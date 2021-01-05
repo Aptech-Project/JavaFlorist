@@ -13,11 +13,11 @@ const initialFieldValues = {
     imgFile: null
 }
 
-const AddEdit = (match) => {
+const AddEdit = (props) => {
     let product = useSelector(state => state.product.product)
     const [values, setValues] = useState(initialFieldValues)
     const dispatch = useDispatch()
-    const { id } = match.match.params;
+    const { id } = props.match.params;
     const isAddMode = !id;
     const [alert, setAlert] = useState(null)
 
