@@ -98,6 +98,12 @@ namespace java_florist_api.Models
                     .HasMaxLength(255)
                     .IsUnicode(false)
                     .HasColumnName("categoryname");
+
+                entity.Property(e => e.Message)
+                    .IsRequired()
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("message");
             });
 
             modelBuilder.Entity<Contact>(entity =>
@@ -221,6 +227,12 @@ namespace java_florist_api.Models
                     .HasMaxLength(255)
                     .IsUnicode(false)
                     .HasColumnName("phonenumber");
+
+                entity.Property(e => e.Message)
+                    .IsRequired()
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("message");
 
                 entity.Property(e => e.Receiver)
                     .IsRequired()

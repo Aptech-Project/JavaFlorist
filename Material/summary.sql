@@ -38,6 +38,7 @@ CREATE TABLE [order] (
   [note] varchar(200) DEFAULT NULL,
   [paymentmethod] varchar(255) NOT NULL,
   [phonenumber] varchar(255) NOT NULL,
+  [message] varchar(255) NOT NULL,
   [receiver] varchar(255) NOT NULL,
   [status] varchar(255) NOT NULL DEFAULT 'processing',
   [totalmoney] float NOT NULL,
@@ -65,6 +66,7 @@ CREATE TABLE [cartdetail] (
 CREATE TABLE [category] (
   [id] int NOT NULL IDENTITY,
   [categoryname] varchar(255) NOT NULL UNIQUE,
+  [message] varchar(255) NOT NULL,
   PRIMARY KEY ([id])
 );
 
