@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import React from 'react';
 import { Route, Switch, Redirect, useLocation } from 'react-router-dom';
 import { Home } from './components/layout/Home';
