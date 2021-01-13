@@ -48,15 +48,16 @@ export default function Components(props) {
         }}
         {...rest}
       />
-      <Parallax image={require("assets/img/bg4.jpg")}>
+      <Parallax image={require("assets/img/shop-bg2.jpg")}>
         <div className={classes.container}>
           <GridContainer>
             <GridItem>
               <div className={classes.brand}>
-                <h1 className={classes.title}>Material Kit React.</h1>
+                <h1 className={classes.title}>Java Florist Shop.</h1>
                 <h3 className={classes.subtitle}>
-                  A Badass Material-UI Kit based on Material Design.
+                “We don’t ask a flower any special reason for its existence. We just look at it and are able to accept it as being something different for ourselves.”
                 </h3>
+                <p style={{paddingLeft: '300px'}}>Gwendolyn Brooks</p>
               </div>
             </GridItem>
           </GridContainer>

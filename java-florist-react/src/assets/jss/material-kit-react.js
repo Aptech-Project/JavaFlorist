@@ -1,11 +1,11 @@
 /*!
 
  =========================================================
- * Material Kit React - v1.9.0 based on Material Kit - v2.0.2
+ * Java Florist Shop - v1.9.0 based on Material Kit - v2.0.2
  =========================================================
 
  * Product Page: https://www.creative-tim.com/product/material-kit-react
- * Copyright 2020 Creative Tim (https://www.creative-tim.com)
+ * Copyright 2020 Hyper Coder (https://www.creative-tim.com)
  * Licensed under MIT (https://github.com/creativetimofficial/material-kit-react/blob/master/LICENSE.md)
 
  =========================================================

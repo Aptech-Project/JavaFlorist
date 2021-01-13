@@ -13,7 +13,7 @@
     "google",
     "twitter"
   ],
-  "license": "Creative TIM License",
+  "license": "Hyper Coder License",
   "ignore": [
     "**/.*",
     "node_modules",
