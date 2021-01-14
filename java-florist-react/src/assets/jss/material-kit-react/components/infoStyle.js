@@ -39,19 +39,19 @@ const infoStyle = {
     color: roseColor
   },
   gray: {
-    color: grayColor
+    color: 'black'
   },
   icon: {
     width: "36px",
     height: "36px"
   },
   descriptionWrapper: {
-    color: grayColor,
+    color: 'black',
     overflow: "hidden"
   },
   title,
   description: {
-    color: grayColor,
+    color: 'black',
     overflow: "hidden",
     marginTop: "0px",
     fontSize: "14px"

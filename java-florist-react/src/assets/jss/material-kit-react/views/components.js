@@ -12,10 +12,21 @@ const componentsStyle = {
     display: "inline-block",
     position: "relative"
   },
+  productTitle: {
+    fontSize: "1.7rem",
+    fontWeight: "600",
+    display: "inline-block",
+    position: "relative"
+  },
   subtitle: {
-    fontSize: "1.313rem",
+    fontSize: "1rem",
     maxWidth: "500px",
-    margin: "10px 0 0"
+    margin: "5px 0 0"
+  },
+  price: {
+    fontSize: "1rem",
+    fontWeight: "400",
+    color: "green",
   },
   main: {
     background: "#FFFFFF",
@@ -33,6 +44,11 @@ const componentsStyle = {
   },
   textCenter: {
     textAlign: "center"
+  },
+  imgCardTop: {
+    width: "100%",
+    borderTopLeftRadius: "calc(.25rem - 1px)",
+    borderTopRightRadius: "calc(.25rem - 1px)"
   }
 };
 

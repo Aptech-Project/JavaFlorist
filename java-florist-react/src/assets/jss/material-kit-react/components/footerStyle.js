@@ -53,7 +53,8 @@ const footerStyle = {
     width: "18px",
     height: "18px",
     position: "relative",
-    top: "3px"
+    top: "3px",
+    color: 'red'
   }
 };
 export default footerStyle;

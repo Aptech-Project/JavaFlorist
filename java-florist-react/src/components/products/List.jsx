@@ -10,8 +10,7 @@ import productFilter from '../../shared/filter.shared';
 
 function List({ match }) {
     const dispatch = useDispatch()
-    const { path } = match;
-    //const loading = useSelector(state => state.productAction.loading)
+    // const { path } = match;
     let [products, setProducts] = useState(null)
 
     //useSelector is the replacement for mapStateToProps to use state in redux store (can use in function only)

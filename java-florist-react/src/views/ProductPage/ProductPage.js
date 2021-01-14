@@ -18,15 +18,17 @@ import Parallax from "components/Parallax/Parallax.js";
 import styles from "assets/jss/material-kit-react/views/landingPage.js";
 
 // Sections for this page
-import TeamSection from "./Sections/TeamSection.js";
-import WorkSection from "./Sections/WorkSection.js";
+
+import TeamSection from "views/LandingPage/Sections/TeamSection.js";
+import WorkSection from "views/LandingPage/Sections/WorkSection.js";
 import { Link } from "react-router-dom";
+import ProductSection from "./ProductSection";
 
 const dashboardRoutes = [];
 
 const useStyles = makeStyles(styles);
 
-export default function LandingPage(props) {
+export default function ProductsPage(props) {
   const classes = useStyles();
   const { ...rest } = props;
   return (
@@ -38,29 +40,24 @@ export default function LandingPage(props) {
         fixed
         changeColorOnScroll={{
           height: 400,
-          color: "white"
+          color: "success"
         }}
-        {...rest}
-      />
-      <Parallax filter image={require("assets/img/landing-bg.jpg")}>
+        {...rest}/>
+      <Parallax filter image={require("assets/img/product-bg1.jpg")}>
         <div className={classes.container}>
           <GridContainer>
             <GridItem xs={12} sm={12} md={6}>
-              <h1 className={classes.title}>Your Story Starts With Us.</h1>
+              <h1 className={classes.title}>Your Love Starts With Us</h1>
               <h4>
-                Every landing page needs a small description after the big bold
-                title, that{"'"}s why we added this text here. Add here all the
-                information that can make you or your product create the first
-                impression.
+                “Happiness is to hold flowers in both hands.”
               </h4>
               <br />
               <Button
                 color="danger"
                 size="lg"
-                href="https://www.youtube.com/watch?v=dQw4w9WgXcQ&ref=creativetim"
+                href="https://www.youtube.com/watch?v=Pc0lvxMLmjs&ab_channel=%EC%89%90%EC%9D%B4%EB%93%9C%EA%B7%B8%EB%A6%B0shadegreen"
                 target="_blank"
-                rel="noopener noreferrer"
-              >
+                rel="noopener noreferrer">
                 <i className="fas fa-play" />
                 Watch video
               </Button>
@@ -70,8 +67,7 @@ export default function LandingPage(props) {
       </Parallax>
       <div className={classNames(classes.main, classes.mainRaised)}>
         <div className={classes.container}>
-          <TeamSection />
-          <WorkSection />
+          <ProductSection/>
         </div>
       </div>
       <Footer />

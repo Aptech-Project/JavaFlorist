@@ -18,15 +18,16 @@ import Parallax from "components/Parallax/Parallax.js";
 import styles from "assets/jss/material-kit-react/views/landingPage.js";
 
 // Sections for this page
-import TeamSection from "./Sections/TeamSection.js";
-import WorkSection from "./Sections/WorkSection.js";
+
+import TeamSection from "views/LandingPage/Sections/TeamSection.js";
+import WorkSection from "views/LandingPage/Sections/WorkSection.js";
 import { Link } from "react-router-dom";
 
 const dashboardRoutes = [];
 
 const useStyles = makeStyles(styles);
 
-export default function LandingPage(props) {
+export default function AboutPage(props) {
   const classes = useStyles();
   const { ...rest } = props;
   return (
