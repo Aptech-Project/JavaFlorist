@@ -18,10 +18,6 @@ import Parallax from "components/Parallax/Parallax.js";
 import styles from "assets/jss/material-kit-react/views/landingPage.js";
 
 // Sections for this page
-
-import TeamSection from "views/LandingPage/Sections/TeamSection.js";
-import WorkSection from "views/LandingPage/Sections/WorkSection.js";
-import { Link } from "react-router-dom";
 import ProductSection from "./ProductSection";
 
 const dashboardRoutes = [];

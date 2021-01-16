@@ -44,7 +44,7 @@ export default function Home(props) {
         color="transparent"
         changeColorOnScroll={{
           height: 400,
-          color: "white"
+          color: "primary"
         }}
         {...rest}
       />
@@ -53,7 +53,7 @@ export default function Home(props) {
           <GridContainer>
             <GridItem>
               <div className={classes.brand}>
-                <h1 className={classes.title}>Java Florist Shop.</h1>
+                <h1 className={classes.title}>Java Florist</h1>
                 <h3 className={classes.subtitle}>
                 “We don’t ask a flower any special reason for its existence. We just look at it and are able to accept it as being something different for ourselves.”
                 </h3>

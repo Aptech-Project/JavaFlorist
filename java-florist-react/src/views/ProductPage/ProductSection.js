@@ -12,6 +12,7 @@ import productFilter from 'shared/filter.shared';
 import Cards from "components/Card/Cards";
 import GridContainer from "components/Grid/GridContainer";
 import GridItem from "components/Grid/GridItem";
+import TitlebarGridList from "components/Grid/TitlebarGridList";
 
 const useStyles = makeStyles(styles);
 
@@ -86,7 +87,7 @@ export default function ProductSection() {
       </form>
       <div className="container">
         <div className="row">
-            {products && products.map(product =>
+            {/* {products && products.map(product =>
             <Cards
               key={product.id}
               id = {product.id}
@@ -95,7 +96,10 @@ export default function ProductSection() {
               description= {product.description}
               price= {product.price}
             />
-            )}
+            )} */}
+            <TitlebarGridList
+              products = {products ? products : []}
+            />
             {!products &&
                 <div className={classes.description +"p-2"}>No Products To Display</div>
             }
