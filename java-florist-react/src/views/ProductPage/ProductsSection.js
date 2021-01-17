@@ -12,7 +12,7 @@ import productFilter from 'shared/filter.shared';
 import Cards from "components/Card/Cards";
 import GridContainer from "components/Grid/GridContainer";
 import GridItem from "components/Grid/GridItem";
-import TitlebarGridList from "components/Grid/TitlebarGridList";
+import ProductsGridList from "components/Grid/ProductsGridList";
 
 const useStyles = makeStyles(styles);
 
@@ -97,15 +97,9 @@ export default function ProductSection() {
               price= {product.price}
             />
             )} */}
-            <TitlebarGridList
+            <ProductsGridList
               products = {products ? products : []}
             />
-            {!products &&
-                <div className={classes.description +"p-2"}>No Products To Display</div>
-            }
-            {products && !products.length &&
-                <div className={classes.description}>No Products To Display</div>
-            }
         </div>
       </div>
       </div>

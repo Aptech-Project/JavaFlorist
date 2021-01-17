@@ -12,7 +12,7 @@ import ProfilePage from "views/ProfilePage/ProfilePage.js";
 import LoginPage from "views/LoginPage/LoginPage.js";
 import { store } from "reducers/store";
 import Home from "views/Home";
-import ProductsPage from "views/ProductPage/ProductPage";
+import ProductsPage from "views/ProductPage/ProductsPage";
 import AboutPage from "views/AboutPage/AboutPage";
 
 var hist = createBrowserHistory();

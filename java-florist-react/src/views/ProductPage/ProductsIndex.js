@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect, useState } from 'react';
+
 // nodejs library that concatenates classes
 import classNames from "classnames";
 // @material-ui/core components
@@ -7,38 +8,23 @@ import { makeStyles } from "@material-ui/core/styles";
 // @material-ui/icons
 
 // core components
-import Header from "components/Header/Header.js";
 import Footer from "components/Footer/Footer.js";
 import GridContainer from "components/Grid/GridContainer.js";
 import GridItem from "components/Grid/GridItem.js";
 import Button from "components/CustomButtons/Button.js";
-import HeaderLinks from "components/Header/HeaderLinks.js";
 import Parallax from "components/Parallax/Parallax.js";
-
 import styles from "assets/jss/material-kit-react/views/landingPage.js";
 
-// Sections for this page
-import ProductSection from "./ProductSection";
 
-const dashboardRoutes = [];
+// Sections for this page
+import ProductSection from "./ProductsSection";
 
 const useStyles = makeStyles(styles);
 
-export default function ProductsPage(props) {
+export default function ProductsIndex(props) {
   const classes = useStyles();
-  const { ...rest } = props;
   return (
     <div>
-      <Header
-        color="transparent"
-        brand="Java Florist"
-        rightLinks={<HeaderLinks />}
-        fixed
-        changeColorOnScroll={{
-          height: 400,
-          color: "success"
-        }}
-        {...rest}/>
       <Parallax filter image={require("assets/img/product-bg1.jpg")}>
         <div className={classes.container}>
           <GridContainer>
@@ -66,7 +52,6 @@ export default function ProductsPage(props) {
           <ProductSection/>
         </div>
       </div>
-      <Footer />
     </div>
   );
 }
