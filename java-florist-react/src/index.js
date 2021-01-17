@@ -10,6 +10,7 @@ import Components from "views/Components/Components.js";
 import LandingPage from "views/LandingPage/LandingPage.js";
 import ProfilePage from "views/ProfilePage/ProfilePage.js";
 import LoginPage from "views/LoginPage/LoginPage.js";
+import RegisterPage from "views/LoginPage/RegisterPage.js";
 import { store } from "reducers/store";
 import Home from "views/Home";
 import ProductsPage from "views/ProductPage/ProductsPage";
@@ -24,6 +25,7 @@ ReactDOM.render(
         <Route path="/landing" component={LandingPage} />
         <Route path="/profile" component={ProfilePage} />
         <Route path="/login" component={LoginPage} />
+        <Route path="/register" component={RegisterPage} />
         <Route path="/components" component={Components} />
         <Route path="/products" component={ProductsPage} />
         <Route path="/about" component={AboutPage} />

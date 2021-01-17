@@ -21,7 +21,8 @@ import CustomInput from "components/CustomInput/CustomInput.js";
 
 import styles from "assets/jss/material-kit-react/views/loginPage.js";
 
-import image from "assets/img/bg7.jpg";
+import image from "assets/img/login-register.jpg";
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles(styles);
 
@@ -29,7 +30,7 @@ export default function LoginPage(props) {
   const [cardAnimaton, setCardAnimation] = React.useState("cardHidden");
   setTimeout(function() {
     setCardAnimation("");
-  }, 700);
+  }, 100);
   const classes = useStyles();
   const { ...rest } = props;
   return (
@@ -56,7 +57,7 @@ export default function LoginPage(props) {
                 <form className={classes.form}>
                   <CardHeader color="primary" className={classes.cardHeader}>
                     <h4>Login</h4>
-                    <div className={classes.socialLine}>
+                    {/* <div className={classes.socialLine}>
                       <Button
                         justIcon
                         href="#pablo"
@@ -84,18 +85,21 @@ export default function LoginPage(props) {
                       >
                         <i className={"fab fa-google-plus-g"} />
                       </Button>
-                    </div>
+                    </div> */}
                   </CardHeader>
-                  <p className={classes.divider}>Or Be Classical</p>
+                  <Link to="/register" className={classes.navLink}>
+                    <p className={classes.divider} style={{cursor: "pointer"}}>Don't have an Account?</p>
+                  </Link>
                   <CardBody>
                     <CustomInput
-                      labelText="First Name..."
+                      labelText="User Name Or Email..."
                       id="first"
                       formControlProps={{
                         fullWidth: true
                       }}
                       inputProps={{
                         type: "text",
+                        defaultValue: "AegonNguyen",
                         endAdornment: (
                           <InputAdornment position="end">
                             <People className={classes.inputIconsColor} />
@@ -103,7 +107,7 @@ export default function LoginPage(props) {
                         )
                       }}
                     />
-                    <CustomInput
+                    {/* <CustomInput
                       labelText="Email..."
                       id="email"
                       formControlProps={{
@@ -117,7 +121,7 @@ export default function LoginPage(props) {
                           </InputAdornment>
                         )
                       }}
-                    />
+                    /> */}
                     <CustomInput
                       labelText="Password"
                       id="pass"
@@ -138,9 +142,9 @@ export default function LoginPage(props) {
                     />
                   </CardBody>
                   <CardFooter className={classes.cardFooter}>
-                    <Button simple color="primary" size="lg">
-                      Get started
-                    </Button>
+                        <Button simple color="primary" size="lg">
+                          Get Started
+                        </Button>
                   </CardFooter>
                 </form>
               </Card>

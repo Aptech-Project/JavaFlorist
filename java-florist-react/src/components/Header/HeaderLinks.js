@@ -70,13 +70,16 @@ export default function HeaderLinks(props) {
           title="Login to your account"
           placement={window.innerWidth > 959 ? "top" : "left"}
           classes={{ tooltip: classes.tooltip }}>
-          <Button
-            href=""
-            target="_blank"
-            color="transparent"
-            className={classes.navLink}>
+          <Link to="/login" className={classes.navLink}>
+            {/* <Button
+              href=""
+              target="_blank"
+              color="transparent"
+              className={classes.navLink}
+            >
+            </Button> */}
             <i className={classes.socialIcons + " fas fa-user-circle"} />
-          </Button>
+          </Link>
         </Tooltip>
       </ListItem>
       <ListItem className={classes.listItem}>
