@@ -81,15 +81,17 @@ CREATE TABLE [favorite] (
 );
 
 CREATE TABLE [feedbackdata] (
+  [id] int NOT NULL IDENTITY, 
   [userid] int NOT NULL FOREIGN KEY REFERENCES [user](id),
   [productid] int NOT NULL FOREIGN KEY REFERENCES [product](id),
   [feedback] varchar(8000) NOT NULL,
   [fbReply] varchar(8000) NOT NULL,
   [vote] int NOT NULL
+  PRIMARY KEY ([id])
 );
 
 CREATE TABLE [contact] (
-  [id] int NOT NULL IDENTITY, 
+  [id] int NOT NULL IDENTITY(1,1), 
   [name] varchar(255) NOT NULL,
   [email] varchar(255) NOT NULL,
   [message] varchar(255) NOT NULL,
