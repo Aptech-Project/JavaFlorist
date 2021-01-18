@@ -150,10 +150,9 @@ namespace java_florist_api.Models
 
             modelBuilder.Entity<Feedbackdatum>(entity =>
             {
-                entity.HasNoKey();
 
                 entity.ToTable("feedbackdata");
-
+                entity.Property(e => e.Id).HasColumnName("id");
                 entity.Property(e => e.FbReply)
                     .IsRequired()
                     .HasMaxLength(8000)
