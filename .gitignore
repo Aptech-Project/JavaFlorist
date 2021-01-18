@@ -4,3 +4,6 @@ java-florist-api/bin
 laptop-react-app/.eslintcache
 java-florist-react/.eslintcache
 
+java-florist-api/appsettings.json
+java-florist-react/src/services/api.service.js
+java-florist-api/Models/javafloristContext.cs
