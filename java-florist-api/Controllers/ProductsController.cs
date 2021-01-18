@@ -108,7 +108,7 @@ namespace java_florist_api.Controllers
             {
                 return NotFound();
             }
-            DeleteImage(product.ImgName);
+            if (product.ImgName != null) DeleteImage(product.ImgName);
             _context.Products.Remove(product);
             await _context.SaveChangesAsync();
 
