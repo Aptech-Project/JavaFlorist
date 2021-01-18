@@ -19,10 +19,11 @@ import CardHeader from "components/Card/CardHeader.js";
 import CardFooter from "components/Card/CardFooter.js";
 import CustomInput from "components/CustomInput/CustomInput.js";
 
+
 import styles from "assets/jss/material-kit-react/views/loginPage.js";
 
 import image from "assets/img/login-register.jpg";
-import { Link } from "react-router-dom";
+import { Link, Route, Switch } from "react-router-dom";
 
 const useStyles = makeStyles(styles);
 

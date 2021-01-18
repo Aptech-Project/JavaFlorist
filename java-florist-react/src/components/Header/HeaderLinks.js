@@ -1,5 +1,5 @@
 /*eslint-disable*/
-import React from "react";
+import React, { useState } from "react";
 import DeleteIcon from "@material-ui/icons/Delete";
 import IconButton from "@material-ui/core/IconButton";
 // react components for routing our app without refresh
@@ -19,11 +19,28 @@ import CustomDropdown from "components/CustomDropdown/CustomDropdown.js";
 import Button from "components/CustomButtons/Button.js";
 
 import styles from "assets/jss/material-kit-react/components/headerLinksStyle.js";
+import { Avatar, Card, Collapse  } from "@material-ui/core";
+import ProfileCard from "views/ProfilePage/ProfileCard";
+import avatar from "assets/img/faces/christian.jpg";
 
 const useStyles = makeStyles(styles);
+const useCustomStyle = makeStyles({
+  avatar:{
+    width: 25,
+    height: 25
+  },
+})
 
 export default function HeaderLinks(props) {
   const classes = useStyles();
+  const customClasses = useCustomStyle();
+  const [isAuthenticated, setIsAuthenticated] = useState(true);
+  const [expanded, setExpanded] = React.useState(false);
+
+  const handleExpandClick = () => {
+    setExpanded(!expanded);
+  };
+
   return (
     <List className={classes.list}>
       {/* <ListItem className={classes.listItem}>
@@ -66,24 +83,6 @@ export default function HeaderLinks(props) {
       </ListItem>
       <ListItem className={classes.listItem}>
         <Tooltip
-          id="login-profile"
-          title="Login to your account"
-          placement={window.innerWidth > 959 ? "top" : "left"}
-          classes={{ tooltip: classes.tooltip }}>
-          <Link to="/login" className={classes.navLink}>
-            {/* <Button
-              href=""
-              target="_blank"
-              color="transparent"
-              className={classes.navLink}
-            >
-            </Button> */}
-            <i className={classes.socialIcons + " fas fa-user-circle"} />
-          </Link>
-        </Tooltip>
-      </ListItem>
-      <ListItem className={classes.listItem}>
-        <Tooltip
           id="cart"
           title="Your cart"
           placement={window.innerWidth > 959 ? "top" : "left"}
@@ -97,6 +96,39 @@ export default function HeaderLinks(props) {
           </Button>
         </Tooltip>
       </ListItem>
+      <ListItem className={classes.listItem}>
+        <Tooltip
+          id="login-profile"
+          title=""
+          placement={window.innerWidth > 959 ? "top" : "left"}
+          classes={{ tooltip: classes.tooltip }}>
+            {
+              isAuthenticated ?
+              <>
+                <Button
+                href=""
+                target="_blank"
+                color="transparent"
+                onClick={handleExpandClick}
+                className={classes.navLink}
+                >
+                  <Avatar alt="Remy Sharp" src={avatar} className={customClasses.avatar}/>
+                </Button>
+                <Card>
+                  <Collapse in={expanded} timeout="auto" unmountOnExit>
+                    <ProfileCard setIsAuthenticated={setIsAuthenticated}/>
+                  </Collapse>
+                </Card>
+              </>
+              :
+                <Link to="/login" className={classes.navLink}>
+                  <i className={classes.socialIcons + " fas fa-user-circle"} />
+                </Link>  
+            }
+          
+        </Tooltip>
+      </ListItem>
+      
     </List>
   );
 }
