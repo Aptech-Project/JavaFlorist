@@ -9,6 +9,7 @@ import IconButton from '@material-ui/core/IconButton';
 import InfoIcon from '@material-ui/icons/Info';
 import { AddShoppingCart, Shop } from '@material-ui/icons';
 import { Link } from 'react-router-dom';
+import Pagination from 'components/Pagination/Pagination';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -31,10 +32,30 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+
+
 export default function ProductsGridList(props) {
+
   const classes = useStyles();
   const {products} = props
-  console.log(products)
+
+  function productPagination(){
+    let indexCount = []
+    let index
+    indexCount.push("PREV")
+    for (index = 1; index <= products.length/9; index++) {
+        indexCount.push(index)
+    }
+    if(products.length%3!=0){
+        indexCount.push(index)
+    }
+    indexCount.push("NEXT")
+    console.log(indexCount)
+    return indexCount
+  }
+
+  const indexCount = productPagination()
+  console.log(indexCount)
 
   return (
     <div className={classes.root + "row"}>
@@ -66,6 +87,14 @@ export default function ProductsGridList(props) {
           <div className={classes.description}>No Products To Display</div>
         }
       </GridList>
+      <br></br>
+      <Pagination
+        product={products}
+        pages={
+          indexCount.map((index)=>{return {text: index}})
+        }
+        color="info"
+      />
     </div>
   );
 }

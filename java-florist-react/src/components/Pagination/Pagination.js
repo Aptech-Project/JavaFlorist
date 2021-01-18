@@ -14,7 +14,7 @@ const useStyles = makeStyles(styles);
 
 export default function Pagination(props) {
   const classes = useStyles();
-  const { pages, color } = props;
+  const { pages, color, products } = props;
   return (
     <ul className={classes.pagination}>
       {pages.map((prop, key) => {
@@ -26,13 +26,14 @@ export default function Pagination(props) {
         return (
           <li className={classes.paginationItem} key={key}>
             {prop.onClick !== undefined ? (
-              <Button onClick={prop.onClick} className={paginationLink}>
+              <Button onClick={prop.onClick} className={paginationLink} style={{color: "#363940"}}>
                 {prop.text}
               </Button>
             ) : (
               <Button
                 onClick={() => alert("you've clicked " + prop.text)}
                 className={paginationLink}
+                style={{color: "#363940"}}
               >
                 {prop.text}
               </Button>
