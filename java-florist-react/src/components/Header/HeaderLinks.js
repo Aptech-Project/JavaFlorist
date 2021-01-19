@@ -19,27 +19,16 @@ import CustomDropdown from "components/CustomDropdown/CustomDropdown.js";
 import Button from "components/CustomButtons/Button.js";
 
 import styles from "assets/jss/material-kit-react/components/headerLinksStyle.js";
-import { Avatar, Card, Collapse  } from "@material-ui/core";
+import LinkMet from "@material-ui/core/Link";
 import ProfileCard from "views/ProfilePage/ProfileCard";
 import avatar from "assets/img/faces/christian.jpg";
+import { useSelector } from "react-redux";
 
 const useStyles = makeStyles(styles);
-const useCustomStyle = makeStyles({
-  avatar:{
-    width: 25,
-    height: 25
-  },
-})
 
 export default function HeaderLinks(props) {
   const classes = useStyles();
-  const customClasses = useCustomStyle();
-  const [isAuthenticated, setIsAuthenticated] = useState(true);
-  const [expanded, setExpanded] = React.useState(false);
-
-  const handleExpandClick = () => {
-    setExpanded(!expanded);
-  };
+  const isAuthenticated = useSelector(state => state.login.isAuthenticated)
 
   return (
     <List className={classes.list}>
@@ -104,22 +93,7 @@ export default function HeaderLinks(props) {
           classes={{ tooltip: classes.tooltip }}>
             {
               isAuthenticated ?
-              <>
-                <Button
-                href=""
-                target="_blank"
-                color="transparent"
-                onClick={handleExpandClick}
-                className={classes.navLink}
-                >
-                  <Avatar alt="Remy Sharp" src={avatar} className={customClasses.avatar}/>
-                </Button>
-                <Card>
-                  <Collapse in={expanded} timeout="auto" unmountOnExit>
-                    <ProfileCard setIsAuthenticated={setIsAuthenticated}/>
-                  </Collapse>
-                </Card>
-              </>
+                <ProfileCard/>
               :
                 <Link to="/login" className={classes.navLink}>
                   <i className={classes.socialIcons + " fas fa-user-circle"} />

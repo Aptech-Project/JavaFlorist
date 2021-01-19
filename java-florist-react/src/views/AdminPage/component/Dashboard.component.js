@@ -19,22 +19,22 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import Tooltip from "@material-ui/core/Tooltip";
-import MainListItems from './listItems';
-import imageBg from "assets/img/bg2.jpg";
+import Chart from '../Chart';
+import Deposits from '../Deposits';
+import Orders from '../Orders';
 import { Link } from "react-router-dom";
-
-import Dashboardcomponent from './component/Dashboard.component'
-import { CardMedia } from '@material-ui/core';
 
 function Copyright() {
   return (
-    <Typography variant="body2" color="textSecondary" align="center">
+    <Typography variant="body2" align="center">
+      <h6 style={{color: "white"}}>
       {'Copyright © '}
       {/* <Link color="inherit" href="https://material-ui.com/">
         Your Website
       </Link>{' '} */}
       {new Date().getFullYear()}
       {'.'}
+      </h6>
     </Typography>
   );
 }
@@ -81,7 +81,7 @@ const useStyles = makeStyles((theme) => ({
   },
   drawerPaper: {
     position: 'relative',
-    //whiteSpace: 'nowrap',
+    whiteSpace: 'nowrap',
     width: drawerWidth,
     transition: theme.transitions.create('width', {
       easing: theme.transitions.easing.sharp,
@@ -95,6 +95,9 @@ const useStyles = makeStyles((theme) => ({
       duration: theme.transitions.duration.leavingScreen,
     }),
     width: theme.spacing(7),
+    [theme.breakpoints.up('sm')]: {
+      width: theme.spacing(9),
+    },
   },
   appBarSpacer: theme.mixins.toolbar,
   content: {
@@ -117,86 +120,41 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Dashboard() {
+export default function Dashboardcomponent() {
   const classes = useStyles();
-  const [sideBarType, setSideBarType] = React.useState('Dashboard');
-  const [open, setOpen] = React.useState(true);
-  const handleDrawerOpen = () => {
-    setOpen(true);
-  };
-  const handleDrawerClose = () => {
-    setOpen(false);
-  };
-  const mainPage = () => {
-    switch (sideBarType) {
-      case 'Dashboard':
-        return <Dashboardcomponent/>
-      case 'Products':
-        return null
-      case 'Orders':
-        return null
-      case 'Customers':
-        return null
-      default:
-        return null
-  }
-}
+  const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
 
   return (
     <div className={classes.root}>
       <CssBaseline />
-      <AppBar position="absolute" className={clsx(classes.appBar, open && classes.appBarShift)}>
-        <Toolbar className={classes.toolbar}>
-          <IconButton
-            edge="start"
-            color="inherit"
-            aria-label="open drawer"
-            onClick={handleDrawerOpen}
-            className={clsx(classes.menuButton, open && classes.menuButtonHidden)}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
-            Dashboard
-          </Typography>
-          <IconButton color="inherit">
-            <Badge badgeContent={4} color="secondary">
-              <NotificationsIcon />
-            </Badge>
-          </IconButton>
-          <Tooltip 
-            title="Exit To HomePage"
-            placement={window.innerWidth > 959 ? "top" : "left"}
-            classes={{ tooltip: classes.tooltip }}
-          >
-            <IconButton color="inherit">
-                <Badge color="secondary">
-                    <Link to="/" className={classes.navLink} style={{color:"inherit"}}>
-                        <ExitToAppIcon />
-                    </Link>
-                </Badge>
-            </IconButton>
-          </Tooltip>
-        </Toolbar>
-      </AppBar>
-      <Drawer
-        variant="permanent"
-        classes={{
-          paper: clsx(classes.drawerPaper, !open && classes.drawerPaperClose),
-        }}
-        open={open}
-      >
-        <div className={classes.toolbarIcon}>
-          <IconButton onClick={handleDrawerClose}>
-            <ChevronLeftIcon />
-          </IconButton>
-        </div>
-        <Divider />
-        <List><MainListItems setSideBarType={setSideBarType}/></List>
-      </Drawer>
-      <CardMedia image={imageBg}>
-        {mainPage()}
-      </CardMedia>
+      <main className={classes.content}>
+        <div className={classes.appBarSpacer} />
+        <Container maxWidth="lg" className={classes.container}>
+          <Grid container spacing={3}>
+            {/* Chart */}
+            <Grid item xs={12} md={8} lg={9}>
+              <Paper className={fixedHeightPaper}>
+                <Chart />
+              </Paper>
+            </Grid>
+            {/* Recent Deposits */}
+            <Grid item xs={12} md={4} lg={3}>
+              <Paper className={fixedHeightPaper}>
+                <Deposits />
+              </Paper>
+            </Grid>
+            {/* Recent Orders */}
+            <Grid item xs={12}>
+              <Paper className={classes.paper}>
+                <Orders />
+              </Paper>
+            </Grid>
+          </Grid>
+          <Box pt={4}>
+            <Copyright />
+          </Box>
+        </Container>
+      </main>
     </div>
   );
 }
