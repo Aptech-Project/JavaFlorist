@@ -24,6 +24,8 @@ import styles from "assets/jss/material-kit-react/views/loginPage.js";
 
 import image from "assets/img/login-register.jpg";
 import { Link, Route, Switch } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { isAuthenticated } from "actions/login.action";
 
 const useStyles = makeStyles(styles);
 
@@ -34,6 +36,7 @@ export default function LoginPage(props) {
   }, 100);
   const classes = useStyles();
   const { ...rest } = props;
+  const loginDispatch = useDispatch();
   return (
     <div>
       <Header
@@ -143,9 +146,11 @@ export default function LoginPage(props) {
                     />
                   </CardBody>
                   <CardFooter className={classes.cardFooter}>
-                        <Button simple color="primary" size="lg">
-                          Get Started
-                        </Button>
+                    <Link to="/" className={classes.navLink}>
+                      <Button simple color="primary" size="lg" onClick={()=>{loginDispatch(isAuthenticated(true))}}>
+                        Get Started
+                      </Button>
+                    </Link>
                   </CardFooter>
                 </form>
               </Card>
