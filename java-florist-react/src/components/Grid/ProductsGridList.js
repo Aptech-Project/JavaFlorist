@@ -10,6 +10,7 @@ import InfoIcon from '@material-ui/icons/Info';
 import { AddShoppingCart, Shop } from '@material-ui/icons';
 import { Link } from 'react-router-dom';
 import Pagination from 'components/Pagination/Pagination';
+import {productPagination} from 'shared/filter.shared';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -30,40 +31,35 @@ const useStyles = makeStyles((theme) => ({
       background: "rgba(200, 200, 200, 0.2)"
     },
   },
+  image: {
+    "&:hover": {
+    }
+  },
+  tileBar: {
+    "&:hover": {
+      transition: 'all .3s ease-in-out 0s',
+      background: "rgb(166, 12, 71, 0.6)",
+    }
+  }
 }));
 
 
 
 export default function ProductsGridList(props) {
 
+  let activeIndex = useSelector(state => state.product.activeIndex) || 1;
   const classes = useStyles();
   const {products} = props
-
-  function productPagination(){
-    let indexCount = []
-    let index
-    indexCount.push("PREV")
-    for (index = 1; index <= products.length/9; index++) {
-        indexCount.push(index)
-    }
-    if(products.length%3!=0){
-        indexCount.push(index)
-    }
-    indexCount.push("NEXT")
-    console.log(indexCount)
-    return indexCount
-  }
-
-  const indexCount = productPagination()
-  console.log(indexCount)
+  const indexCount = productPagination(products)
 
   return (
     <div className={classes.root + "row"}>
       <GridList cellHeight={240} className={classes.gridList}>
         {products.map((product) => (
           <GridListTile key={product.id} className={"col-sm-6 col-md-4"} style={{minWidth: '200px'}}>
-            <img src={product.imgSrc} alt={product.name} />
+            <img src={product.imgSrc} alt={product.name} className={classes.image}/>
             <GridListTileBar
+              className={classes.tileBar}
               style={{textAlign: 'left'}}
               title={<Link to={{pathname: `/products/${product.id}`, product: {product}}} style={{color: 'white', width: '70%'}}>{product.name}</Link>}
               subtitle={<span>Price: {product.price} $</span>}
@@ -89,12 +85,15 @@ export default function ProductsGridList(props) {
       </GridList>
       <br></br>
       <Pagination
-        product={products}
         pages={
-          indexCount.map((index)=>{return {text: index}})
+          indexCount.map((index)=>{
+            let indexObject = {text: index}
+            if (activeIndex == index) indexObject["active"] = true
+            return indexObject
+          })
         }
         color="info"
       />
     </div>
-  );
+);
 }

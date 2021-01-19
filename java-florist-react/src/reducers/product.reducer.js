@@ -37,6 +37,12 @@ export const productReducer = (state = initialState, action) => {
                 ...state,
                 list: state.list.filter(x => x.id != action.payload)
             }
+
+        case ACTION_TYPES.SET_ACTIVE_INDEX:
+            return {
+                ...state,
+                activeIndex: action.payload
+            }
             
         default:
             return state

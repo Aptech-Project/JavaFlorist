@@ -8,6 +8,7 @@ export const ACTION_TYPES = {
     DELETE: 'DELETE',
     FETCH_ALL: 'FETCH_ALL',
     FETCH_BY_ID: 'FETCH_BY_ID',
+    SET_ACTIVE_INDEX: 'SET_ACTIVE_INDEX'
 }
 
 export const fetchAll = () => dispatch => {
@@ -63,4 +64,11 @@ export const Delete = (id) => dispatch => {
             })
         })
         .catch(err => console.log(err))
+}
+
+export const setActiveIndex =(index) =>{
+    return{
+        type: ACTION_TYPES.SET_ACTIVE_INDEX,
+        payload: index,
+    }
 }

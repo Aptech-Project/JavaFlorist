@@ -8,7 +8,7 @@ import { useForm } from "react-hook-form";
 import { Link } from 'react-router-dom';
 import { FormGroup, FormControlLabel, Switch} from '@material-ui/core';
 import * as actions from 'actions/product.action'
-import productFilter from 'shared/filter.shared';
+import {productFilter} from 'shared/filter.shared';
 import Cards from "components/Card/Cards";
 import GridContainer from "components/Grid/GridContainer";
 import GridItem from "components/Grid/GridItem";
@@ -23,6 +23,8 @@ export default function ProductSection() {
 
   //useSelector is the replacement for mapStateToProps to use state in redux store (can use in function only)
   let allProducts = useSelector(state => state.product.list);//get from root reducer
+  let activeIndex = useSelector(state => state.product.activeIndex);
+  console.log(activeIndex)
 
   const [isAdvanceFilter, setIsAdvanceFilter] = useState(false)
   const { register, handleSubmit, setValue, errors } = useForm(); // initialize the react hook form

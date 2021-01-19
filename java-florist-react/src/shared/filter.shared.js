@@ -1,4 +1,4 @@
-export default function productFilter(filterData, list) {
+const productFilter = (filterData, list) => {
 
   let filteredList = list.filter(item => {
     let matched = true
@@ -24,8 +24,23 @@ export default function productFilter(filterData, list) {
       return item
     }
   })
-  console.log(filteredList)
   return (
     filteredList
   )
 }
+
+const productPagination = (products) => {
+  let indexCount = []
+  let index
+  indexCount.push("PREV")
+  for (index = 1; index <= products.length/9; index++) {
+      indexCount.push(index)
+  }
+  if(products.length%3!=0){
+      indexCount.push(index)
+  }
+  indexCount.push("NEXT")
+  return indexCount
+}
+
+export {productFilter, productPagination}
