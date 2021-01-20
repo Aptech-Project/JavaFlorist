@@ -102,7 +102,7 @@ export default function ProfileCard(props) {
             </Link> */}
       </MenuItem>
       <Divider light />
-      <MenuItem>
+      <MenuItem to="/" component={Link}>
         <div
           onClick={() => {
             const action = isAuthenticated(false);

@@ -1,5 +1,5 @@
 const initialState = {
-    isAuthenticated: true
+    isAuthenticated: null
 }
 const loginReducer = (state = initialState, action) =>{
     switch (action.type) {

@@ -50,7 +50,7 @@ export default function Home(props) {
       />
       <Parallax image={require("assets/img/shop-bg2.jpg")}>
         <div className={classes.container}>
-          <GridContainer fixed>
+          <GridContainer>
             <GridItem>
               <div className={classes.brand}>
                 <h1 className={classes.title}>Java Florist</h1>
