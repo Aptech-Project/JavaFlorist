@@ -26,6 +26,7 @@
     "react-scripts": "3.4.1",
     "react-slick": "0.26.1",
     "react-swipeable-views": "0.13.9",
+    "react-table-scrollbar": "^0.1.9",
     "react-toast-notifications": "^2.4.0",
     "recharts": "^2.0.3",
     "redux": "^4.0.5",
