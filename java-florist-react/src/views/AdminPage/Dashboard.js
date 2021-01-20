@@ -24,6 +24,7 @@ import imageBg from "assets/img/bg2.jpg";
 import { Link } from "react-router-dom";
 
 import Dashboardcomponent from './component/Dashboard.component'
+import Messagecomponent from './component/Message.component'
 import { CardMedia } from '@material-ui/core';
 
 function Copyright() {
@@ -137,6 +138,8 @@ export default function Dashboard() {
         return null
       case 'Customers':
         return null
+      case 'Message':
+        return <Messagecomponent/>
       default:
         return null
   }

@@ -11,12 +11,12 @@ import Header from "components/Header/Header.js";
 import Footer from "components/Footer/Footer.js";
 import GridContainer from "components/Grid/GridContainer.js";
 import GridItem from "components/Grid/GridItem.js";
-import Button from "components/CustomButtons/Button.js";
 import HeaderLinks from "components/Header/HeaderLinks.js";
 import Parallax from "components/Parallax/Parallax.js";
-
+import { ToastProvider } from 'react-toast-notifications'
 import styles from "assets/jss/material-kit-react/views/landingPage.js";
-
+import { store } from "../../reducers/store";
+import { Provider } from "react-redux";
 // Sections for this page
 
 import TeamSection from "views/LandingPage/Sections/TeamSection.js";
@@ -49,7 +49,7 @@ export default function AboutPage(props) {
             <GridItem xs={12} sm={12} md={6}>
               <h1 className={classes.title}>Welcome to our flower shop</h1>
               <h4>
-              We are very pleased to serve you. Customer satisfaction is the driving force for us to continue to develop and give ideas to satisfy customers.
+                We are very pleased to serve you. Customer satisfaction is the driving force for us to continue to develop and give ideas to satisfy customers.
               </h4>
               <br />
             </GridItem>
@@ -58,8 +58,13 @@ export default function AboutPage(props) {
       </Parallax>
       <div className={classNames(classes.main, classes.mainRaised)}>
         <div className={classes.container}>
+          
           <TeamSection />
-          <WorkSection />
+          <Provider store={store}>
+            <ToastProvider autoDismiss={true}>
+              <WorkSection />
+            </ToastProvider>
+          </Provider>
         </div>
       </div>
       <Footer />

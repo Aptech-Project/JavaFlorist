@@ -1,71 +1,147 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 
 // @material-ui/icons
 
 // core components
-import GridContainer from "components/Grid/GridContainer.js";
-import GridItem from "components/Grid/GridItem.js";
-import CustomInput from "components/CustomInput/CustomInput.js";
-import Button from "components/CustomButtons/Button.js";
+import { TextField, Grid, Button, withWidth, TextareaAutosize, withStyles} from "@material-ui/core";
+import * as actions from "../../../actions/contact.action";
+import { connect } from "react-redux";
+import useForm from "./useForm";
+import { useToasts } from 'react-toast-notifications'
+const styles = theme => ({
+  root: {
+    '& .MuiTextField-root': {
+      margin: theme.spacing(1),
+      minWidth: 230,
+      padding: theme.spacing(1),
+    }
+  },
+  smMargin: {
+    margin: theme.spacing(1)
+  }
+})
+const initialFieldValues = {
+  name: '',
+  email: '',
+  message: ''
+}
 
-import styles from "assets/jss/material-kit-react/views/landingPageSections/workStyle.js";
+const WorkSection = ({ classes, ...props }) => {
 
-const useStyles = makeStyles(styles);
+  //toast msg.
+  const { addToast } = useToasts()
 
-export default function WorkSection() {
-  const classes = useStyles();
+  //validate()
+  //validate({fullName:'jenny'})
+  const validate = (fieldValues = values) => {
+    let temp = { ...errors }
+    if ('name' in fieldValues)
+      temp.name = fieldValues.name ? "" : "Name is required."
+    if ('message' in fieldValues)
+      temp.message = fieldValues.message ? "" : "Message is required."
+    if ('email' in fieldValues){
+      temp.email = (/^$|.+@.+..+/).test(fieldValues.email) ? "" : "Email is not valid."
+      temp.email = fieldValues.email?"" : "Email is not valid."
+    }
+      
+    setErrors({
+      ...temp
+    })
+
+    if (fieldValues == values)
+      return Object.values(temp).every(x => x == "")
+  }
+
+  const {
+    values,
+    setValues,
+    errors,
+    setErrors,
+    handleInputChange,
+    resetForm
+  } = useForm(initialFieldValues, validate, props.setCurrentId)
+
+  //material-ui select
+
+  const handleSubmit = e => {
+    e.preventDefault()
+    if (validate()) {
+      resetForm()
+      window.alert("Your message has been sent to us")
+      console.log(values)
+      props.createContact(values)
+    }
+  }
+
   return (
-    <div className={classes.section}>
-      <GridContainer justify="center">
-        <GridItem cs={12} sm={12} md={8}>
-          <h2 className={classes.title}>Contact us</h2>
-          <h4 className={classes.description}>
+    <form autoComplete="off"  className={classes.root} onSubmit={handleSubmit}>
+      <Grid container >
+        <Grid item lg={12}>
+          <h2 align="center" style={{ fontWeight: 'bold', color: 'black' }}  >Contact us</h2>
+        </Grid>
+        <Grid item lg={12}>
+          <h4 align="center" style={{ color: 'black' }}>
             If you have any questions, please contact us by filling in the information below
           </h4>
-          <form>
-            <GridContainer>
-              <GridItem xs={12} sm={12} md={6}>
-                <CustomInput
-                  labelText="Your Name"
-                  id="name"
-                  name="name"
-                  formControlProps={{
-                    fullWidth: true
-                  }}
-                />
-              </GridItem>
-              <GridItem xs={12} sm={12} md={6}>
-                <CustomInput
-                  labelText="Your Email"
-                  id="email"
-                  name="email"
-                  formControlProps={{
-                    fullWidth: true
-                  }}
-                />
-              </GridItem>
-              <CustomInput
-                labelText="Your Message"
-                id="message"
-                name="message"
-                formControlProps={{
-                  fullWidth: true,
-                  className: classes.textArea
-                }}
-                inputProps={{
-                  multiline: true,
-                  rows: 5
-                }}
-              />
-              <GridItem xs={12} sm={12} md={4}>
-                <Button color="primary">Send Message</Button>
-              </GridItem>
-            </GridContainer>
-          </form>
-        </GridItem>
-      </GridContainer>
-    </div>
+        </Grid>
+        <Grid item lg={6}>
+          <TextField className={classes.smMargin}
+            fullWidth
+            name="name"
+            label="Name"
+            value={values.name}
+            onChange={handleInputChange}
+            {...(errors.name && { error: true, helperText: errors.name })}
+          />
+        </Grid>
+        <Grid item lg={6} >
+          <TextField
+            fullWidth
+            name="email"
+            label="Email"
+            value={values.email}
+            type="email"
+            onChange={handleInputChange}
+            {...(errors.email && { error: true, helperText: errors.email })}
+          />
+        </Grid>
+        <Grid item lg={12}>
+          <TextField
+            multiline
+            rows={5}
+            fullWidth
+            name="message"
+            label="Message"
+            value={values.message}
+            onChange={handleInputChange}
+            {...(errors.message && { error: true, helperText: errors.message })}
+          />
+        </Grid>
+
+        <div>
+          <Button className={classes.smMargin}
+            variant="contained"
+            color="primary"
+            type="submit"
+          >
+            Send
+                      </Button>
+          <Button
+            variant="contained"
+            onClick={resetForm}>
+            Reset
+                      </Button>
+        </div>
+      </Grid>
+    </form>
   );
 }
+const mapStateToProps = state => ({
+  contactReducer: state.contact.list
+})
+const mapActionToProp = {
+  createContact: actions.create,
+}
+export default connect(mapStateToProps, mapActionToProp)(withStyles(styles)(WorkSection));

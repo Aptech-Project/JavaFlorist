@@ -6,6 +6,8 @@ import ListSubheader from '@material-ui/core/ListSubheader';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import PeopleIcon from '@material-ui/icons/People';
+import MessageICon from '@material-ui/icons/Message';
+import CommentICon from '@material-ui/icons/Feedback';
 import BarChartIcon from '@material-ui/icons/BarChart';
 import LayersIcon from '@material-ui/icons/Layers';
 import AssignmentIcon from '@material-ui/icons/Assignment';
@@ -50,7 +52,22 @@ export default function MainListItems (props){
         <ListItemText primary="Customers" />
       </ListItem>
     </div>
-
+    <div onClick={()=>{setSideBarType('Message')}}>
+      <ListItem button>
+        <ListItemIcon>
+          <MessageICon/>
+        </ListItemIcon>
+        <ListItemText primary="Message" />
+      </ListItem>
+    </div>
+    <div onClick={()=>{setSideBarType('Feedback')}}>
+      <ListItem button>
+        <ListItemIcon>
+          <CommentICon/>
+        </ListItemIcon>
+        <ListItemText primary="Feedback" />
+      </ListItem>
+    </div>
   </div>
   )
 };
