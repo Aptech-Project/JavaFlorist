@@ -8,11 +8,11 @@ import { useForm } from "react-hook-form";
 import { Link } from 'react-router-dom';
 import { FormGroup, FormControlLabel, Switch} from '@material-ui/core';
 import * as actions from 'actions/product.action'
-import {productFilter} from 'shared/filter.shared';
-import Cards from "components/Card/Cards";
+import {productFilter} from 'shared/productFunction.shared';
 import GridContainer from "components/Grid/GridContainer";
 import GridItem from "components/Grid/GridItem";
 import ProductsGridList from "components/Grid/ProductsGridList";
+import noProduct from "assets/img/noProduct.jpg";
 
 const useStyles = makeStyles(styles);
 
@@ -23,8 +23,6 @@ export default function ProductSection() {
 
   //useSelector is the replacement for mapStateToProps to use state in redux store (can use in function only)
   let allProducts = useSelector(state => state.product.list);//get from root reducer
-  let activeIndex = useSelector(state => state.product.activeIndex);
-  console.log(activeIndex)
 
   const [isAdvanceFilter, setIsAdvanceFilter] = useState(false)
   const { register, handleSubmit, setValue, errors } = useForm(); // initialize the react hook form
@@ -37,6 +35,7 @@ export default function ProductSection() {
       console.log(data);
       let filteredList = productFilter(data, allProducts)
       setProducts(filteredList)
+      dispatch(actions.setActiveIndex(1))
   }
   const classes = useStyles();
   return (
@@ -89,19 +88,12 @@ export default function ProductSection() {
       </form>
       <div className="container">
         <div className="row">
-            {/* {products && products.map(product =>
-            <Cards
-              key={product.id}
-              id = {product.id}
-              src= {product.imgSrc}
-              name= {product.name}
-              description= {product.description}
-              price= {product.price}
-            />
-            )} */}
-            <ProductsGridList
-              products = {products ? products : []}
-            />
+          <ProductsGridList
+            products = {products ? products : []}
+          />
+          {(!products || products.length == 0 ) &&
+            <img src={noProduct} style={{margin:'auto'}}/>
+          }
         </div>
       </div>
       </div>

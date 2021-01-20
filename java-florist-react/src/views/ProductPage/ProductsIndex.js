@@ -21,7 +21,7 @@ import ProductSection from "./ProductsSection";
 
 const useStyles = makeStyles(styles);
 
-export default function ProductsIndex(props) {
+export default function ProductsIndex() {
   const classes = useStyles();
   return (
     <div>

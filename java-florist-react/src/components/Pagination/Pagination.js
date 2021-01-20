@@ -15,7 +15,7 @@ const useStyles = makeStyles(styles);
 export default function Pagination(props) {
   const dispatch = useDispatch()
   const classes = useStyles();
-  const { pages, color } = props;
+  const { pages, color, activeIndex } = props;
   return (
     <ul className={classes.pagination}>
       {pages.map((prop, key) => {
@@ -27,7 +27,16 @@ export default function Pagination(props) {
         return (
           <li className={classes.paginationItem} key={key}>
             <Button
-              onClick={() => {dispatch(actions.setActiveIndex(prop.text))}}
+              disabled = {(prop.text == "PREV" && activeIndex == 1) || (prop.text == "NEXT" && activeIndex == pages.length - 2)}
+              onClick={() => {
+                if (prop.text == "PREV") {
+                  dispatch(actions.setActiveIndex(activeIndex - 1))
+                } else if (prop.text == "NEXT") {
+                  dispatch(actions.setActiveIndex(activeIndex + 1))
+                } else {
+                  dispatch(actions.setActiveIndex(prop.text))}
+                }
+              }
               className={paginationLink}
               style={{color: "#363940"}}
             >

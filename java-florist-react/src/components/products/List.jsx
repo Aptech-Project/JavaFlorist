@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { Link } from 'react-router-dom';
 import { FormGroup, FormControlLabel, Switch} from '@material-ui/core';
 import * as actions from '../../actions/product.action'
-import productFilter from '../../shared/filter.shared';
+import productFilter from '../../shared/productFunction.shared';
 
 
 

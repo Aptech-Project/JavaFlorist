@@ -14,7 +14,12 @@ const productStyle = {
   },
   description: {
     color: "black"
-  }
+  },
+  center: {
+    display: 'flex',  
+    justifyContent:'center', 
+    alignItems:'center',
+  },
 };
 
 export default productStyle;
