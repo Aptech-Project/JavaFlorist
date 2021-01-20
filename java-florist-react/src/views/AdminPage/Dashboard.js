@@ -25,6 +25,7 @@ import { Link } from "react-router-dom";
 
 import Dashboardcomponent from './component/Dashboard.component'
 import Messagecomponent from './component/Message.component'
+import Customercomponent from './component/Customer.componet'
 import { CardMedia } from '@material-ui/core';
 
 function Copyright() {
@@ -137,7 +138,7 @@ export default function Dashboard() {
       case 'Orders':
         return null
       case 'Customers':
-        return null
+        return <Customercomponent/>
       case 'Message':
         return <Messagecomponent/>
       default:
