@@ -20,7 +20,6 @@ import {
 export default function Cart() {
     const dispatch = useDispatch()
 
-    //  console.log(items)
     let TotalCart = 0;
     let carts = useSelector(state => state.cart.Carts);//get from root reducer
     let [cart, setCart] = useState([])
@@ -67,7 +66,6 @@ export default function Cart() {
                         </tr>
                     </thead>
                     <tbody>
-                        {console.log(cart)}
                         {cart != [] ?
                             cart.map((item, key) => {
                                 return (

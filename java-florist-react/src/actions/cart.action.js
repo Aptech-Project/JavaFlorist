@@ -12,7 +12,6 @@ export const DELETE_CART = 'DELETE_CART';
 export const GetCart = (id) => dispatch => {
     apiService.carts().fetchById(id)
         .then(response => {
-            console.log(response.data.cartdetails)
             dispatch({
                 type: GET_ALL_CART,
                 payload: response.data
@@ -28,7 +27,6 @@ export function GetNumberCart() {
 }
 
 export const AddCart = (product) => dispatch => {
-    console.log(product)
     apiService.carts().update(1, product)
         .then(response => {
             dispatch({
