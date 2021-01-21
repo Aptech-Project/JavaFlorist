@@ -15,14 +15,13 @@ import {productPagination} from 'shared/productFunction.shared';
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
-    flexWrap: 'wrap',
-    justifyContent: 'space-around',
     overflow: 'hidden',
     backgroundColor: theme.palette.background.paper,
   },
   gridList: {
+    transition: 'all .3s ease-in-out 0s',
     // width: 500,
-    // height: 450,
+    // height: 450, //scrollbar appear
   },
   icon: {
     color: 'rgba(255, 255, 255, 0.54)',
@@ -84,6 +83,7 @@ export default function ProductsGridList(props) {
         <br></br>
         {products.length > 0 &&
           <Pagination
+            style={{}}
             color='info'  
             activeIndex={activeIndex}
             pages={

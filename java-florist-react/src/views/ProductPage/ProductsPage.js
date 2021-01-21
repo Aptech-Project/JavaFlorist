@@ -17,7 +17,7 @@ export default function ProductsPage(props) {
             rightLinks={<HeaderLinks />}
             fixed
             changeColorOnScroll={{
-            height: 400,
+            height: 250,
             color: "success"
             }}
             {...rest}/>
