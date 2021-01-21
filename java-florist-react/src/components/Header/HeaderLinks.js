@@ -78,8 +78,7 @@ export default function HeaderLinks(props) {
           classes={{ tooltip: classes.tooltip }}>
           <Button
             color="transparent"
-            href=""
-            target="_blank"
+            href="/cart"
             className={classes.navLink}>
             <i className={classes.socialIcons + " fas fa-shopping-cart"} />
           </Button>
@@ -91,18 +90,18 @@ export default function HeaderLinks(props) {
           title="Login To Order"
           placement={window.innerWidth > 959 ? "top" : "left"}
           classes={{ tooltip: classes.tooltip }}>
-            {
-              isAuthenticated ?
-                <ProfileCard/>
+          {
+            isAuthenticated ?
+              <ProfileCard />
               :
-                <Link to="/login" className={classes.navLink}>
-                  <i className={classes.socialIcons + " fas fa-user-circle"} />
-                </Link>  
-            }
-          
+              <Link to="/login" className={classes.navLink}>
+                <i className={classes.socialIcons + " fas fa-user-circle"} />
+              </Link>
+          }
+
         </Tooltip>
       </ListItem>
-      
+
     </List>
   );
 }

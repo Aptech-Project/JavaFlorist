@@ -16,6 +16,7 @@ import ProductsPage from "views/ProductPage/ProductsPage";
 import AboutPage from "views/AboutPage/AboutPage";
 import RegisterPage from "views/LoginPage/RegisterPage.js";
 import Dashboard from "views/AdminPage/Dashboard";
+import CartPage from "views/CartPage/CartPage";
 
 var hist = createBrowserHistory();
 
@@ -31,6 +32,7 @@ ReactDOM.render(
         <Route path="/components" component={Components} />
         <Route path="/products" component={ProductsPage} />
         <Route path="/about" component={AboutPage} />
+        <Route path="/cart" component={CartPage} />
         <Route path="/" component={Home} />
       </Switch>
     </Router>
