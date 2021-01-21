@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
-
 import styles from "assets/jss/material-kit-react/views/landingPageSections/productStyle.js";
 import { useSelector, useDispatch } from 'react-redux';
 import { useForm } from "react-hook-form";
@@ -13,6 +12,9 @@ import GridContainer from "components/Grid/GridContainer";
 import GridItem from "components/Grid/GridItem";
 import ProductsGridList from "components/Grid/ProductsGridList";
 import noProduct from "assets/img/noProduct.jpg";
+import Button from '@material-ui/core/Button';
+import ButtonGroup from '@material-ui/core/ButtonGroup';
+import CustomInput from "components/CustomInput/CustomInput";
 
 const useStyles = makeStyles(styles);
 
@@ -32,7 +34,6 @@ export default function ProductSection() {
   }, [allProducts == products == [], ]); //second parameter use to inform useEffect run when this parameter changes
   
   function onSubmitFilter (data) {
-      console.log(data);
       let filteredList = productFilter(data, allProducts)
       setProducts(filteredList)
       dispatch(actions.setActiveIndex(1))
@@ -40,60 +41,94 @@ export default function ProductSection() {
   const classes = useStyles();
   return (
     <div className={classes.section}>
-      <GridContainer justify="center">
-        <GridItem xs={12} sm={12} md={8}>
-          <h2 className={classes.title}>Let{"'"}s talk product</h2>
-          <h5 className={classes.description}>
-            "There are always flowers for those who want to see them"
-          </h5>
-        </GridItem>
-      </GridContainer>
-      <FormGroup>
-        <FormControlLabel control={<Switch onChange={e => setIsAdvanceFilter(!isAdvanceFilter)} />} label="Advance Filter"/>
-      </FormGroup>
-      <form onSubmit={handleSubmit(onSubmitFilter)} style={{boder: '1px solid grey'}}>
-          {isAdvanceFilter ?
-          <div className="form-row">
-              <div className="form-group col-3">
-                  <label>Name</label>
-                  <input name="name" type="text" ref={register} placeholder="Search by Name..." className="form-control"/>
-              </div>
-              <div className="form-group col-3">
-                  <label>Description</label>
-                  <input name="description" ref={register} placeholder="Search by description..." className="form-control"/>
-              </div>
-              <div className="form-group col-3">
-                  <label>Min price</label>
-                  <input name="min" ref={register} placeholder="Min price..." type="number" className="form-control"/>
-              </div>
-              <div className="form-group col-3">
-                  <label>Max price</label>
-                  <input name="max" ref={register} placeholder="Max price..." type="number" className="form-control"/>
-              </div>
-          </div>:
-          <div className="form-row">
-              <div className="form-group col-3">
-                  <label>Name</label>
-                  <input name="name" type="text" ref={register} placeholder="Search by Name..." className="form-control"/>
-              </div>
-              <input name="description" ref={register} className="form-control" hidden/>
-              <input name="min" ref={register} type="number" className="form-control" hidden/>
-              <input name="max" ref={register} type="number" className="form-control" hidden/>
-          </div>}
-          <div className="form-group">
-              <button type="submit" className="btn btn-primary">
-                  Filter Products
-              </button>
-          </div>
-      </form>
+      <div className="row">
+        <div className="col-md-3 col-sm-6">
+        <form onSubmit={handleSubmit(onSubmitFilter)} style={{boder: '1px solid grey'}}>
+                {isAdvanceFilter ?
+                <div className="form-row">
+                    <div className="form-group col-12">
+                        <label>Name</label>
+                        <input name="name" type="text" ref={register} placeholder="Search by Name..." className="form-control"/>
+                    </div>
+                    <div className="form-group col-6">
+                        <label>Min price</label>
+                        <input name="min" ref={register} placeholder="Min price..." type="number" className="form-control"/>
+                    </div>
+                    <div className="form-group col-6">
+                        <label>Max price</label>
+                        <input name="max" ref={register} placeholder="Max price..." type="number" className="form-control"/>
+                    </div>
+                </div>:
+                <div className="form-row">
+                    <div className="form-group col-12">
+                      
+                      {/* <CustomInput
+                        name="name" 
+                        type="text" 
+                        inputRef={register}
+                        onClick={e => console.log(e)}
+                        onChange={e => console.log(e)}
+                        id="name"
+                        inputProps={{
+                          placeholder: "Search by Name"
+                        }}
+                        formControlProps={{
+                          fullWidth: true
+                        }}
+                      /> */}
+
+                      <label>Name</label>
+                      <input name="name" type="text" ref={register} placeholder="Search by Name..." className="form-control"/>
+                    </div>
+                </div>}
+                <div className="form-row">
+                  <div className="form-group col-6">
+                    <FormControlLabel control={<Switch onChange={e => setIsAdvanceFilter(!isAdvanceFilter)} />} label="Advance"/>
+                  </div>
+                  <div className="form-group col-6">
+                    <button type="submit" className="btn btn-primary">
+                        Search
+                    </button>
+                  </div>
+                </div>
+            </form>
+        </div>
+        <div className="col-md-9 col-sm-6">
+          <GridContainer justify="center">
+            <GridItem xs={12} sm={12} md={8}>
+              <h2 className={classes.title}>Let{"'"}s talk product</h2>
+              <h5 className={classes.description}>
+                "There are always flowers for those who want to see them"
+              </h5>
+            </GridItem>
+          </GridContainer>
+        </div>
+      </div>
+      <br/>
       <div className="container">
         <div className="row">
-          <ProductsGridList
-            products = {products ? products : []}
-          />
-          {(!products || products.length == 0 ) &&
-            <img src={noProduct} style={{margin:'auto'}}/>
-          }
+          <div className="col-md-3 col-sm-12">
+            <ButtonGroup
+              orientation="vertical"
+              color="primary"
+              aria-label="vertical contained primary button group"
+              variant="text"
+            >
+              <Button style={{width: '200px'}}>Anniversary</Button>
+              <Button>Birthday</Button>
+              <Button>Lover</Button>
+              <Button>Mother's Day</Button>
+              <Button>Special Day</Button>
+            </ButtonGroup>
+          </div>
+          <div className="col-md-9 col-sm-12">
+            <ProductsGridList
+              products = {products ? products : []}
+            />
+            {(!products || products.length == 0 ) &&
+              <img src={noProduct} style={{margin:'auto'}}/>
+            }
+          </div>
         </div>
       </div>
       </div>

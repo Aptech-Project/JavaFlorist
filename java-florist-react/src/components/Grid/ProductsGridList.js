@@ -52,14 +52,12 @@ export default function ProductsGridList(props) {
   let activeIndex = useSelector(state => state.product.activeIndex) || 1;
   const classes = useStyles();
   const {products, indexCount} = productPagination(props.products, activeIndex)
-  // const indexCount = productPagination(products)
-  console.log(products.length)
   return (
     <div>
       <div className={classes.root + "row"}>
         <GridList cellHeight={240} className={classes.gridList}>
           {products.map((product) => (
-            <GridListTile key={product.id} className={classes.smooth + "col-xs-8 col-sm-6 col-md-4"} style={{minWidth: '300px'}}>
+            <GridListTile key={product.id} className={classes.smooth + "col-xs-8 col-sm-6 col-md-4"}>
               <img src={product.imgSrc} alt={product.name} className={classes.image}/>
               <GridListTileBar
                 className={classes.tileBar}
