@@ -6,7 +6,7 @@ export const ACTION_TYPES ={
     FETCH_ALL: "FECTH_ALL"
 }
 export const fetchAll=()=> dispatch=>{
-    apiService.Comment().fetchAll()
+    apiService.feedbacks().fetchAll()
     .then(
         response => {
             console.log(response)
@@ -18,7 +18,7 @@ export const fetchAll=()=> dispatch=>{
     ).catch(err =>console.log(err))
 }
 export const create =(data, onSuccess)=> dispatch=>{
-    apiService.Comment().create(data).then(res=>{
+    apiService.feedbacks().create(data).then(res=>{
         dispatch({
             type:ACTION_TYPES.CREATE,
             payload: res.data
@@ -28,7 +28,7 @@ export const create =(data, onSuccess)=> dispatch=>{
     .catch(err =>console.log(err))
 }
 export const update =(id, data, onSuccess)=> dispatch=>{
-    apiService.Comment().update(id,data).then(res=>{
+    apiService.feedbacks().update(id,data).then(res=>{
         dispatch({
             type:ACTION_TYPES.UPDATE,
             payload: {id, ...data}
@@ -38,7 +38,7 @@ export const update =(id, data, onSuccess)=> dispatch=>{
     .catch(err =>console.log(err))
 }
 export const Delete =(id, onSuccess)=> dispatch=>{
-    apiService.Comment().delete(id).then(res=>{
+    apiService.feedbacks().delete(id).then(res=>{
         dispatch({
             type:ACTION_TYPES.DELETE,
             payload: id

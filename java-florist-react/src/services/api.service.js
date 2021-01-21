@@ -5,7 +5,6 @@ import axios from "axios";
 const baseApi = "http://localhost:5000/api/"
 
 export default {
-
     products(url = baseApi + 'Products/') {
         return {
             fetchAll: () => axios.get(url),

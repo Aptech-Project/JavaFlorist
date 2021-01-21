@@ -13,7 +13,12 @@ const useForm = (initialFieldValues, validate, setCurrentId) => {
         })
         validate(fieldValue)
     }
-
+    const reset = () => {
+        setValues({
+            ...initialFieldValues
+        })
+        setErrors({})
+    }
     const resetForm = () => {
         setValues({
             ...initialFieldValues
@@ -21,12 +26,7 @@ const useForm = (initialFieldValues, validate, setCurrentId) => {
         setErrors({})
         setCurrentId(0)
     }
-    const reset = () => {
-        setValues({
-            ...initialFieldValues
-        })
-        setErrors({})
-    }
+    
     return {
         values,
         setValues,

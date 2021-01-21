@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 import InputAdornment from "@material-ui/core/InputAdornment";
@@ -21,12 +21,13 @@ import Card from "components/Card/Card.js";
 import CardBody from "components/Card/CardBody.js";
 import CardHeader from "components/Card/CardHeader.js";
 import CardFooter from "components/Card/CardFooter.js";
-import CustomInput from "components/CustomInput/CustomInput.js";
-
 import styles from "assets/jss/material-kit-react/views/loginPage.js";
-
 import image from "assets/img/login-register.jpg";
-import { Link } from "react-router-dom";
+import { Link, useHistory  } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { isAuthenticated } from "actions/login.action";
+import { useForm } from 'react-hook-form';
+import { TextField } from "@material-ui/core";
 
 const useStyles = makeStyles(styles);
 
@@ -37,6 +38,23 @@ export default function RegisterPage(props) {
   }, 100);
   const classes = useStyles();
   const { ...rest } = props;
+  const loginDispatch = useDispatch();
+  const history = useHistory()
+
+  const { register, handleSubmit, errors,  watch  } = useForm({
+      defaultValues: { password: '' },
+      validateCriteriaMode: 'all',
+      mode: 'onChange',
+  });
+  const onSubmit = (data, e) => {
+    e.preventDefault();
+    console.log(data);
+    loginDispatch(isAuthenticated(true));
+    history.push('/')
+  };
+  const password = useRef({});
+  password.current = watch('password', '');
+
   return (
     <div>
       <Header
@@ -58,7 +76,7 @@ export default function RegisterPage(props) {
           <GridContainer justify="center">
             <GridItem xs={12} sm={12} md={8}>
               <Card className={classes[cardAnimaton]}>
-                <form className={classes.form}>
+                <form className={classes.form} noValidate  onSubmit={handleSubmit(onSubmit)}>
                   <CardHeader color="primary" className={classes.cardHeader}>
                     <h4>Register</h4>
                   </CardHeader>
@@ -68,161 +86,272 @@ export default function RegisterPage(props) {
                   <CardBody>
                       <GridContainer justify="center">
                           <GridItem xs={6} sm={6} md={6}>
-                            <CustomInput
-                            labelText="Full Name..."
-                            id="first"
-                            formControlProps={{
-                                fullWidth: true
-                            }}
-                            inputProps={{
-                                type: "text",
-                                endAdornment: (
-                                <InputAdornment position="end">
-                                    <People className={classes.inputIconsColor} />
+                            <TextField
+                            label="Full Name..."
+                            id="fullname"
+                            margin="normal"
+                            name="fullname"
+                            fullWidth
+                            InputProps={{
+                              endAdornment: (
+                                <InputAdornment position='end'>
+                                  <People className={classes.inputIconsColor} />
                                 </InputAdornment>
-                                )
+                              ),
                             }}
+                            inputRef={register({
+                              required: 'Full Name is required',
+                              // pattern: {
+                              //   value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                              //   message: 'Invalid email address',
+                              // },
+                            })}
+                            required
+                            autoFocus
+                            autoComplete="fullname"
+                            error={errors.fullname}
+                            helperText={errors.fullname && errors.fullname.message}
                             />
-                            <CustomInput
-                            labelText="Email..."
+                            <TextField
+                            label="Email..."
+                            margin="normal"
                             id="email"
-                            formControlProps={{
-                                fullWidth: true
-                            }}
-                            inputProps={{
-                                type: "email",
-                                endAdornment: (
-                                <InputAdornment position="end">
-                                    <Email className={classes.inputIconsColor} />
+                            name="email"
+                            fullWidth
+                            //type= "text"
+                            InputProps={{
+                              endAdornment: (
+                                <InputAdornment position='end'>
+                                  <Email className={classes.inputIconsColor} />
                                 </InputAdornment>
-                                )
+                              ),
                             }}
+                            inputRef={register({
+                              required: 'Email is required',
+                              pattern: {
+                                value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                                message: 'Invalid email address',
+                              },
+                            })}
+                            required
+                            autoComplete="email"
+                            error={errors.email}
+                            helperText={errors.email && errors.email.message}
                             />
-                            <CustomInput
-                            labelText="Password"
-                            id="pass"
-                            formControlProps={{
-                                fullWidth: true
+                            <TextField
+                            label="Password"
+                            margin="normal"
+                            id="password"
+                            name="password"
+                            fullWidth
+                            //type= "text"
+                            InputProps={{
+                              type: "password",
+                              endAdornment: (
+                              <InputAdornment position="end">
+                                <Icon className={classes.inputIconsColor}>
+                                  lock_outline
+                                </Icon>
+                              </InputAdornment>
+                              ),
                             }}
-                            inputProps={{
-                                type: "password",
-                                endAdornment: (
-                                <InputAdornment position="end">
-                                    <Icon className={classes.inputIconsColor}>
-                                    lock_outline
-                                    </Icon>
-                                </InputAdornment>
-                                ),
-                                autoComplete: "off"
-                            }}
+                            inputRef={register({
+                              required: 'You must specify a password',
+                              minLength: {
+                                value: 8,
+                                message: 'Min length is 8',
+                              },
+                            })}
+                            required
+                            autoFocus
+                            autoComplete="off"
+                            error={errors.password}
+                            helperText={errors.password && errors.password.message}
                             />
-                            <CustomInput
-                            labelText="Confirm Password"
-                            id="pass"
-                            formControlProps={{
-                                fullWidth: true
-                            }}
-                            inputProps={{
-                                type: "password",
-                                endAdornment: (
+                            <TextField
+                            label="Confirm Password"
+                            margin="normal"
+                            id="confirmPassword"
+                            name="confirmPassword"
+                            fullWidth
+                            //type= "text"
+                            InputProps={{
+                              type: "password",
+                              endAdornment: (
                                 <InputAdornment position="end">
-                                    <Icon className={classes.inputIconsColor}>
+                                  <Icon className={classes.inputIconsColor}>
                                     lock_outline
-                                    </Icon>
+                                  </Icon>
                                 </InputAdornment>
-                                ),
-                                autoComplete: "off"
+                              ),
                             }}
+                            inputRef={register({
+                              required: 'You must specify a password',
+                              validate: value =>
+                              value === password.current || 'The passwords do not match',
+                            })}
+                            required
+                            autoFocus
+                            autoComplete="off"
+                            error={errors.confirmPassword}
+                            helperText={errors.confirmPassword && errors.confirmPassword.message}
                             />
                           </GridItem>
                           <GridItem xs={6} sm={6} md={6}>
-                            <CustomInput
-                            labelText="User Name..."
-                            id="user"
-                            formControlProps={{
-                                fullWidth: true
-                            }}
-                            inputProps={{
-                                type: "text",
-                                endAdornment: (
-                                <InputAdornment position="end">
-                                    <People className={classes.inputIconsColor} />
+                            <TextField
+                            label="User Name..."
+                            id="username"
+                            margin="normal"
+                            name="username"
+                            fullWidth
+                            InputProps={{
+                              endAdornment: (
+                                <InputAdornment position='end'>
+                                  <People className={classes.inputIconsColor} />
                                 </InputAdornment>
-                                )
+                              ),
                             }}
+                            inputRef={register({
+                              required: 'User Name is required',
+                              maxLength: {
+                                value: 20,
+                                message: 'Max length is 20',
+                              },
+                              // pattern: {
+                              //   value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                              //   message: 'Invalid email address',
+                              // },
+                            })}
+                            required
+                            autoFocus
+                            autoComplete="username"
+                            error={errors.username}
+                            helperText={errors.username && errors.username.message}
                             />
-                            <CustomInput
-                            labelText="Address..."
+                            <TextField
+                            label="Address..."
                             id="address"
-                            formControlProps={{
-                                fullWidth: true
-                            }}
-                            inputProps={{
-                                type: "text",
-                                endAdornment: (
-                                <InputAdornment position="end">
-                                    <BusinessIcon className={classes.inputIconsColor} />
+                            margin="normal"
+                            name="address"
+                            fullWidth
+                            InputProps={{
+                              endAdornment: (
+                                <InputAdornment position='end'>
+                                  <BusinessIcon className={classes.inputIconsColor} />
                                 </InputAdornment>
-                                )
+                              ),
                             }}
+                            inputRef={register({
+                              required: 'Address is required',
+                              // pattern: {
+                              //   value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                              //   message: 'Invalid email address',
+                              // },
+                            })}
+                            required
+                            autoFocus
+                            autoComplete="address"
+                            error={errors.address}
+                            helperText={errors.address && errors.address.message}
                             />
-                            <CustomInput
-                            labelText=""
+                            <TextField
+                            label="Birthday..."
                             id="birthday"
-                            formControlProps={{
-                                fullWidth: true
-                            }}
-                            inputProps={{
-                                type: "date",
-                                endAdornment: (
-                                <InputAdornment position="end">
-                                    <CakeIcon className={classes.inputIconsColor} />
-                                </InputAdornment>
-                                ),
-                                autoComplete: "off"
-                            }}
+                            margin="normal"
+                            name="birthday"
+                            fullWidth
+                            type="date"
+                            InputLabelProps={{ shrink: true }}
+                            // InputProps={{
+                            //   endAdornment: (
+                            //     <InputAdornment position='end'>
+                            //       <CakeIcon className={classes.inputIconsColor} />
+                            //     </InputAdornment>
+                            //   ),
+                            // }}
+                            inputRef={register({
+                              required: 'Birthday is required',
+                              // pattern: {
+                              //   value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                              //   message: 'Invalid email address',
+                              // },
+                            })}
+                            required
+                            autoFocus
+                            autoComplete="birthday"
+                            error={errors.birthday}
+                            helperText={errors.birthday && errors.birthday.message}
                             />
-                            <CustomInput
-                            labelText="Phone Number"
+                            <TextField
+                            label="Phone Number"
                             id="phone"
-                            formControlProps={{
-                                fullWidth: true
-                            }}
-                            inputProps={{
-                                type: "text",
-                                endAdornment: (
-                                <InputAdornment position="end">
-                                    <PhoneIphoneIcon className={classes.inputIconsColor}/>
+                            margin="normal"
+                            name="phone"
+                            fullWidth
+                            InputProps={{
+                              endAdornment: (
+                                <InputAdornment position='end'>
+                                  <PhoneIphoneIcon className={classes.inputIconsColor} />
                                 </InputAdornment>
-                                ),
-                                autoComplete: "off"
+                              ),
                             }}
+                            inputRef={register({
+                              required: 'Phone Number is required',
+                              maxLength: {
+                                value: 13,
+                                message: 'The Phone Number do not exceed 13 numbers',
+                              },
+                              minLength: {
+                                value: 10,
+                                message: 'The Phone Number must have at least 10 number',
+                              },
+                            })}
+                            required
+                            autoFocus
+                            autoComplete="phone"
+                            error={errors.phone}
+                            helperText={errors.phone && errors.phone.message}
                             />
                           </GridItem>
                       </GridContainer>
                       <GridContainer justify="center">
                           <GridItem xs={12} sm={12} md={6}>
-                            <CustomInput
-                                labelText="Avatar"
-                                id="ava"
-                                formControlProps={{
-                                    fullWidth: true
-                                }}
-                                inputProps={{
-                                    type: "file",
-                                    endAdornment: (
-                                    <InputAdornment position="end">
-                                        <AccountBoxIcon className={classes.inputIconsColor}/>
+                            <TextField
+                                //label="Address..."
+                                id="avatar"
+                                margin="normal"
+                                name="avatar"
+                                InputProps={{
+                                  type: "file",
+                                  endAdornment: (
+                                    <InputAdornment position='end'>
+                                      <AccountBoxIcon className={classes.inputIconsColor} />
                                     </InputAdornment>
-                                    ),
-                                    autoComplete: "off"
+                                  ),
                                 }}
+                                inputRef={register({
+                                  required: 'You need to provide your Avatar',
+                                  pattern: {
+                                    value: /^.*\.(jpg|JPG|gif|GIF|png)$/i,
+                                    message: 'Invalid file type',
+                                  },
+                                })}
+                                required
+                                autoFocus
+                                autoComplete="avatar"
+                                error={errors.avatar}
+                                helperText={errors.avatar && errors.avatar.message}
                             />
                           </GridItem>
                       </GridContainer>
                   </CardBody>
                   <CardFooter className={classes.cardFooter}>
-                    <Button simple color="primary" size="lg">
+                    <Button simple 
+                        color="primary" 
+                        size="lg" 
+                        type="submit"
+                        //disabled={!formState.isValid}
+                        variant="contained">
                     Get Started
                     </Button>
                   </CardFooter>
