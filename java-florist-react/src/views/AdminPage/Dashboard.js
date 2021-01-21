@@ -27,6 +27,7 @@ import Dashboardcomponent from './component/Dashboard.component'
 import Messagecomponent from './component/Message.component'
 import Customercomponent from './component/Customer.componet'
 import { CardMedia } from '@material-ui/core';
+import Feedbackcomponent from './component/Feedback.component';
 
 function Copyright() {
   return (
@@ -141,6 +142,8 @@ export default function Dashboard() {
         return <Customercomponent/>
       case 'Message':
         return <Messagecomponent/>
+      case 'Feedback':
+        return <Feedbackcomponent/>
       default:
         return null
   }

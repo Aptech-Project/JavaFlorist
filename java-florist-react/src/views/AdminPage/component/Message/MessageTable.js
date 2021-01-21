@@ -47,6 +47,7 @@ const Messagecomponent = ({ classes, ...props }) => {
     if (window.confirm('Are you sure to delete this record?'))
       props.deleteContact(id)
   }
+ 
   return (
 
     <React.Fragment>
@@ -68,7 +69,7 @@ const Messagecomponent = ({ classes, ...props }) => {
       </Grid>
       <br />
       <TableScrollbar>
-      <Table size="big" stickyHeader aria-label="sticky table">
+      <Table size="small" stickyHeader aria-label="sticky table">
         <TableHead>
           <TableRow>
             <TableCell>Name</TableCell>

@@ -1,5 +1,4 @@
 import { ACTION_TYPES } from "../actions/feedback.action"
-import * as actions from "../actions/feedback.action";
 const initialState = {
     list: []
 }
