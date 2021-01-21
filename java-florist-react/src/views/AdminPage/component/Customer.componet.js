@@ -7,7 +7,7 @@ import Paper from '@material-ui/core/Paper';
 import { store } from "../../../reducers/store";
 import { TableContainer, Table, TableHead, TableRow, TableCell, TableBody } from "@material-ui/core";
 import { withStyles } from "@material-ui/core";
-import MessageTable from "./Message/MessageTable";
+import CustomerTable from "./Message/CustomerTable";
 import { Provider } from "react-redux";
 import { ToastProvider } from "react-toast-notifications";
 
@@ -107,7 +107,7 @@ const Messagecomponent = ({ classes, ...props }) => {
                                 {/* Chart */}
                                 <Grid item xs={12} md={12} lg={12}>
                                     <Paper className={fixedHeightPaper}>
-                                        <MessageTable/>
+                                        <CustomerTable/>
                                     </Paper>
                                 </Grid>
                             </Grid>

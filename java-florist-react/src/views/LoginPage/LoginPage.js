@@ -23,9 +23,11 @@ import CustomInput from "components/CustomInput/CustomInput.js";
 import styles from "assets/jss/material-kit-react/views/loginPage.js";
 
 import image from "assets/img/login-register.jpg";
-import { Link, Route, Switch } from "react-router-dom";
+import { Link, useHistory  } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { isAuthenticated } from "actions/login.action";
+import { useForm } from 'react-hook-form';
+import { TextField } from "@material-ui/core";
 
 const useStyles = makeStyles(styles);
 
@@ -37,6 +39,18 @@ export default function LoginPage(props) {
   const classes = useStyles();
   const { ...rest } = props;
   const loginDispatch = useDispatch();
+  const history = useHistory()
+
+  const { register, handleSubmit, errors } = useForm({
+    //mode: 'onChange',
+  });
+  const onSubmit = (data, e) => {
+    e.preventDefault();
+    console.log(data);
+    loginDispatch(isAuthenticated(true));
+    history.goBack()
+  };
+
   return (
     <div>
       <Header
@@ -58,7 +72,7 @@ export default function LoginPage(props) {
           <GridContainer justify="center">
             <GridItem xs={12} sm={12} md={4}>
               <Card className={classes[cardAnimaton]}>
-                <form className={classes.form}>
+                <form className={classes.form} noValidate  onSubmit={handleSubmit(onSubmit)}>
                   <CardHeader color="primary" className={classes.cardHeader}>
                     <h4>Login</h4>
                     {/* <div className={classes.socialLine}>
@@ -95,44 +109,40 @@ export default function LoginPage(props) {
                     <p className={classes.divider} style={{cursor: "pointer"}}>Don't have an Account?</p>
                   </Link>
                   <CardBody>
-                    <CustomInput
-                      labelText="User Name Or Email..."
-                      id="first"
-                      formControlProps={{
-                        fullWidth: true
-                      }}
-                      inputProps={{
-                        type: "text",
-                        defaultValue: "AegonNguyen",
+                    <TextField
+                      label="Email..."
+                      margin="normal"
+                      id="email"
+                      name="email"
+                      fullWidth
+                      //type= "text"
+                      InputProps={{
                         endAdornment: (
-                          <InputAdornment position="end">
+                          <InputAdornment position='end'>
                             <People className={classes.inputIconsColor} />
                           </InputAdornment>
-                        )
+                        ),
                       }}
+                      inputRef={register({
+                        required: 'Email is required',
+                        pattern: {
+                          value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                          message: 'Invalid email address',
+                        },
+                      })}
+                      required
+                      autoFocus
+                      autoComplete="email"
+                      error={errors.email}
+                      helperText={errors.email && errors.email.message}
                     />
-                    {/* <CustomInput
-                      labelText="Email..."
-                      id="email"
-                      formControlProps={{
-                        fullWidth: true
-                      }}
-                      inputProps={{
-                        type: "email",
-                        endAdornment: (
-                          <InputAdornment position="end">
-                            <Email className={classes.inputIconsColor} />
-                          </InputAdornment>
-                        )
-                      }}
-                    /> */}
-                    <CustomInput
-                      labelText="Password"
+                    <TextField
+                      label="Password"
+                      margin="normal"
                       id="pass"
-                      formControlProps={{
-                        fullWidth: true
-                      }}
-                      inputProps={{
+                      name="pass"
+                      fullWidth
+                      InputProps={{
                         type: "password",
                         endAdornment: (
                           <InputAdornment position="end">
@@ -143,14 +153,30 @@ export default function LoginPage(props) {
                         ),
                         autoComplete: "off"
                       }}
+                      inputRef={register({
+                        required: 'Password is required',
+                        minLength: {
+                          value: 8,
+                          message: 'Min length is 8',
+                        },
+                      })}
+                      required
+                      autoComplete="pass"
+                      error={errors.pass}
+                      helperText={errors.pass && errors.pass.message}
                     />
                   </CardBody>
                   <CardFooter className={classes.cardFooter}>
-                    <Link to="/" className={classes.navLink}>
-                      <Button simple color="primary" size="lg" onClick={()=>{loginDispatch(isAuthenticated(true))}}>
+                      <Button 
+                        simple 
+                        color="primary" 
+                        //size="lg" 
+                        type="submit"
+                        //disabled={!formState.isValid}
+                        variant="contained"
+                      >
                         Get Started
                       </Button>
-                    </Link>
                   </CardFooter>
                 </form>
               </Card>

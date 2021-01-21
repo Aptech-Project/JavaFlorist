@@ -60,7 +60,8 @@ const WorkSection = ({ classes, ...props }) => {
     errors,
     setErrors,
     handleInputChange,
-    resetForm
+    resetForm,
+    reset
   } = useForm(initialFieldValues, validate, props.setCurrentId)
 
   //material-ui select
@@ -68,7 +69,7 @@ const WorkSection = ({ classes, ...props }) => {
   const handleSubmit = e => {
     e.preventDefault()
     if (validate()) {
-      resetForm()
+      reset()
       window.alert("Your message has been sent to us")
       console.log(values)
       props.createContact(values)
@@ -130,7 +131,7 @@ const WorkSection = ({ classes, ...props }) => {
                       </Button>
           <Button
             variant="contained"
-            onClick={resetForm}>
+            onClick={reset}>
             Reset
                       </Button>
         </div>
