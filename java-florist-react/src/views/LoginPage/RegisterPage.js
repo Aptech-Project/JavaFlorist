@@ -28,6 +28,8 @@ import { useDispatch } from "react-redux";
 import { isAuthenticated } from "actions/login.action";
 import { useForm } from 'react-hook-form';
 import { TextField } from "@material-ui/core";
+import { create } from "actions/customer.action";
+import axios from "axios";
 
 const useStyles = makeStyles(styles);
 
@@ -39,6 +41,7 @@ export default function RegisterPage(props) {
   const classes = useStyles();
   const { ...rest } = props;
   const loginDispatch = useDispatch();
+  const registerDispatch = useDispatch();
   const history = useHistory()
 
   const { register, handleSubmit, errors,  watch  } = useForm({
@@ -49,8 +52,22 @@ export default function RegisterPage(props) {
   const onSubmit = (data, e) => {
     e.preventDefault();
     console.log(data);
-    loginDispatch(isAuthenticated(true));
-    history.push('/')
+    const userData = {
+      Email: data.email,
+      Password: data.password,
+      Username: data.username,
+      Role: "Member",
+      Address: data.address,
+      Birthday: data.birthday,
+      Name: data.fullname,
+      PhoneNumber: data.phone,
+      ImgName: data.avatar[0].name,
+      Active: 1
+    }
+    console.log(userData);
+    registerDispatch(create(userData))
+    //loginDispatch(isAuthenticated(true));
+    //history.push('/')
   };
   const password = useRef({});
   password.current = watch('password', '');
@@ -101,10 +118,6 @@ export default function RegisterPage(props) {
                             }}
                             inputRef={register({
                               required: 'Full Name is required',
-                              // pattern: {
-                              //   value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                              //   message: 'Invalid email address',
-                              // },
                             })}
                             required
                             autoFocus
