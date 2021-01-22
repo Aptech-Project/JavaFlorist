@@ -30,7 +30,8 @@ const ProductFeedback = ({ classes, ...props }) => {
                     {[...Array(5)].map((star, i) => {
                         const ratingValue = i + 1;
                         return <label>
-                            <input 
+                            <input
+                            key={ratingValue} 
                             type="radio" 
                             name="rating" 
                             style={{ display: "none" }} 
@@ -39,6 +40,7 @@ const ProductFeedback = ({ classes, ...props }) => {
                             
                             />
                             <FaStar 
+                            key={i}
                             style={{ cursor: 'pointer', transition: "color 200ms" }} 
                             color={ratingValue <= (hover||rating) ? "#ffc107" : "#e4e5e9"} 
                             size={25} 
@@ -60,6 +62,7 @@ const ProductFeedback = ({ classes, ...props }) => {
                             <br />
                             <h6 style={{ color: 'blue' }}>{record.name} was comment this product</h6>
                             <TextField
+                                key={record.name}
                                 id="filled-read-only-input"
                                 value={record.fb}
                                 disabled

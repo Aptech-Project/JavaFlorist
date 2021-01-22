@@ -91,7 +91,7 @@ export default function Cart() {
                         </tr>
                         <tr>
                             <td colSpan="5"></td>
-                            <td><button className="btn btn-primary" onclick={() => ""}>Check out</button></td>
+                            <td><button className="btn btn-primary" onClick={() => ""}>Check out</button></td>
                         </tr>
                     </tbody>
 

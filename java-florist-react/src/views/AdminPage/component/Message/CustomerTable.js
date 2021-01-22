@@ -46,7 +46,7 @@ const Customercomponent = ({ classes, ...props }) => {
     <React.Fragment>
       <br />
       <Grid container>
-        <Title><h3 style={{ fontWeight: 'bold', color: 'black' }}>&nbsp;LIST OF CUSTOMER</h3></Title>
+        <Title style={{ fontWeight: 'bold', color: 'black' }}>&nbsp;LIST OF CUSTOMER</Title>
         <Grid item xs={12} align="right">
           <form>&nbsp;
             <TextField id="outlined-basic" label="Search" variant="outlined" size="small" />&nbsp;
@@ -93,10 +93,10 @@ const Customercomponent = ({ classes, ...props }) => {
                           <Modal.Title>Customer Properties</Modal.Title>
                         </Modal.Header>
                         <Modal.Body>
-                          <DetailCustomer {...({ currentId, setCurrentId })} />
+                          <DetailCustomer customer={record}/>
                         </Modal.Body>
                         <Modal.Footer>
-                          <Button Button variant="outlined" color="secondary" onClick={handleClose}>Close</Button>
+                          <Button variant="outlined" color="secondary" onClick={handleClose}>Close</Button>
                         </Modal.Footer>
                       </Modal>
                       <Button><DeleteIcon color="secondary"

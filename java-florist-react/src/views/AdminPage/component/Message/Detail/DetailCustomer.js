@@ -24,7 +24,9 @@ const initialFieldValues = {
     name: '',
 }
 
-const DetailCustomer = ({ classes, ...props }) => {
+const DetailCustomer = (props) => {
+    const  { customer } = props
+    console.log(customer)
     const validate = (fieldValues = values) => {
         let temp = { ...errors }
         if (fieldValues == values)
