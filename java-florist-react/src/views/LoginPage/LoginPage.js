@@ -61,12 +61,6 @@ export default function LoginPage(props) {
   const onSubmit = (data, e) => {
     e.preventDefault();
     console.log(data);
-    // let userData = new FormData()
-    // userData.append('email', data.email)
-    //userData.append('password', data.password)
-    //loginDispatch(login(userData));
-    //loginDispatch(isAuthenticated(true));
-    //history.goBack()
     let userExited = 0;
     let userExitedid ="";
     userList.map((user)=>{

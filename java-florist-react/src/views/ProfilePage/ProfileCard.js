@@ -112,21 +112,20 @@ export default function ProfileCard(props) {
         <MenuItem>
           <CardMedia className={classes.media} image={userProfile.imgSrc} title="" />
         </MenuItem>
-        <MenuItem className={classes.text}>Hello {userProfile.username}</MenuItem>
+        <MenuItem className={classes.text}>Hello <div> {userProfile.username}</div>!!</MenuItem>
         <Divider light />
-        <MenuItem to="/adminpage" component={Link} className={classes.navLink}>
-          Management Page
-          {/* <Link to="/adminpage" className={classes.navLink} style={{color: "black"}}>
-                Management Page
-              </Link>  */}
-        </MenuItem>
-        <Divider light />
-        <MenuItem to="/profile" component={Link} className={classes.navLink}>
-          Profile
-          {/* <Link to="/profile" className={classes.navLink} style={{color: "black"}}>
-                  Profile
-              </Link> */}
-        </MenuItem>
+        {
+          userProfile.role === 'user'
+          ?
+          <MenuItem to="/profile" component={Link} className={classes.navLink}>
+            Profile Management
+          </MenuItem>
+          :
+          <MenuItem to="/adminpage" component={Link} className={classes.navLink}>
+            Management Page
+          </MenuItem>
+
+        }        
         <Divider light />
         <MenuItem to="/" component={Link} className={classes.navLink}>
           <div

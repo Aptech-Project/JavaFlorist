@@ -14,7 +14,7 @@ const initialState = {
 const loginReducer = (state = initialState, action) =>{
     switch (action.type) {
         case 'AUTHENTICATE_SIGNAL': {
-            if (userAuth === 'undefined') {
+            if (localStorage.getItem(SET_USER_AUTHENTICATE) === 'undefined') {
                 localStorage.setItem(SET_USER_AUTHENTICATE, JSON.stringify(action.userExitedid))
                 return{
                     ...state,
