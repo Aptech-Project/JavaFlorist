@@ -45,79 +45,42 @@ export default function ProductSection() {
       <div className="row">
         <div className="col-md-3 col-sm-6">
           <form onSubmit={handleSubmit(onSubmitFilter)} style={{ boder: '1px solid grey' }}>
-            {isAdvanceFilter ?
-              <div className="form-row">
-                <div className="form-group col-12">
-                  <label>Name</label>
-                  <input name="name" type="text" ref={register} placeholder="Search by Name..." className="form-control" />
-                  <Button type="submit" color="white" aria-label="edit" justIcon round>
-                    <Search />
-                  </Button>
-                </div>
-                <div className="form-group col-6">
-                  <label>Min price</label>
-                  <input name="min" ref={register} placeholder="Min price..." type="number" className="form-control" />
-                </div>
-                <div className="form-group col-6">
-                  <label>Max price</label>
-                  <input name="max" ref={register} placeholder="Max price..." type="number" className="form-control" />
-                </div>
-              </div> :
-              <div className="form-row">
-                <div className="form-group col-12" style={{ marginLeft: "10px" }}>
-
-                  <TextField
-                    label="Search by Name..."
-                    margin="normal"
-                    id="name"
-                    name="name"
-                    inputRef={register}
-                  />
-                  {/* <CustomInput
-                    onChange={e => console.log(e)}
-                    inputProps={{
-                      placeholder: "Search",
-                      inputProps: {
-                        "aria-label": "Search"
-                      }
-                    }}
-                  /> */}
-                  <Button color="primary" aria-label="edit" style={{ marginTop: "30px", width: "100px" }}>
-                    <Search />
-                  </Button>
-                </div>
-
-
-                <div className="form-group col-12">
-
-                  {/* <CustomInput
-                        name="name" 
-                        type="text" 
-                        inputRef={register}
-                        onClick={e => console.log(e)}
-                        onChange={e => console.log(e)}
-                        id="name"
-                        inputProps={{
-                          placeholder: "Search by Name"
-                        }}
-                        formControlProps={{
-                          fullWidth: true
-                        }}
-                      /> */}
-
-                  <label>Name</label>
-                  <input name="name" type="text" ref={register} placeholder="Search by Name..." className="form-control" />
-                </div>
-              </div>}
             <div className="form-row">
-              <div className="form-group col-6">
-                <FormControlLabel control={<Switch onChange={e => setIsAdvanceFilter(!isAdvanceFilter)} />} label="Advance" />
+              <FormControlLabel control={<Switch onChange={e => setIsAdvanceFilter(!isAdvanceFilter)} />} label="Advance Search" />
+              <div className="form-group col-9">
+                <TextField
+                  label="Search by Name..."
+                  id="name"
+                  name="name"
+                  inputRef={register}
+                  onChange={e => console.log(e)}
+                />
               </div>
-              <div className="form-group col-6">
-                <Button type="submit" color="primary" aria-label="edit">
+              <div className="form-group col-3">
+                <Button type="submit" color="primary" aria-label="edit" style={{ marginTop: "15px" }}>
                   <Search />
                 </Button>
               </div>
+              {isAdvanceFilter &&
+                <div className="form-row">
+                  <div className="form-group col-6">
+                    <TextField
+                      label="Min price"
+                      id="min"
+                      name="min"
+                      inputRef={register}
+                    />
+                  </div>
+                  <div className="form-group col-6">
+                    <TextField
+                      label="Max price"
+                      id="max"
+                      name="max"
+                      inputRef={register}
+                    />
+                  </div>
+                </div>
+              }
             </div>
           </form>
         </div>

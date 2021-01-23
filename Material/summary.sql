@@ -66,7 +66,7 @@ CREATE TABLE [cartdetail] (
 CREATE TABLE [category] (
   [id] int NOT NULL IDENTITY,
   [categoryname] varchar(255) NOT NULL UNIQUE,
-  [message] varchar(255) NOT NULL,
+  [message] varchar(8000) NOT NULL,
   PRIMARY KEY ([id])
 );
 
