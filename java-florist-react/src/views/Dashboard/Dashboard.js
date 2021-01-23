@@ -16,6 +16,8 @@ import Accessibility from "@material-ui/icons/Accessibility";
 import BugReport from "@material-ui/icons/BugReport";
 import Code from "@material-ui/icons/Code";
 import Cloud from "@material-ui/icons/Cloud";
+import PaymentIcon from '@material-ui/icons/Payment';
+import LocalFloristIcon from '@material-ui/icons/LocalFlorist';
 // core components
 import GridItem from "components/Grid/GridItem.js";
 import GridContainer from "components/Grid/GridContainer.js";
@@ -38,11 +40,23 @@ import {
 } from "variables/charts.js";
 
 import styles from "assets/jss/material-dashboard-react/views/dashboardStyle.js";
+//payment
+import mastercard from "assets/img/PaymentIcons/mastercard.png";
+
 
 const useStyles = makeStyles(styles);
 
 export default function Dashboard() {
   const classes = useStyles();
+
+  const paymentMethod = (method) => {
+    switch (method) {
+      case "mastercard":
+        return <img src={mastercard} />
+      default:
+        break;
+    }
+  }
   return (
     <div>
       <GridContainer>
@@ -50,21 +64,15 @@ export default function Dashboard() {
           <Card>
             <CardHeader color="warning" >
               <CardIcon color="warning">
-                <Icon>content_copy</Icon>
+                <Store />
               </CardIcon>
-              <p className={classes.cardCategory}>Used Space</p>
-              <h3 className={classes.cardTitle}>
-                49/50 <small>GB</small>
-              </h3>
+              <p className={classes.cardCategory}>Year Revenue</p>
+              <h4 className={classes.cardTitle}>$540,245</h4>
             </CardHeader>
             <CardFooter>
               <div className={classes.stats}>
-                <Danger>
-                  <Warning />
-                </Danger>
-                <a href="#pablo" onClick={e => e.preventDefault()}>
-                  Get more space
-                </a>
+                <DateRange />
+                Last Years
               </div>
             </CardFooter>
           </Card>
@@ -76,7 +84,7 @@ export default function Dashboard() {
                 <Store />
               </CardIcon>
               <p className={classes.cardCategory}>Revenue</p>
-              <h3 className={classes.cardTitle}>$34,245</h3>
+              <h4 className={classes.cardTitle}>$34,245</h4>
             </CardHeader>
             <CardFooter>
               <div className={classes.stats}>
@@ -90,15 +98,15 @@ export default function Dashboard() {
           <Card>
             <CardHeader color="danger" >
               <CardIcon color="danger">
-                <Icon>info_outline</Icon>
+                <LocalFloristIcon/>
               </CardIcon>
-              <p className={classes.cardCategory}>Fixed Issues</p>
-              <h3 className={classes.cardTitle}>75</h3>
+              <p className={classes.cardCategory}>BestSellers</p>
+              <h4 className={classes.cardTitle}>Rose</h4>
             </CardHeader>
             <CardFooter>
               <div className={classes.stats}>
-                <LocalOffer />
-                Tracked from Github
+                <LocalFloristIcon />
+                BestSellers of Month
               </div>
             </CardFooter>
           </Card>
@@ -107,24 +115,27 @@ export default function Dashboard() {
           <Card>
             <CardHeader color="info" >
               <CardIcon color="info">
-                <Accessibility />
+                <PaymentIcon />
               </CardIcon>
-              <p className={classes.cardCategory}>Followers</p>
-              <h3 className={classes.cardTitle}>+245</h3>
+              <p className={classes.cardCategory}>Pay Method</p>
+              <h4 className={classes.cardTitle} style={{textAlign: "center"}}>{paymentMethod('mastercard')}</h4>
             </CardHeader>
             <CardFooter>
               <div className={classes.stats}>
-                <Update />
-                Just Updated
+                <PaymentIcon />
+                Highest Payment Method
               </div>
             </CardFooter>
           </Card>
         </GridItem>
       </GridContainer>
       <GridContainer>
-        <GridItem xs={12} sm={12} md={4}>
+        <GridItem xs={12} sm={12} md={12}>
           <Card>
             <CardHeader color="success">
+              <h4 style={{textAlign:'center'}}>Year Revenue</h4>
+            </CardHeader>
+            <CardBody>
               <ChartistGraph
                 className="ct-chart"
                 data={dailySalesChart.data}
@@ -132,128 +143,34 @@ export default function Dashboard() {
                 options={dailySalesChart.options}
                 listener={dailySalesChart.animation}
               />
-            </CardHeader>
-            <CardBody>
-              <h4 className={classes.cardTitle}>Daily Sales</h4>
-              <p className={classes.cardCategory}>
-                <span className={classes.successText}>
-                  <ArrowUpward className={classes.upArrowCardCategory} /> 55%
-                </span>{" "}
-                increase in today sales.
-              </p>
             </CardBody>
             <CardFooter>
-              <div className={classes.stats}>
+              {/* <div className={classes.stats}>
                 <AccessTime /> updated 4 minutes ago
-              </div>
-            </CardFooter>
-          </Card>
-        </GridItem>
-        <GridItem xs={12} sm={12} md={4}>
-          <Card>
-            <CardHeader color="warning">
-              <ChartistGraph
-                className="ct-chart"
-                data={emailsSubscriptionChart.data}
-                type="Bar"
-                options={emailsSubscriptionChart.options}
-                responsiveOptions={emailsSubscriptionChart.responsiveOptions}
-                listener={emailsSubscriptionChart.animation}
-              />
-            </CardHeader>
-            <CardBody>
-              <h4 className={classes.cardTitle}>Email Subscriptions</h4>
-              <p className={classes.cardCategory}>Last Campaign Performance</p>
-            </CardBody>
-            <CardFooter>
-              <div className={classes.stats}>
-                <AccessTime /> campaign sent 2 days ago
-              </div>
-            </CardFooter>
-          </Card>
-        </GridItem>
-        <GridItem xs={12} sm={12} md={4}>
-          <Card>
-            <CardHeader color="danger">
-              <ChartistGraph
-                className="ct-chart"
-                data={completedTasksChart.data}
-                type="Line"
-                options={completedTasksChart.options}
-                listener={completedTasksChart.animation}
-              />
-            </CardHeader>
-            <CardBody>
-              <h4 className={classes.cardTitle}>Completed Tasks</h4>
-              <p className={classes.cardCategory}>Last Campaign Performance</p>
-            </CardBody>
-            <CardFooter>
-              <div className={classes.stats}>
-                <AccessTime /> campaign sent 2 days ago
-              </div>
+              </div> */}
             </CardFooter>
           </Card>
         </GridItem>
       </GridContainer>
       <GridContainer>
-        <GridItem xs={12} sm={12} md={6}>
-          <CustomTabs
-            title="Tasks:"
-            headerColor="primary"
-            tabs={[
-              {
-                tabName: "Bugs",
-                tabIcon: BugReport,
-                tabContent: (
-                  <Tasks
-                    checkedIndexes={[0, 3]}
-                    tasksIndexes={[0, 1, 2, 3]}
-                    tasks={bugs}
-                  />
-                )
-              },
-              {
-                tabName: "Website",
-                tabIcon: Code,
-                tabContent: (
-                  <Tasks
-                    checkedIndexes={[0]}
-                    tasksIndexes={[0, 1]}
-                    tasks={website}
-                  />
-                )
-              },
-              {
-                tabName: "Server",
-                tabIcon: Cloud,
-                tabContent: (
-                  <Tasks
-                    checkedIndexes={[1]}
-                    tasksIndexes={[0, 1, 2]}
-                    tasks={server}
-                  />
-                )
-              }
-            ]}
-          />
-        </GridItem>
-        <GridItem xs={12} sm={12} md={6}>
+        <GridItem xs={12} sm={12} md={12}>
           <Card>
             <CardHeader color="warning">
-              <h4 className={classes.cardTitleWhite}>Employees Stats</h4>
+              <h4 className={classes.cardTitleWhite}>Revenue Details</h4>
               <p className={classes.cardCategoryWhite}>
-                New employees on 15th September, 2016
+                Revenue from this month
               </p>
             </CardHeader>
             <CardBody>
               <Table
                 tableHeaderColor="warning"
-                tableHead={["ID", "Name", "Salary", "Country"]}
+                tableHead={["Date", "Name", "Ship To", "Payment Method","Sale Amount"]}
                 tableData={[
-                  ["1", "Dakota Rice", "$36,738", "Niger"],
-                  ["2", "Minerva Hooper", "$23,789", "Curaçao"],
-                  ["3", "Sage Rodriguez", "$56,142", "Netherlands"],
-                  ["4", "Philip Chaney", "$38,735", "Korea, South"]
+                  ['16 Mar, 2019', 'Elvis Presley', 'Tupelo, MS', 'VISA ⠀•••• 3719', 312.44],
+                  ['16 Mar, 2019', 'Paul McCartney', 'London, UK', 'VISA ⠀•••• 2574', 866.99],
+                  ['16 Mar, 2019', 'Tom Scholz', 'Boston, MA', 'MC ⠀•••• 1253', 100.81],
+                  ['16 Mar, 2019', 'Michael Jackson', 'Gary, IN', 'AMEX ⠀•••• 2000', 654.39],
+                  ['15 Mar, 2019', 'Bruce Springsteen', 'Long Branch, NJ', 'VISA ⠀•••• 5919', 212.79]
                 ]}
               />
             </CardBody>
