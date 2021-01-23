@@ -47,7 +47,7 @@ namespace java_florist_api.Controllers
         // PUT: api/Categories/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutCategory(int id, [FromForm]Category Category)
+        public async Task<IActionResult> PutCategory(int id, Category Category)
         {
 
             _context.Entry(Category).State = EntityState.Modified;
@@ -74,7 +74,7 @@ namespace java_florist_api.Controllers
         // POST: api/Categories
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Category>> PostCategory([FromForm]Category Category)
+        public async Task<ActionResult<Category>> PostCategory(Category Category)
         {
             _context.Categories.Add(Category);
             await _context.SaveChangesAsync();

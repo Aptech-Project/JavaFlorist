@@ -7,6 +7,7 @@ import { useForm } from "react-hook-form";
 import { Link } from 'react-router-dom';
 import { FormGroup, FormControlLabel, Switch, TextField } from '@material-ui/core';
 import * as actions from 'actions/product.action'
+import * as categoryActions from 'actions/category.action'
 import { productFilter } from 'shared/productFunction.shared';
 import GridContainer from "components/Grid/GridContainer";
 import GridItem from "components/Grid/GridItem";
@@ -21,21 +22,24 @@ const useStyles = makeStyles(styles);
 
 export default function ProductSection() {
   const dispatch = useDispatch()
-  // const { path } = match;
   let [products, setProducts] = useState(null)
-
+  // let [categories, setCategories] = useState(null)
+  // dispatch(categoryActions.fetchAll())
   //useSelector is the replacement for mapStateToProps to use state in redux store (can use in function only)
   let allProducts = useSelector(state => state.product.list);//get from root reducer
-
+  // categories = useSelector(state => state.category.categoriesList);//get from root reducer
   const [isAdvanceFilter, setIsAdvanceFilter] = useState(false)
   const { register, handleSubmit, setValue, errors } = useForm(); // initialize the react hook form
   useEffect(() => {
     dispatch(actions.fetchAll())
     setProducts(allProducts)
+    // setCategories(allCategories)
   }, [allProducts == products == [],]); //second parameter use to inform useEffect run when this parameter changes
 
   function onSubmitFilter(data) {
+    console.log(allProducts)
     let filteredList = productFilter(data, allProducts)
+    console.log(filteredList)
     setProducts(filteredList)
     dispatch(actions.setActiveIndex(1))
   }
@@ -53,7 +57,7 @@ export default function ProductSection() {
                   id="name"
                   name="name"
                   inputRef={register}
-                  onChange={e => console.log(e)}
+                // onChange={e => console.log(e)}
                 />
               </div>
               <div className="form-group col-3">

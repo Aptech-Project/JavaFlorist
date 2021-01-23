@@ -123,3 +123,43 @@ INSERT [dbo].[product] ([id], [name], [price], [description], [imgName]) VALUES 
 INSERT [dbo].[product] ([id], [name], [price], [description], [imgName]) VALUES (34, N'Sweet & Swooning ™ Bouquet', 48, N'Celebrate a love that is unlike any other with a floral arrangement that stands above the rest. Perfect for friends, family and lovers!', N'Wg8sOEA_10215907066.png')
 INSERT [dbo].[product] ([id], [name], [price], [description], [imgName]) VALUES (35, N'Mixed Roses Wrapped Bouquet', 32, N'Turn up the heat on a new romance - or a lifelong love affair - with this premium mixed rose bouquet.', N'Roses_Colo215943901.jpg')
 SET IDENTITY_INSERT [dbo].[product] OFF
+
+
+-- Category
+USE [javaflorist]
+GO
+SET IDENTITY_INSERT [dbo].[product] ON
+INSERT [dbo].[category] ([id], [categoryname], [message]) VALUES (1, N'Anniversary', N'Happy anniversary, my love. Thank you for filling my life with so much peace, joy and contentment. I am beyond grateful for all that you’ve done for me.
+To my best friend and confidante, happy anniversary! My greatest wish is to experience many more with you.
+Let’s celebrate! It’s our anniversary today. Thank you for your role in getting us to this special place. I cherish the relationship we have.
+I couldn’t be happier to celebrate our anniversary today. My heart sings with joy knowing how far we’ve come. Thank you for making it so easy.
+Thank you for putting up with me all this time. You are such a special human being and I consider myself extremely lucky to be able to celebrate an anniversary with you.
+Happy anniversary, my friend! I cherish our special memories and moments together. Thank you for all you do for me.
+Congratulations on this anniversary. It is definitely something to be proud about. You have done so well in getting where you are! Continue with the positive attitude, and we will be sure to celebrate many, many more.')
+INSERT [dbo].[category] ([id], [categoryname], [message]) VALUES (2, N'Lover', N'I don’t want to set the world on fire I just want to start a flame in your heart.
+I wrote your name in the sky but the clouds blew it away. I wrote you name in the sand but the waves washed it away. So I wrote your name in my heart and there it will always stay.
+Sorry for embarrassing you at work. I bet your face is as red as these roses!
+12 roses I give to you to show you how much I do love you.
+I love you with all of my heart.
+Roses are red, shamrocks are green - you’ve got the sweetest smile I’ve ever seen!')
+INSERT [dbo].[category] ([id], [categoryname], [message]) VALUES (3, N'Birthday', N'On this day, may your most cherished desires come true; I wish you success in life. Happy birthday!
+We prayed to God to give us a special gift. He gave us you.  Dear, you are a dream come true. Happy birthday!
+Happy birthday! You are my happiness. Your memories bring a smile to my face.  Have a wonderful day
+Dear Friend, as you move into another year of your life, may the blessings and success follow you always. Happy birthday!
+You are a very special person to me. Hope the New Year will not change but have more memorable moments with you. Happy birthday!')
+INSERT [dbo].[category] ([id], [categoryname], [message]) VALUES (4, N'Mother''s Day', N'You are the greatest gift from the heavens mother, filled with love and care for all your children and the entire family. 
+Your smile brightens each day just as the morning rays shines on the hills and it’s with doubt that this gives us the courage to face the new day with joy. 
+It’s my time to know you that how fortunate and special I am to be blessed with a mother as caring, loving as you. 
+Wish you a happy Mother’s Day Mom. I believe in love at the first sight for you are the first person I saw when I opened my eyes and have loved you since that day dear mum. 
+Mom, you’ve always been there for me. There’s no way I could ever fully express my gratitude for all you’ve done for me. I love you! Happy Mother’s Day. 
+With zeal and courage you have brought and fought for us that we can share in love bound with togetherness. You are so special to us mother.')
+INSERT [dbo].[category] ([id], [categoryname], [message]) VALUES (5, N'Special Day', N'And here’s wishing you the very best for all the new ventures, that life has in store for you.
+I find my heart singing a chorus at your happy news. Good luck to you during this joyous time.
+Keep your best wishes, close to your heart and watch what happens.
+Don’t be afraid of moving forward. The future is bright.
+Good luck and tons of best wishes. God bless you in whatever you do. This is my heartiest wish just for you.
+Here’s wishing you success in everything you do. Good luck.
+Success comes only to those who believe in themselves and are prepared to win. Good Luck.
+I wish nothing but the best for you.
+Moving on to a new stage in life can be a challenging process. We wish you the best of luck in all of your future endeavors, you will be great.')
+SET IDENTITY_INSERT [dbo].[category] OFF
