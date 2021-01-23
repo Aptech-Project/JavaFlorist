@@ -27,34 +27,11 @@ const initialFieldValues = {
 const DetailCustomer = (props) => {
     const  { customer } = props
     console.log(customer)
-    const validate = (fieldValues = values) => {
-        let temp = { ...errors }
-        if (fieldValues == values)
-            return Object.values(temp).every(x => x == "")
-    }
-    const {
-        values,
-        setValues,
-        errors,
-        setErrors,
-    } = useForm(initialFieldValues,validate)
-
-    //material-ui select
-
-    useEffect(() => {
-        if (props.currentId != 0) {
-            setValues({
-                ...props.customerReducer.find(x => x.id == props.currentId),
-            })
-            setErrors({})
-        }
-    }, [props.currentId])
-
     return (
         <form>
         <Grid container>
           <Grid item lg={6} align='left' >          
-              <h5 style={{ fontWeight: 'bold', color: 'black' }}>Name: {values.name}</h5>
+              <h5 style={{ fontWeight: 'bold', color: 'black' }}>Name: {customer.name}</h5>
               <h5 style={{ fontWeight: 'bold', color: 'black' }}>UserName: </h5>
               <h5 style={{ fontWeight: 'bold', color: 'black' }}>Email: AAAAAAA</h5>
               <h5 style={{ fontWeight: 'bold', color: 'black' }}>Address: AAAAAAA</h5>

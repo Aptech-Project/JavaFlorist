@@ -93,7 +93,7 @@ const useStyles = theme => ({
     height: '79vh',
   },
 });
-const Messagecomponent = ({ classes, ...props }) => {
+const Messagecomponent = ({ classes }) => {
     const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
     return (
         <Provider store={store}>
