@@ -1,3 +1,5 @@
+import apiService from "../services/api.service"
+
 const initialState = {
     isAuthenticated: null
 }
@@ -15,5 +17,6 @@ const loginReducer = (state = initialState, action) =>{
             return state;
     }
 }
+
 
 export default loginReducer;
