@@ -55,7 +55,8 @@ export default function RegisterPage(props) {
   const loginDispatch = useDispatch();
   const registerDispatch = useDispatch();
   const history = useHistory()
-  let forAuth
+
+  let forAuth = 0
 
   const { register, handleSubmit, errors, watch } = useForm({
     defaultValues: { password: '' },
@@ -98,22 +99,17 @@ export default function RegisterPage(props) {
       userData.append('imgFile', image.imgFile)
       userData.append('active', 1)
       registerDispatch(create(userData))
-      forAuth = userList[userList.length - 1].id + 1
-      //   if (regisStatus === 204) {
-      //   alert("Your Account Has Been Created!!");
-      //   loginDispatch(isAuthenticated(data.username));
-      // }
-      //loginDispatch(isAuthenticated(data.username));
     }
-        //history.push('/')
   };
   useEffect(()=>{
-    if (regisStatus === 204) {
+    console.log(forAuth);
+    if (regisStatus === 204 || regisStatus == 200) {
+      forAuth = forAuth + userList[userList.length - 1].id + 1
       alert("Your Account Has Been Created!!");
       loginDispatch(isAuthenticated(forAuth));
       history.push('/')
     }
-    if (regisStatus === 500 || regisStatus === 404) {
+    if (regisStatus == 500 || regisStatus == 404 || regisStatus == 400 ) {
       alert("Cannot Create Account!!");
     }
   },[regisStatus])

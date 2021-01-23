@@ -21,13 +21,13 @@ const loginReducer = (state = initialState, action) =>{
                     userAuth: action.userExitedid
                 }
             }
-            if (userAuth === action.userExitedid) {
-                localStorage.setItem(SET_USER_AUTHENTICATE, JSON.stringify(action.userExitedid))
-                return{
-                    ...state,
-                    userAuth: action.userExitedid
-                }
-            }
+            // if (userAuth === action.userExitedid) {
+            //     localStorage.setItem(SET_USER_AUTHENTICATE, JSON.stringify(action.userExitedid))
+            //     return{
+            //         ...state,
+            //         userAuth: action.userExitedid
+            //     }
+            // }
         }
         case 'LOGOUT_SIGNAL': {
                 localStorage.setItem(SET_USER_AUTHENTICATE, JSON.stringify())
