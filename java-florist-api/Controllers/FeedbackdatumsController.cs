@@ -22,9 +22,22 @@ namespace java_florist_api.Controllers
 
         // GET: api/Feedbackdatums
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Feedbackdatum>>> GetFeedbackdata()
+        public async Task<ActionResult<IEnumerable<Feedbackfullcs>>> GetFeedback()
         {
-            return await _context.Feedbackdata.ToListAsync();
+
+
+
+            var feedback = from p in _context.Products
+                           join f in _context.Feedbackdata on p.Id equals f.Productid
+                           join u in _context.Users on f.Userid equals u.Id
+                           select new Feedbackfullcs()
+                           {
+                               name = u.Username,
+                               pname = p.Name,
+                               fb = f.Feedback,
+                               vote = f.Vote
+                           };
+            return await feedback.ToListAsync();
         }
 
         // GET: api/Feedbackdatums/5
