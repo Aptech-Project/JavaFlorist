@@ -21,20 +21,22 @@ import Admin from "views/AdminPage/Admin";
 import AddEdit from "components/products/AddEdit";
 
 var hist = createBrowserHistory();
+const SET_USER_AUTHENTICATE = 'user_authenticated';
+let userAuth = localStorage.getItem(SET_USER_AUTHENTICATE)
 
 ReactDOM.render(
   <Provider store={store}>
     <Router history={hist}>
       <Switch>
         <Route path="/landing" component={LandingPage} />
-        <Route path="/profile" component={ProfilePage} />
+        <Route path="/profile" component={userAuth !== 'undefined' ? ProfilePage : null} />
         <Route path="/admin" component={Admin} />
         <Route path="/login" component={LoginPage} />
         <Route path="/register" component={RegisterPage} />
         <Route path="/components" component={Components} />
         <Route path="/products" component={ProductsPage} />
         <Route path="/about" component={AboutPage} />
-        <Route path="/cart" component={CartPage} />
+        <Route path="/cart" component={userAuth !== 'undefined' ? CartPage : null} />
         <Route path="/addedit" component={AddEdit} />
         <Route path="/" component={Home} />
       </Switch>

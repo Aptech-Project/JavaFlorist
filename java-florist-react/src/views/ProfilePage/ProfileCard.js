@@ -16,6 +16,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { userlogout } from "actions/login.action";
 import { loadprofile } from "actions/customer.action";
 import axios from "axios";
+import GridContainer from "components/Grid/GridContainer";
+import GridItem from "components/Grid/GridItem";
 
 const SET_USER_AUTHENTICATE = 'user_authenticated'
 
@@ -112,7 +114,12 @@ export default function ProfileCard(props) {
         <MenuItem>
           <CardMedia className={classes.media} image={userProfile.imgSrc} title="" />
         </MenuItem>
-        <MenuItem className={classes.text}>Hello <div> {userProfile.username}</div>!!</MenuItem>
+        <MenuItem className={classes.text}>
+          Hello &nbsp; <div style={{color: "violet"}}>{userProfile.username}!!</div>      
+        </MenuItem>
+        <MenuItem className={classes.text}>
+          Role &nbsp; <div style={{color: "blue"}}>{userProfile.role}</div>
+        </MenuItem>
         <Divider light />
         {
           userProfile.role === 'user'
