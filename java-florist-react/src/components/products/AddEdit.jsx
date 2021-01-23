@@ -24,18 +24,18 @@ const AddEdit = (props) => {
     function onSubmit(e) {
         e.preventDefault()
         let formData = new FormData()
-            formData.append('name', values.name)
-            formData.append('price', values.price)
-            formData.append('description', values.description)
-            formData.append('imgName', values.imgName)
-            formData.append('imgFile', values.imgFile)
-            if (isAddMode) {
-                createProduct(formData)
-            } else {
-                formData.append('id', product.id)
-                updateProduct(product.id, formData)
-            }
-        
+        formData.append('name', values.name)
+        formData.append('price', values.price)
+        formData.append('description', values.description)
+        formData.append('imgName', values.imgName)
+        formData.append('imgFile', values.imgFile)
+        if (isAddMode) {
+            createProduct(formData)
+        } else {
+            formData.append('id', product.id)
+            updateProduct(product.id, formData)
+        }
+
     }
 
     function createProduct(data) {
@@ -84,12 +84,13 @@ const AddEdit = (props) => {
                 imgSrc: defaultImgSrc
             })
         }
+        console.log(values)
     }
 
     return (
         <form onSubmit={(onSubmit)}>
             <h1>{isAddMode ? 'Add Product' : 'Edit Product'}</h1>
-            { alert && 
+            { alert &&
                 <div className={'alert alert-success'}>
                     {alert}
                 </div>
@@ -97,19 +98,19 @@ const AddEdit = (props) => {
             <div className="form-row">
                 <div className="form-group col-4">
                     <label>Name</label>
-                    <input name="name" value={values && values.name} type="text" className="form-control" onChange={handleInputChange}/>
+                    <input name="name" value={values && values.name} type="text" className="form-control" onChange={handleInputChange} />
                 </div>
                 <div className="form-group col-4">
                     <label>Description</label>
-                    <input name="description" value={values && values.description} className="form-control" onChange={handleInputChange}/>
+                    <input name="description" value={values && values.description} className="form-control" onChange={handleInputChange} />
                 </div>
                 <div className="form-group col-4">
                     <label>Price</label>
-                    <input name="price" value={values && values.price} type="number" className="form-control" onChange={handleInputChange}/>
+                    <input name="price" value={values && values.price} type="number" className="form-control" onChange={handleInputChange} />
                 </div>
                 {values &&
                     <div className="form-group col-4">
-                        <img src={values.imgSrc} className="card-img-top" alt=""/>
+                        <img src={values.imgSrc} className="card-img-top" alt="" />
                     </div>
                 }
                 <div className="form-group col-8">
@@ -127,4 +128,4 @@ const AddEdit = (props) => {
     );
 }
 
-export default ( AddEdit );
+export default (AddEdit);

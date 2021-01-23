@@ -18,6 +18,7 @@ import RegisterPage from "views/LoginPage/RegisterPage.js";
 import Dashboard from "views/AdminPage/Dashboard";
 import CartPage from "views/CartPage/CartPage";
 import Admin from "views/AdminPage/Admin";
+import AddEdit from "components/Products/AddEdit";
 
 var hist = createBrowserHistory();
 
@@ -34,6 +35,7 @@ ReactDOM.render(
         <Route path="/products" component={ProductsPage} />
         <Route path="/about" component={AboutPage} />
         <Route path="/cart" component={CartPage} />
+        <Route path="/addedit" component={AddEdit} />
         <Route path="/" component={Home} />
       </Switch>
     </Router>
