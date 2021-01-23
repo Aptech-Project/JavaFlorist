@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 import InputAdornment from "@material-ui/core/InputAdornment";
@@ -28,6 +28,8 @@ import { useDispatch } from "react-redux";
 import { isAuthenticated } from "actions/login.action";
 import { useForm } from 'react-hook-form';
 import { TextField } from "@material-ui/core";
+import { login } from "actions/customer.action";
+import axios from "axios";
 
 const useStyles = makeStyles(styles);
 
@@ -41,14 +43,46 @@ export default function LoginPage(props) {
   const loginDispatch = useDispatch();
   const history = useHistory()
 
+  const [userList, setUserList] = useState([]);
+
   const { register, handleSubmit, errors } = useForm({
     //mode: 'onChange',
   });
+  useEffect(()=>{
+    axios.get('http://localhost:5000/api/Users')
+    .then(function (response) {
+      console.log(response);
+      setUserList(response.data)
+    })
+    .catch(function (error) {
+      console.log(error);
+    })
+  },[])
   const onSubmit = (data, e) => {
     e.preventDefault();
     console.log(data);
-    loginDispatch(isAuthenticated(true));
-    history.goBack()
+    // let userData = new FormData()
+    // userData.append('email', data.email)
+    //userData.append('password', data.password)
+    //loginDispatch(login(userData));
+    //loginDispatch(isAuthenticated(true));
+    //history.goBack()
+    let userExited = 0;
+    let userExitedid ="";
+    userList.map((user)=>{
+      if (user.email === data.email && user.password === data.pass) {
+        userExited = userExited + 1;
+        userExitedid = user.id
+      }
+    })
+    console.log(userExited);
+    if (userExited > 0) {
+      alert("Login Success!!")
+      loginDispatch(isAuthenticated(userExitedid));
+      history.push('/')
+    }else{
+      alert("Login Faill!! Check your Email and Password")
+    }
   };
 
   return (

@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 import InputAdornment from "@material-ui/core/InputAdornment";
@@ -24,7 +24,7 @@ import CardFooter from "components/Card/CardFooter.js";
 import styles from "assets/jss/material-kit-react/views/loginPage.js";
 import backgroundImage from "assets/img/login-register.jpg";
 import { Link, useHistory } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { isAuthenticated } from "actions/login.action";
 import { useForm } from 'react-hook-form';
 import { TextField } from "@material-ui/core";
@@ -39,8 +39,13 @@ const initialImageValues = {
 }
 
 export default function RegisterPage(props) {
-  const [cardAnimaton, setCardAnimation] = React.useState("cardHidden");
-  const [image, setImage] = React.useState(initialImageValues)
+  const [cardAnimaton, setCardAnimation] = useState("cardHidden");
+  const [image, setImage] = useState(initialImageValues);
+  const [userList, setUserList] = useState([]);
+
+  const regisStatus = useSelector(state => state.customer.registerStatus)
+
+
 
   setTimeout(function () {
     setCardAnimation("");
@@ -50,43 +55,69 @@ export default function RegisterPage(props) {
   const loginDispatch = useDispatch();
   const registerDispatch = useDispatch();
   const history = useHistory()
+  let forAuth
 
   const { register, handleSubmit, errors, watch } = useForm({
     defaultValues: { password: '' },
     validateCriteriaMode: 'all',
     mode: 'onChange',
   });
+
+  useEffect(()=>{
+    axios.get('http://localhost:5000/api/Users')
+    .then(function (response) {
+      console.log(response);
+      setUserList(response.data)
+    })
+    .catch(function (error) {
+      console.log(error);
+    })
+  },[])
+
   const onSubmit = (data, e) => {
     e.preventDefault();
-    let userData = new FormData()
-    userData.append('email', data.email)
-    userData.append('password', data.password)
-    userData.append('username', data.username)
-    userData.append('role', "user")
-    userData.append('address', data.address)
-    userData.append('birthday', data.birthday)
-    userData.append('name', data.name)
-    userData.append('phonenumber', data.phone)
-    userData.append('imgName', image.imgName)
-    userData.append('imgFile', image.imgFile)
-    userData.append('active', 1)
-    // const userData = {
-    //   Email: data.email,
-    //   Password: data.password,
-    //   Username: data.username,
-    //   Role: "Member",
-    //   Address: data.address,
-    //   Birthday: data.birthday,
-    //   Name: data.fullname,
-    //   PhoneNumber: data.phone,
-    //   ImgName: data.avatar[0].name,
-    //   Active: 1
-    // }
-    console.log(userData);
-    registerDispatch(create(userData))
-    //loginDispatch(isAuthenticated(true));
-    //history.push('/')
+    let userExited = 0;
+    userList.map((user)=>{
+      if (user.email === data.email) {
+        userExited = userExited + 1;
+      }
+    })
+    if (userExited > 0) {
+      alert("Email alredy Exited!!")
+    }else{
+      let userData = new FormData()
+      userData.append('email', data.email)
+      userData.append('password', data.password)
+      userData.append('username', data.username)
+      userData.append('role', "user")
+      userData.append('address', data.address)
+      userData.append('birthday', data.birthday)
+      userData.append('name', data.fullname)
+      userData.append('phonenumber', data.phone)
+      userData.append('imgName', image.imgName)
+      userData.append('imgFile', image.imgFile)
+      userData.append('active', 1)
+      registerDispatch(create(userData))
+      forAuth = userList[userList.length - 1].id + 1
+      //   if (regisStatus === 204) {
+      //   alert("Your Account Has Been Created!!");
+      //   loginDispatch(isAuthenticated(data.username));
+      // }
+      //loginDispatch(isAuthenticated(data.username));
+    }
+        //history.push('/')
   };
+  useEffect(()=>{
+    if (regisStatus === 204) {
+      alert("Your Account Has Been Created!!");
+      loginDispatch(isAuthenticated(forAuth));
+      history.push('/')
+    }
+    if (regisStatus === 500 || regisStatus === 404) {
+      alert("Cannot Create Account!!");
+    }
+  },[regisStatus])
+
   const password = useRef({});
   password.current = watch('password', '');
 
@@ -298,10 +329,6 @@ export default function RegisterPage(props) {
                           }}
                           inputRef={register({
                             required: 'Address is required',
-                            // pattern: {
-                            //   value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                            //   message: 'Invalid email address',
-                            // },
                           })}
                           required
                           autoFocus
@@ -317,19 +344,8 @@ export default function RegisterPage(props) {
                           fullWidth
                           type="date"
                           InputLabelProps={{ shrink: true }}
-                          // InputProps={{
-                          //   endAdornment: (
-                          //     <InputAdornment position='end'>
-                          //       <CakeIcon className={classes.inputIconsColor} />
-                          //     </InputAdornment>
-                          //   ),
-                          // }}
                           inputRef={register({
                             required: 'Birthday is required',
-                            // pattern: {
-                            //   value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                            //   message: 'Invalid email address',
-                            // },
                           })}
                           required
                           autoFocus
@@ -370,39 +386,17 @@ export default function RegisterPage(props) {
                       </GridItem>
                     </GridContainer>
                     <GridContainer justify="center">
-                      <GridItem xs={12} sm={12} md={6} justify="center">
-                        {/* <TextField
-                          //label="Address..."
-                          id="avatar"
-                          margin="normal"
-                          name="avatar"
-                          onChange={showPreview}
-                          InputProps={{
-                            type: "file",
-                            endAdornment: (
-                              <InputAdornment position='end'>
-                                <AccountBoxIcon className={classes.inputIconsColor} />
-                              </InputAdornment>
-                            ),
-                          }}
-                          inputRef={register({
-                            required: 'You need to provide your Avatar',
-                            pattern: {
-                              value: /^.*\.(jpg|JPG|gif|GIF|png)$/i,
-                              message: 'Invalid file type',
-                            },
-                          })}
-                          required
-                          autoFocus
-                          autoComplete="avatar"
-                          error={errors.avatar}
-                          helperText={errors.avatar && errors.avatar.message}
-                        /> */}
-                        <img src={image.imgSrc} className="card-img-top" alt="" style={{ width: "100px" }} />
-                        <label>Choose image</label><br></br>
-                        <input type="file" accept="image/*" className="form-control-file" onChange={showPreview} />
+                      <GridItem xs={12} sm={12} md={4} justify="center">
+                        <img src={image.imgSrc} className="card-img-top" alt="" style={{ width: "90px", marginLeft: "28%", marginTop: "15px" }} />
+                        {/* <label>Choose image</label><br></br> */}
+                        <input style={{marginTop: "15px"}} type="file" accept="image/*" className="form-control-file" onChange={showPreview} />
                       </GridItem>
                     </GridContainer>
+                    {/* <GridContainer justify="center">
+                      <GridItem xs={12} sm={12} md={4} justify="center">
+                        
+                      </GridItem>
+                    </GridContainer> */}
                   </CardBody>
                   <CardFooter className={classes.cardFooter}>
                     <Button simple

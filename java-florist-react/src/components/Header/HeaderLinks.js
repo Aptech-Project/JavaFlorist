@@ -28,7 +28,7 @@ const useStyles = makeStyles(styles);
 
 export default function HeaderLinks(props) {
   const classes = useStyles();
-  const isAuthenticated = useSelector(state => state.login.isAuthenticated)
+  const userAuth = useSelector(state => state.login.userAuth)
 
   return (
     <List className={classes.list}>
@@ -91,7 +91,7 @@ export default function HeaderLinks(props) {
           placement={window.innerWidth > 959 ? "top" : "left"}
           classes={{ tooltip: classes.tooltip }}>
           {
-            isAuthenticated ?
+            userAuth !== 'undefined' ?
               <ProfileCard />
               :
               <Link to="/login" className={classes.navLink}>

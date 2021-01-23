@@ -98,14 +98,17 @@ namespace java_florist_api.Controllers
         [HttpPost]
         public async Task<ActionResult<User>> PostUser([FromForm] User User)
         {
-            User.ImgName = await SaveImage(User.ImgFile);
-            _context.Users.Add(User);
-            await _context.SaveChangesAsync();
+                User.ImgName = await SaveImage(User.ImgFile);
+                _context.Users.Add(User);
+                await _context.SaveChangesAsync();
 
-            _context.Carts.Add(new Cart { Userid = User.Id });
-            await _context.SaveChangesAsync();
+                _context.Carts.Add(new Cart { Userid = User.Id });
+                await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetUser", new { id = User.Id }, User);
+                //return CreatedAtAction("GetUser", new { id = User.Id }, User);
+            //     //return Ok();
+
+            return NoContent();
         }
 
         // DELETE: api/Users/5

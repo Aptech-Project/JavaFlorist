@@ -1,7 +1,10 @@
 import { ACTION_TYPES } from "../actions/customer.action"
 
+
 const initialState = {
-    list: []
+    list: [],
+    registerStatus: null,
+    userProfile: null
 }
 
 
@@ -15,15 +18,17 @@ export const customerReducer = (state = initialState, action) => {
             }
 
         case ACTION_TYPES.FETCH_BY_ID:
+            console.log(action.payload);
             return {
                 ...state,
-                product: action.payload
+                userProfile: {...action.payload}
             }
 
         case ACTION_TYPES.CREATE:
+            console.log(action.payload);
             return {
                 ...state,
-                list: [...state.list, action.payload]
+                registerStatus: action.payload
             }
 
         case ACTION_TYPES.UPDATE:
@@ -44,6 +49,13 @@ export const customerReducer = (state = initialState, action) => {
                 activeIndex: action.payload
             }
             
+        case 'USER_PROFILE':
+            let newProfile = state.userProfile;
+            newProfile = action.payload
+            return {
+                ...state,
+                userProfile: newProfile
+            }    
         default:
             return state
     }

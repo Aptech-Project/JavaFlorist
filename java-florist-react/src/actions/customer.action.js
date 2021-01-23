@@ -1,11 +1,15 @@
 import apiService from "../services/api.service"
 
+const SET_USER_AUTHENTICATE = 'user_authenticated'
+const userAuth = localStorage.getItem(SET_USER_AUTHENTICATE);
+
 export const ACTION_TYPES = {
     CREATE: 'CREATE',
     UPDATE: 'UPDATE',
     DELETE: 'DELETE',
     FETCH_ALL: 'FETCH_ALL',
     FETCH_BY_ID: 'FETCH_BY_ID',
+    LOG_IN: 'LOG_IN'
 }
 
 export const fetchAll = () => dispatch => {
@@ -35,7 +39,7 @@ export const create = (data) => dispatch => {
         .then(res => {
             dispatch({
                 type: ACTION_TYPES.CREATE,
-                payload: res.data
+                payload: res.status
             })
         })
         .catch(err => console.log(err))
@@ -61,4 +65,22 @@ export const Delete = (id) => dispatch => {
             })
         })
         .catch(err => console.log(err))
+}
+
+export const login = (email) => dispatch => {
+    apiService.customers().login(email)
+        .then(response => {
+            dispatch({
+                type: ACTION_TYPES.LOG_IN,
+                payload: response
+            })
+        })
+        .catch(err => console.log(err))
+}
+
+export const loadprofile = (userData) => {
+    return {
+        type: 'USER_PROFILE',
+        payload: userData
+    }
 }

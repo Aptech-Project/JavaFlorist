@@ -1,6 +1,11 @@
-export const isAuthenticated = (flag) => {
+export const isAuthenticated = (userExitedid) => {
     return {
         type: 'AUTHENTICATE_SIGNAL',
-        isAuthenticated: flag,
+        userExitedid: userExitedid,
+    }
+}
+export const userlogout = () => {
+    return {
+        type: 'LOGOUT_SIGNAL',
     }
 }

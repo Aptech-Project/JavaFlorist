@@ -18,7 +18,7 @@ import RegisterPage from "views/LoginPage/RegisterPage.js";
 import Dashboard from "views/AdminPage/Dashboard";
 import CartPage from "views/CartPage/CartPage";
 import Admin from "views/AdminPage/Admin";
-import AddEdit from "components/Products/AddEdit";
+import AddEdit from "components/products/AddEdit";
 
 var hist = createBrowserHistory();
 
