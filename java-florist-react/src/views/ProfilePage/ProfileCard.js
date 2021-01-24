@@ -128,7 +128,7 @@ export default function ProfileCard(props) {
             Profile Management
           </MenuItem>
           :
-          <MenuItem to="/adminpage" component={Link} className={classes.navLink}>
+          <MenuItem to="/admin" component={Link} className={classes.navLink}>
             Management Page
           </MenuItem>
 

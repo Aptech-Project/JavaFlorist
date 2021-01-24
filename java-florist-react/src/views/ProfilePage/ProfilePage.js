@@ -10,6 +10,7 @@ import Favorite from "@material-ui/icons/Favorite";
 import BusinessIcon from '@material-ui/icons/Business';
 import CakeIcon from '@material-ui/icons/Cake';
 import PhoneIphoneIcon from '@material-ui/icons/PhoneIphone';
+import EditIcon from '@material-ui/icons/Edit';
 // core components
 import Header from "components/Header/Header.js";
 import Footer from "components/Footer/Footer.js";
@@ -35,9 +36,11 @@ import work5 from "assets/img/examples/clem-onojegaw.jpg";
 
 import styles from "assets/jss/material-kit-react/views/profilePage.js";
 import { useSelector } from "react-redux";
-import { List, ListItem, ListItemIcon, ListItemText } from "@material-ui/core";
+import { List, ListItem, ListItemIcon, ListItemText, Tooltip } from "@material-ui/core";
 import { Email, People } from "@material-ui/icons";
 import { date } from "yup";
+import { Link } from "react-router-dom";
+
 
 const useStyles = makeStyles(styles);
 
@@ -54,7 +57,7 @@ export default function ProfilePage(props) {
   const userProfile = useSelector(state => state.customer.userProfile);
 
   const formatDate = () => {
-    let date = new Date('2013-03-10T02:00:00Z');
+    let date = new Date(userProfile.birthday);
     date = date.getDate() + ' - ' + (date.getMonth()+1) + ' - ' + date.getFullYear();
     return date
   }
@@ -76,7 +79,7 @@ export default function ProfilePage(props) {
         userProfile !== null 
         ?
         <>
-        <Parallax small filter image={require("assets/img/profile-bg.jpg")} />
+        <Parallax small filter image={require("assets/img/shop-bg1.jpg")} />
         <div className={classNames(classes.main, classes.mainRaised)}>
           <div>
             <div className={classes.container}>
@@ -102,7 +105,12 @@ export default function ProfilePage(props) {
                 </GridItem>
               </GridContainer>
               <div className={classes.description}>
-              <h4 className={classes.title}>My Infomation</h4>
+              <h4 style={{marginLeft:"5%"}} className={classes.title}>My Infomation</h4> &nbsp; 
+              <Tooltip title="Edit Profile">
+                <Link to="/editProfile" className={classes.description}>
+                  <EditIcon fontSize="small"/>
+                </Link>
+              </Tooltip>
                 <GridContainer style={{marginLeft: '8%'}}>
                   <GridItem xs={12} sm={12} md={6}>
                     <List>
@@ -110,7 +118,7 @@ export default function ProfilePage(props) {
                         <ListItemIcon>
                           <People />
                         </ListItemIcon>
-                        <ListItemText primary={userProfile.name} />
+                        <ListItemText primary={userProfile.name}/>
                       </ListItem>
                       <ListItem>
                         <ListItemIcon>

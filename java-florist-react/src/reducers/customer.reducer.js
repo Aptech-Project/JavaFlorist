@@ -4,7 +4,8 @@ import { ACTION_TYPES } from "../actions/customer.action"
 const initialState = {
     list: [],
     registerStatus: null,
-    userProfile: null
+    userProfile: null,
+    editStatus: null,
 }
 
 
@@ -34,13 +35,14 @@ export const customerReducer = (state = initialState, action) => {
         case ACTION_TYPES.UPDATE:
             return {
                 ...state,
-                list: state.list.map(x => x.id == action.payload.id ? action.payload : x)
+                list: state.list.map(x => x.id == action.payload.id ? action.payload : x),
+                editStatus: action.status
             }
 
         case ACTION_TYPES.DELETE:
             return {
                 ...state,
-                list: state.list.filter(x => x.id != action.payload)
+                list: state.list.filter(x => x.id != action.payload),
             }
 
         case ACTION_TYPES.SET_ACTIVE_INDEX:

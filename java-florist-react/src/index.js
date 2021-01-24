@@ -19,6 +19,7 @@ import Dashboard from "views/AdminPage/Dashboard";
 import CartPage from "views/CartPage/CartPage";
 import Admin from "views/AdminPage/Admin";
 import AddEdit from "components/products/AddEdit";
+import ProfileEdit from "views/ProfilePage/ProfileEdit";
 
 var hist = createBrowserHistory();
 
@@ -31,6 +32,7 @@ const render = () => {
       <Switch>
         <Route path="/landing" component={LandingPage} />
         <Route path="/profile" component={ProfilePage} />
+        <Route path="/editProfile" component={ProfileEdit} />
         <Route path="/admin" component={Admin} />
         <Route path="/login" component={LoginPage} />
         <Route path="/register" component={RegisterPage} />

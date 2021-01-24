@@ -50,7 +50,8 @@ export const update = (id, data) => dispatch => {
         .then(res => {
             dispatch({
                 type: ACTION_TYPES.UPDATE,
-                payload: { id, ...data }
+                payload: { id, ...data },
+                status: res.status
             })
         })
         .catch(err => console.log(err))
