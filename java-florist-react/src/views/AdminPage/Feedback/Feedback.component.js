@@ -7,7 +7,7 @@ import Card from "components/Card/Card.js";
 import CardHeader from "components/Card/CardHeader.js";
 import CardBody from "components/Card/CardBody.js";
 import CardFooter from "components/Card/CardFooter.js";
-import CustomerTable from './CustomerTable';
+import FeedbackTable from './FeedbackTable';
 const styles = {
     cardCategoryWhite: {
         color: "rgba(255,255,255,.62)",
@@ -28,7 +28,7 @@ const styles = {
 };
 
 const useStyles = makeStyles(styles);
-const Messagecomponent = ({ classes }) => {
+const Feedbackcomponent = ({ classes }) => {
     return (
         <div>
             <GridContainer>
@@ -40,7 +40,7 @@ const Messagecomponent = ({ classes }) => {
                         <CardBody>
                             <GridContainer>
                                 <GridItem xs={12} sm={12} md={12}>
-                                    <CustomerTable />
+                                    <FeedbackTable />
                                 </GridItem>
                             </GridContainer>
                         </CardBody>
@@ -52,4 +52,4 @@ const Messagecomponent = ({ classes }) => {
         </div>
     );
 }
-export default withStyles(useStyles)(Messagecomponent);
+export default withStyles(useStyles)(Feedbackcomponent);

@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using java_florist_api.Models;
 using System.IO;
 using Microsoft.AspNetCore.Hosting;
+using System.Web.Http.Description;
 
 namespace java_florist_api.Controllers
 {
@@ -46,19 +47,12 @@ namespace java_florist_api.Controllers
                 })
                 .ToListAsync();
         }
-
-        // GET: api/Users/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<User>> GetUser(int id)
+        [HttpGet("Role/{role}")]
+        public IQueryable<User> UserRole(string role)
         {
-            var User = await _context.Users.FindAsync(id);
-            User.ImgSrc = String.Format("{0}://{1}{2}/Images/{3}", Request.Scheme, Request.Host, Request.PathBase, User.ImgName);
-            if (User == null)
-            {
-                return NotFound();
-            }
-
-            return User;
+            role = "user";
+            var userRole = from user in _context.Users where user.Role.Contains(role) select user;
+            return userRole;
         }
 
         // PUT: api/Users/5
@@ -126,6 +120,21 @@ namespace java_florist_api.Controllers
 
             return NoContent();
         }
+        [HttpDelete("Delete/{id}")]
+        public async Task<IActionResult> DeleteUserId(int id)
+        {
+            var user = await _context.Users.FindAsync(id);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            _context.Users.Remove(user);
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+        }
+
 
         private bool UserExists(int id)
         {
@@ -151,6 +160,13 @@ namespace java_florist_api.Controllers
             var imgPath = Path.Combine(_hostEnvironment.ContentRootPath, "Images", imgName);
             if (System.IO.File.Exists(imgPath))
                 System.IO.File.Delete(imgPath);
+        }
+        [ResponseType(typeof(User))]
+        [HttpGet("GetNameUser/{name}")]
+        public IQueryable<User> SearchByName(string name)
+        {
+            var userName = from user in _context.Users where user.Name.Contains(name) select user;
+            return userName;
         }
     }
 }
