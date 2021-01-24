@@ -165,3 +165,26 @@ Success comes only to those who believe in themselves and are prepared to win. G
 I wish nothing but the best for you.
 Moving on to a new stage in life can be a challenging process. We wish you the best of luck in all of your future endeavors, you will be great.')
 SET IDENTITY_INSERT [dbo].[category] OFF
+
+
+-- Product category
+GO
+INSERT [dbo].[productcategory] ([productid], [categoryname]) VALUES (5, N'Anniversary')
+INSERT [dbo].[productcategory] ([productid], [categoryname]) VALUES (18, N'Lover')
+INSERT [dbo].[productcategory] ([productid], [categoryname]) VALUES (19, N'Lover')
+INSERT [dbo].[productcategory] ([productid], [categoryname]) VALUES (21, N'Birthday')
+INSERT [dbo].[productcategory] ([productid], [categoryname]) VALUES (22, N'Lover')
+INSERT [dbo].[productcategory] ([productid], [categoryname]) VALUES (23, N'Mother''s Day')
+INSERT [dbo].[productcategory] ([productid], [categoryname]) VALUES (24, N'Birthday')
+INSERT [dbo].[productcategory] ([productid], [categoryname]) VALUES (25, N'Special Day')
+INSERT [dbo].[productcategory] ([productid], [categoryname]) VALUES (26, N'Mother''s Day')
+INSERT [dbo].[productcategory] ([productid], [categoryname]) VALUES (27, N'Lover')
+INSERT [dbo].[productcategory] ([productid], [categoryname]) VALUES (28, N'Birthday')
+INSERT [dbo].[productcategory] ([productid], [categoryname]) VALUES (29, N'Special Day')
+INSERT [dbo].[productcategory] ([productid], [categoryname]) VALUES (30, N'Anniversary')
+INSERT [dbo].[productcategory] ([productid], [categoryname]) VALUES (31, N'Lover')
+INSERT [dbo].[productcategory] ([productid], [categoryname]) VALUES (32, N'Birthday')
+INSERT [dbo].[productcategory] ([productid], [categoryname]) VALUES (33, N'Special Day')
+INSERT [dbo].[productcategory] ([productid], [categoryname]) VALUES (34, N'Lover')
+INSERT [dbo].[productcategory] ([productid], [categoryname]) VALUES (35, N'Mother''s Day')
+GO
