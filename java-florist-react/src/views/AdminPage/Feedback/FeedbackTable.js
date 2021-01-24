@@ -11,63 +11,65 @@ import { connect } from "react-redux";
 import { TextField } from "@material-ui/core";
 import TableScrollbar from 'react-table-scrollbar';
 import { Modal } from "react-bootstrap";
-import * as actions from "../../../actions/customer.action";
-import CustomerDetail from "./CustomerDetail"
+import * as actions from "../../../actions/feedback.action";
 import { useSelector, useDispatch } from 'react-redux';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import Search from '@material-ui/icons/Search';
-const CustomerTable = ({ classes, ...props }) => {
+import FeedbackDetail from "./FeedbackDetail";
+const FeedbackTable = ({ classes, ...props }) => {
     const dispatch = useDispatch()
     const [currentId, setCurrentId] = useState(0)
-    const [customer, setCustomer] = useState([])
-    let allCustomer = useSelector(state => state.customer.list);
+    const [feedback, setFeedback] = useState([])
+    let allFeedback = useSelector(state => state.feedback.list);
     const [search, setSearch] = useState("")
-    const [filterCustomer, setFilterCustomer] = useState([])
+    const [filterFeedback, setFilterFeedback] = useState([])
 
     useEffect(() => {
-        props.fetchAllCustomer()
+        props.fetchAllFeedback()
     }, [])//componentDidMount
 
     useEffect(() => {
         dispatch(actions.fetchAll())
-        setCustomer(allCustomer)
+        setFeedback(allFeedback)
         // setCategories(allCategories)
-    }, [allCustomer == customer == [],]);
+    }, [allFeedback == feedback == [],]);
 
     const [show, setShow] = useState(false);
 
     const handleClose = () => setShow(false);
 
+
+
     useEffect(() => {
-        setFilterCustomer(
-            customer.filter((customers) =>
-                customers.name.toLowerCase().includes(search.toLowerCase())
+        setFilterFeedback(
+            feedback.filter((fb) =>
+                fb.name.toLowerCase().includes(search.toLowerCase())
             )
         );
-    }, [search, customer]);
+    }, [search, feedback]);
     const renderTable = () => {
         return (
             <TableBody>
-                {filterCustomer.map((record, index) => {
-                    return (<TableRow key={index} hover>
+                {filterFeedback.map((record, index) => {
+                    return (<TableRow key={index} hover >
                         <TableCell>{record.name}</TableCell>
-                        <TableCell>{record.username}</TableCell>
-                        <TableCell>{record.email}</TableCell>
-                        <TableCell>{record.address}</TableCell>
-                        <TableCell>{record.birthday}</TableCell>
-                        <TableCell>{record.phonenumber}</TableCell>
+                        <TableCell>{record.pname}</TableCell>
+                        <TableCell>{record.fb}</TableCell>
+                        <TableCell>{record.vote}</TableCell>
                         <TableCell>
                             <ButtonGroup variant="text">
                                 <Button><EditIcon color="primary" onClick={() => { setCurrentId(record.id); setShow(true) }} /></Button>
+                                <Button><DeleteIcon color="secondary"
+                                    onClick={() => onDelete(record.id)} /></Button>
                             </ButtonGroup>
                         </TableCell>
                         {/* <Modal show={show} onHide={() => setShow(false)} size="lg" aria-labelledby="contained-modal-title-vcenter" centered> */}
                         <Modal show={show} size="lg" aria-labelledby="contained-modal-title-vcenter" centered>
                             <Modal.Header>
-                                <Modal.Title><h4 style={{ fontWeight: 'bold', color: '#0a7cdb' }}>USER INFORMATION</h4></Modal.Title>
+                                <Modal.Title><h4 style={{ fontWeight: 'bold', color: '#0a7cdb' }}>FEEDBACK INFORMATION</h4></Modal.Title>
                             </Modal.Header>
                             <Modal.Body >
-                                <CustomerDetail {...({ currentId, setCurrentId })} />
+                                <FeedbackDetail {...({ currentId, setCurrentId })} />
                             </Modal.Body>
                             <Modal.Footer>
                                 <Button variant="outlined" color="secondary" onClick={handleClose}>Close</Button>
@@ -78,6 +80,12 @@ const CustomerTable = ({ classes, ...props }) => {
                 }
             </TableBody>
         )
+    }
+    const onDelete = id => {
+        if (window.confirm('Are you sure to delete this record?')) {
+            props.deleteFeedback(id, window.alert("Delete Successfull !!!"))
+            setFeedback(allFeedback)
+        }
     }
     return (
         <div>
@@ -105,14 +113,12 @@ const CustomerTable = ({ classes, ...props }) => {
             <br />
             <TableScrollbar rows={15}>
                 <Table size="small" stickyHeader aria-label="sticky table">
-                    <TableHead>
+                    <TableHead align='left'>
                         <TableRow>
-                            <TableCell>Name</TableCell>
-                            <TableCell>Username</TableCell>
-                            <TableCell>Email</TableCell>
-                            <TableCell>Address</TableCell>
-                            <TableCell>Birthday</TableCell>
-                            <TableCell>Phone Number</TableCell>
+                            <TableCell>UserName</TableCell>
+                            <TableCell>Product name</TableCell>
+                            <TableCell>Feedback</TableCell>
+                            <TableCell>Vote</TableCell>
                             <TableCell></TableCell>
                         </TableRow>
                     </TableHead>
@@ -123,10 +129,11 @@ const CustomerTable = ({ classes, ...props }) => {
     );
 }
 const mapStateToProps = state => ({
-    customerReducer: state.customer.list
+    feedbackReducer: state.feedback.list
 })
 
 const mapActionToProps = {
-    fetchAllCustomer: actions.fetchAll,
+    fetchAllFeedback: actions.fetchAll,
+    deleteFeedback: actions.Delete
 }
-export default connect(mapStateToProps, mapActionToProps)(CustomerTable);
+export default connect(mapStateToProps, mapActionToProps)(FeedbackTable);

@@ -18,6 +18,8 @@
 // @material-ui/icons
 import Dashboard from "@material-ui/icons/Dashboard";
 import Person from "@material-ui/icons/Person";
+import MessageICon from "@material-ui/icons/Message";
+import Comment from "@material-ui/icons/Comment";
 import LibraryBooks from "@material-ui/icons/LibraryBooks";
 import BubbleChart from "@material-ui/icons/BubbleChart";
 import LocationOn from "@material-ui/icons/LocationOn";
@@ -32,6 +34,8 @@ import Maps from "views/Maps/Maps.js";
 import NotificationsPage from "views/Notifications/Notifications.js";
 import UpgradeToPro from "views/UpgradeToPro/UpgradeToPro.js";
 import Customer from "./views/AdminPage/Customer/Customer.component"
+import Message from "./views/AdminPage/Message/Message.component"
+import Feedback from "./views/AdminPage/Feedback/Feedback.component"
 const dashboardRoutes = [
   {
     path: "/dashboard",
@@ -48,10 +52,24 @@ const dashboardRoutes = [
     layout: "/admin"
   },
   {
-    path: "/customer",
-    name: "Customer",
+    path: "/listUser",
+    name: "List User",
     icon: Person,
     component: Customer,
+    layout: "/admin"
+  },
+  {
+    path: "/message",
+    name: "Message",
+    icon: MessageICon,
+    component: Message,
+    layout: "/admin"
+  },
+  {
+    path: "/feedback",
+    name: "Feedback",
+    icon: Comment,
+    component: Feedback,
     layout: "/admin"
   },
   {

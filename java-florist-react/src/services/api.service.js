@@ -48,7 +48,8 @@ export default {
             create: newRecord => axios.post(url, newRecord),
             update: (id, updateRecord) => axios.put(url + id, updateRecord),
             delete: id => axios.delete(url + id),
-            login: email => axios.get(url+ "login/" + email)
+            deleteID: id => axios.deleteID(url + "Delete/" + id),
+            login: email => axios.get(url + "login/" + email)
         }
     },
     carts(url = baseApi + 'Carts/') {

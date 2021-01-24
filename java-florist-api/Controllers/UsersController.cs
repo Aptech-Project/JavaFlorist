@@ -46,24 +46,30 @@ namespace java_florist_api.Controllers
                 })
                 .ToListAsync();
         }
-
-        // GET: api/Users/5
+        [HttpGet("Role/{role}")]
+        public IQueryable<User> UserRole(string role)
+        {
+            role = "user";
+            var userRole = from user in _context.Users where user.Role.Contains(role) select user;
+            return userRole;
+        }
         [HttpGet("{id}")]
         public async Task<ActionResult<User>> GetUser(int id)
         {
-            var User = await _context.Users.FindAsync(id);
-            User.ImgSrc = String.Format("{0}://{1}{2}/Images/{3}", Request.Scheme, Request.Host, Request.PathBase, User.ImgName);
-            if (User == null)
             {
-                return NotFound();
+                var User = await _context.Users.FindAsync(id); 
+                User.ImgSrc = String.Format("{0}://{1}{2}/Images/{3}", Request.Scheme, Request.Host, Request.PathBase, User.ImgName); 
+                if (User == null) 
+                {
+                    return NotFound();
+                }
+
+                return User;
             }
-
-            return User;
         }
-
-        // PUT: api/Users/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
+            // PUT: api/Users/5
+            // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+            [HttpPut("{id}")]
         public async Task<IActionResult> PutUser(int id, [FromForm] User User)
         {
             if (User.ImgFile != null)
@@ -126,6 +132,21 @@ namespace java_florist_api.Controllers
 
             return NoContent();
         }
+        [HttpDelete("Delete/{id}")]
+        public async Task<IActionResult> DeleteUserId(int id)
+        {
+            var user = await _context.Users.FindAsync(id);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            _context.Users.Remove(user);
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+        }
+
 
         private bool UserExists(int id)
         {

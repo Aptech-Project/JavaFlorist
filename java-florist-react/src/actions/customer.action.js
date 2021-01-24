@@ -7,6 +7,7 @@ export const ACTION_TYPES = {
     CREATE: 'CREATE',
     UPDATE: 'UPDATE',
     DELETE: 'DELETE',
+    DELETEID: 'DELETEID',
     FETCH_ALL: 'FETCH_ALL',
     FETCH_BY_ID: 'FETCH_BY_ID',
     LOG_IN: 'LOG_IN'
@@ -58,6 +59,16 @@ export const update = (id, data) => dispatch => {
 }
 
 export const Delete = (id) => dispatch => {
+    apiService.customers().delete(id)
+        .then(res => {
+            dispatch({
+                type: ACTION_TYPES.DELETE,
+                payload: id
+            })
+        })
+        .catch(err => console.log(err))
+}
+export const DeleteID = (id) => dispatch => {
     apiService.customers().delete(id)
         .then(res => {
             dispatch({

@@ -11,63 +11,64 @@ import { connect } from "react-redux";
 import { TextField } from "@material-ui/core";
 import TableScrollbar from 'react-table-scrollbar';
 import { Modal } from "react-bootstrap";
-import * as actions from "../../../actions/customer.action";
-import CustomerDetail from "./CustomerDetail"
+import * as actions from "../../../actions/contact.action";
 import { useSelector, useDispatch } from 'react-redux';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import Search from '@material-ui/icons/Search';
-const CustomerTable = ({ classes, ...props }) => {
+import MessageDetail from "./MessageDetail";
+const MessageTable = ({ classes, ...props }) => {
     const dispatch = useDispatch()
     const [currentId, setCurrentId] = useState(0)
-    const [customer, setCustomer] = useState([])
-    let allCustomer = useSelector(state => state.customer.list);
+    const [contact, setContact] = useState([])
+    let allContact = useSelector(state => state.contact.list);
     const [search, setSearch] = useState("")
-    const [filterCustomer, setFilterCustomer] = useState([])
+    const [filterContact, setFilterContact] = useState([])
 
     useEffect(() => {
-        props.fetchAllCustomer()
+        props.fetchAllContact()
     }, [])//componentDidMount
 
     useEffect(() => {
         dispatch(actions.fetchAll())
-        setCustomer(allCustomer)
+        setContact(allContact)
         // setCategories(allCategories)
-    }, [allCustomer == customer == [],]);
+    }, [allContact == contact == [],]);
 
     const [show, setShow] = useState(false);
 
     const handleClose = () => setShow(false);
 
+
+
     useEffect(() => {
-        setFilterCustomer(
-            customer.filter((customers) =>
-                customers.name.toLowerCase().includes(search.toLowerCase())
+        setFilterContact(
+            contact.filter((mess) =>
+                mess.name.toLowerCase().includes(search.toLowerCase())
             )
         );
-    }, [search, customer]);
+    }, [search, contact]);
     const renderTable = () => {
         return (
             <TableBody>
-                {filterCustomer.map((record, index) => {
-                    return (<TableRow key={index} hover>
+                {filterContact.map((record, index) => {
+                    return (<TableRow key={index} hover >
                         <TableCell>{record.name}</TableCell>
-                        <TableCell>{record.username}</TableCell>
                         <TableCell>{record.email}</TableCell>
-                        <TableCell>{record.address}</TableCell>
-                        <TableCell>{record.birthday}</TableCell>
-                        <TableCell>{record.phonenumber}</TableCell>
+                        <TableCell>{record.message}</TableCell>
                         <TableCell>
                             <ButtonGroup variant="text">
                                 <Button><EditIcon color="primary" onClick={() => { setCurrentId(record.id); setShow(true) }} /></Button>
+                                <Button><DeleteIcon color="secondary"
+                                    onClick={() => onDelete(record.id)} /></Button>
                             </ButtonGroup>
                         </TableCell>
                         {/* <Modal show={show} onHide={() => setShow(false)} size="lg" aria-labelledby="contained-modal-title-vcenter" centered> */}
                         <Modal show={show} size="lg" aria-labelledby="contained-modal-title-vcenter" centered>
                             <Modal.Header>
-                                <Modal.Title><h4 style={{ fontWeight: 'bold', color: '#0a7cdb' }}>USER INFORMATION</h4></Modal.Title>
+                                <Modal.Title><h4 style={{ fontWeight: 'bold', color: '#0a7cdb' }}>MESSAGE INFORMATION</h4></Modal.Title>
                             </Modal.Header>
                             <Modal.Body >
-                                <CustomerDetail {...({ currentId, setCurrentId })} />
+                                <MessageDetail {...({ currentId, setCurrentId })} />
                             </Modal.Body>
                             <Modal.Footer>
                                 <Button variant="outlined" color="secondary" onClick={handleClose}>Close</Button>
@@ -78,6 +79,12 @@ const CustomerTable = ({ classes, ...props }) => {
                 }
             </TableBody>
         )
+    }
+    const onDelete = id => {
+        if (window.confirm('Are you sure to delete this record?')) {
+            props.deleteContact(id, window.alert("Delete Successfull !!!"))
+            setContact(allContact)
+        }
     }
     return (
         <div>
@@ -102,17 +109,13 @@ const CustomerTable = ({ classes, ...props }) => {
                     </form>
                 </Grid>
             </Grid>
-            <br />
             <TableScrollbar rows={15}>
                 <Table size="small" stickyHeader aria-label="sticky table">
                     <TableHead>
                         <TableRow>
                             <TableCell>Name</TableCell>
-                            <TableCell>Username</TableCell>
                             <TableCell>Email</TableCell>
-                            <TableCell>Address</TableCell>
-                            <TableCell>Birthday</TableCell>
-                            <TableCell>Phone Number</TableCell>
+                            <TableCell>Message</TableCell>
                             <TableCell></TableCell>
                         </TableRow>
                     </TableHead>
@@ -123,10 +126,11 @@ const CustomerTable = ({ classes, ...props }) => {
     );
 }
 const mapStateToProps = state => ({
-    customerReducer: state.customer.list
+    contactReducer: state.contact.list
 })
 
 const mapActionToProps = {
-    fetchAllCustomer: actions.fetchAll,
+    fetchAllContact: actions.fetchAll,
+    deleteContact: actions.Delete
 }
-export default connect(mapStateToProps, mapActionToProps)(CustomerTable);
+export default connect(mapStateToProps, mapActionToProps)(MessageTable);
