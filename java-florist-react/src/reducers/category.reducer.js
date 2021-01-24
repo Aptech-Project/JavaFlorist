@@ -8,10 +8,10 @@ const initialState = {
 export const categoryReducer = (state = initialState, action) => {
 
     switch (action.type) {
-        case ACTION_TYPES.FETCH_ALL:
+        case ACTION_TYPES.FETCH_ALL_CATEGORIES:
             return {
                 ...state,
-                categoriesList: [...action.payload]
+                categoriesList: action.payload
             }
 
         case ACTION_TYPES.FETCH_BY_ID:

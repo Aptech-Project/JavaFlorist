@@ -6,7 +6,7 @@ export const ACTION_TYPES = {
     CREATE: 'CREATE',
     UPDATE: 'UPDATE',
     DELETE: 'DELETE',
-    FETCH_ALL: 'FETCH_ALL',
+    FETCH_ALL_CATEGORIES: 'FETCH_ALL_CATEGORIES',
     FETCH_BY_ID: 'FETCH_BY_ID',
     SET_ACTIVE_CATEGORY: 'SET_ACTIVE_CATEGORY'
 }
@@ -15,7 +15,7 @@ export const fetchAll = () => dispatch => {
     apiService.categories().fetchAll()
         .then(response => {
             dispatch({
-                type: ACTION_TYPES.FETCH_ALL,
+                type: ACTION_TYPES.FETCH_ALL_CATEGORIES,
                 payload: response.data
             })
         })
