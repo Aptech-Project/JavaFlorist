@@ -23,23 +23,20 @@ const useStyles = makeStyles(styles);
 export default function ProductSection() {
   const dispatch = useDispatch()
   let [products, setProducts] = useState(null)
-  // let [categories, setCategories] = useState(null)
-  // dispatch(categoryActions.fetchAll())
   //useSelector is the replacement for mapStateToProps to use state in redux store (can use in function only)
   let allProducts = useSelector(state => state.product.list);//get from root reducer
-  // categories = useSelector(state => state.category.categoriesList);//get from root reducer
+  let allCategories = useSelector(state => state.category.categoriesList) || [];//get from root reducer
   const [isAdvanceFilter, setIsAdvanceFilter] = useState(false)
   const { register, handleSubmit, setValue, errors } = useForm(); // initialize the react hook form
   useEffect(() => {
     dispatch(actions.fetchAll())
     setProducts(allProducts)
-    // setCategories(allCategories)
-  }, [allProducts == products == [],]); //second parameter use to inform useEffect run when this parameter changes
-
+    dispatch(categoryActions.fetchAll())
+    console.log("on UseEffect")
+  }, [allProducts == products == allCategories == []]); //second parameter use to inform useEffect run when this parameter changes
+  console.log(products)
   function onSubmitFilter(data) {
-    console.log(allProducts)
     let filteredList = productFilter(data, allProducts)
-    console.log(filteredList)
     setProducts(filteredList)
     dispatch(actions.setActiveIndex(1))
   }
@@ -109,11 +106,16 @@ export default function ProductSection() {
               aria-label="vertical contained primary button group"
               variant="text"
             >
-              <Button style={{ width: '200px' }}>Anniversary</Button>
-              <Button>Birthday</Button>
-              <Button>Lover</Button>
-              <Button>Mother's Day</Button>
-              <Button>Special Day</Button>
+              <Button
+                // style={{ width: "10rem" }}
+                onClick={() => { onSubmitFilter({}) }}>All Products</Button>
+              {allCategories && allCategories.map((category) => (
+                <Button
+                  // style={{ width: "10rem" }}
+                  key={category.categoryname}
+                  onClick={() => { onSubmitFilter({ categoryname: category.categoryname }) }}
+                >{category.categoryname}</Button>
+              ))}
             </ButtonGroup>
           </div>
           <div className="col-md-9 col-sm-12">

@@ -25,6 +25,7 @@ CREATE TABLE [product] (
   [name] varchar(255) NOT NULL,
   [price] float NOT NULL,
   [description] varchar(500) NOT NULL,
+  [active] int NOT NULL DEFAULT '1',
   [imgName] varchar(255) DEFAULT NULL,
   PRIMARY KEY ([id])
 );
@@ -67,6 +68,7 @@ CREATE TABLE [category] (
   [id] int NOT NULL IDENTITY,
   [categoryname] varchar(255) NOT NULL UNIQUE,
   [message] varchar(8000) NOT NULL,
+  [active] int NOT NULL DEFAULT '1',
   PRIMARY KEY ([id])
 );
 

@@ -97,11 +97,6 @@ export default function ProductsGridList(props) {
           />
         }
       </div>
-      {/* {(!products || products.length == 0 ) &&
-        <div className={classes.center}>
-          <img src={noProduct}/>
-        </div>
-      } */}
     </div>
   );
 }

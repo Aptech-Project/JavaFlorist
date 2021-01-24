@@ -21,13 +21,18 @@ import SectionTabs from "./Components/Sections/SectionTabs.js";
 import SectionPills from "./Components/Sections/SectionPills.js";
 import SectionNotifications from "./Components/Sections/SectionNotifications.js";
 import SectionTypography from "./Components/Sections/SectionTypography.js";
+import SectionJavascript from "./Components/Sections/SectionJavascript.js";
 import SectionCarousel from "./Components/Sections/SectionCarousel.js";
-import image from "assets/img/faces/avatar.jpg";
+import SectionCompletedExamples from "./Components/Sections/SectionCompletedExamples.js";
+import SectionLogin from "./Components/Sections/SectionLogin.js";
+import SectionExamples from "./Components/Sections/SectionExamples.js";
+import SectionDownload from "./Components/Sections/SectionDownload.js";
+
 import styles from "assets/jss/material-kit-react/views/components.js";
 
 const useStyles = makeStyles(styles);
 
-export default function Home(props) {
+export default function NotFoundPage(props) {
   const classes = useStyles();
   const { ...rest } = props;
   return (
@@ -48,22 +53,15 @@ export default function Home(props) {
           <GridContainer>
             <GridItem>
               <div className={classes.brand}>
-                <h1 className={classes.title}>Java Florist</h1>
-                <h3 className={classes.subtitle}>
-                  “We don’t ask a flower any special reason for its existence. We just look at it and are able to accept it as being something different for ourselves.”
-                </h3>
-                <p style={{ paddingLeft: '300px' }}>Gwendolyn Brooks</p>
+                <h1 className={classes.title}>404 Page Not Found</h1>
+                <h2 className={classes.subtitle}>
+                  Look like you entered a wrong path, please try again!
+                </h2>
               </div>
             </GridItem>
           </GridContainer>
         </div>
       </Parallax>
-
-      <div className={classNames(classes.main, classes.mainRaised)}>
-        <SectionTypography />
-        <SectionCarousel />
-        <SectionPills />
-      </div>
       <Footer />
     </div>
   );
