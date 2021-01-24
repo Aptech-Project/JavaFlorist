@@ -4,7 +4,7 @@ import { createBrowserHistory } from "history";
 import { Router, Route, Switch } from "react-router-dom";
 
 import "assets/scss/material-kit-react.scss?v=1.9.0";
-import { Provider } from "react-redux";
+import { Provider, useSelector } from "react-redux";
 // pages for this product
 import Components from "views/Components/Components.js";
 import LandingPage from "views/LandingPage/LandingPage.js";
@@ -22,9 +22,12 @@ import AddEdit from "components/products/AddEdit";
 
 var hist = createBrowserHistory();
 
-ReactDOM.render(
-  <Provider store={store}>
-    <Router history={hist}>
+
+const render = () => {
+  //const userAuth = useSelector(state => state.login.userAuth)
+  const SET_USER_AUTHENTICATE = 'user_authenticated';
+  let userAuth = localStorage.getItem(SET_USER_AUTHENTICATE)
+  return(
       <Switch>
         <Route path="/landing" component={LandingPage} />
         <Route path="/profile" component={ProfilePage} />
@@ -38,6 +41,13 @@ ReactDOM.render(
         <Route path="/addedit" component={AddEdit} />
         <Route path="/" component={Home} />
       </Switch>
+  )
+}
+
+ReactDOM.render(
+  <Provider store={store}>
+    <Router history={hist}>
+      {render()}
     </Router>
   </Provider>,
   document.getElementById("root")
