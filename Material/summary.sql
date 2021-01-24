@@ -107,7 +107,7 @@ GO
 
 --User
 SET IDENTITY_INSERT [dbo].[user] ON 
-INSERT [dbo].[user] ([id], [active], [email], [password], [username], [role], [address], [birthday], [name], [phonenumber], [imgName]) VALUES (1, 1, N'haiuser@gmail.com', N'chronicles', N'haiuser', N'user', N'cuchi', CAST(N'2020-04-24T00:00:00.000' AS DateTime), N'haiuser', N'1234567890', N'christian214049235.jpg')
+INSERT [dbo].[user] ([id], [active], [email], [password], [username], [role], [address], [birthday], [name], [phonenumber], [imgName]) VALUES (1, 1, N'haiuser@gmail.com', N'chronicles', N'haiuser', N'customer', N'cuchi', CAST(N'2020-04-24T00:00:00.000' AS DateTime), N'haiuser', N'1234567890', N'christian214049235.jpg')
 INSERT [dbo].[user] ([id], [active], [email], [password], [username], [role], [address], [birthday], [name], [phonenumber], [imgName]) VALUES (2, 1, N'haiadmin@gmail.com', N'chronicles', N'haiadmin', N'admin', N'cuchi', CAST(N'2020-04-24T00:00:00.000' AS DateTime), N'haiadmin', N'1234567890', N'christian214049235.jpg')
 SET IDENTITY_INSERT [dbo].[user] OFF
 
