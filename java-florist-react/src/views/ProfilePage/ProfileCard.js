@@ -122,7 +122,7 @@ export default function ProfileCard(props) {
         </MenuItem>
         <Divider light />
         {
-          userProfile.role === 'user'
+          userProfile.role === 'customer'
           ?
           <MenuItem to="/profile" component={Link} className={classes.navLink}>
             Profile Management

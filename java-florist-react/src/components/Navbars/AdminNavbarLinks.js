@@ -20,11 +20,13 @@ import CustomInput from "components/CustomInput/CustomInput.js";
 import Button from "components/CustomButtons/Button.js";
 
 import styles from "assets/jss/material-dashboard-react/components/headerLinksStyle.js";
+import { Link, useHistory } from "react-router-dom";
 
 const useStyles = makeStyles(styles);
 
 export default function AdminNavbarLinks() {
   const classes = useStyles();
+  const history = useHistory()
   const [openNotification, setOpenNotification] = React.useState(null);
   const [openProfile, setOpenProfile] = React.useState(null);
   const handleClickNotification = event => {
@@ -45,7 +47,7 @@ export default function AdminNavbarLinks() {
     }
   };
   const handleCloseProfile = () => {
-    setOpenProfile(null);
+    //history.push('/profile')
   };
   return (
     <div>
@@ -177,8 +179,10 @@ export default function AdminNavbarLinks() {
               <Paper>
                 <ClickAwayListener onClickAway={handleCloseProfile}>
                   <MenuList role="menu">
-                    <MenuItem
-                      onClick={handleCloseProfile}
+                    <MenuItem 
+                      to="/profile"
+                      component={Link}
+                      //onClick={handleCloseProfile}
                       className={classes.dropdownItem}
                     >
                       Profile

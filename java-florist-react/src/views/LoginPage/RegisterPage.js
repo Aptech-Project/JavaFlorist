@@ -90,7 +90,7 @@ export default function RegisterPage(props) {
       userData.append('email', data.email)
       userData.append('password', data.password)
       userData.append('username', data.username)
-      userData.append('role', "user")
+      userData.append('role', "customer")
       userData.append('address', data.address)
       userData.append('birthday', data.birthday)
       userData.append('name', data.fullname)
