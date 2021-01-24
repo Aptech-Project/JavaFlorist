@@ -66,7 +66,6 @@ export default function ProfileEdit(props) {
   }, 100);
   const classes = useStyles();
   const { ...rest } = props;
-  const loginDispatch = useDispatch();
   const editProfileDispatch = useDispatch();
   const history = useHistory()
 
@@ -110,15 +109,18 @@ export default function ProfileEdit(props) {
       userData.append('email', data.email)
       userData.append('password', userProfile.password)
       userData.append('username', data.username)
-      userData.append('role', "user")
+      userData.append('role', "customer")
       userData.append('address', data.address)
       userData.append('birthday',newBirthday)
       userData.append('name', data.fullname)
       userData.append('phonenumber', data.phone)
-      if (changeImage) {
-        userData.append('imgName', image.imgName)
-        userData.append('imgFile', image.imgFile)
-        }
+      // if (changeImage) {
+      //   userData.append('imgName', image.imgName)
+      //   userData.append('imgFile', image.imgFile)
+      //   }
+      userData.append('imgName', userProfile.imgName)
+      userData.append('imgFile', userProfile.imgFile)
+      userData.append('imgFile', userProfile.imgSrc)
       userData.append('active', 1)
       editProfileDispatch(update(userProfile.id,userData))
     }
@@ -130,7 +132,7 @@ export default function ProfileEdit(props) {
       //forAuth = forAuth + userList[userList.length - 1].id + 1
       alert("Your Account Has Been Updated!!");
       //loginDispatch(isAuthenticated(forAuth));
-      //history.push("/profile")
+      history.push("/")
     }
     if (editStatus == 500 || editStatus == 404 || editStatus == 400 ) {
       alert("Cannot Create Account!!");
@@ -140,49 +142,54 @@ export default function ProfileEdit(props) {
 //   const password = useRef({});
 //   password.current = watch('password', '');
 
-  const showPreview = e => {
-    console.log(e)
-    if (e.target.files && e.target.files[0] && changeImage) {
-      let imgFile = e.target.files[0];
-      const reader = new FileReader();
-      reader.onload = x => {
-        setImage({
-          ...image,
-          imgFile,
-          imgSrc: x.target.result
-        })
-      }
-      reader.readAsDataURL(imgFile)
-    }
-    else {
-      setImage({
-        ...image,
-        imgFile: null,
-        imgSrc: userProfile.imgSrc
-      })
-    console.log(image)
-  }
-}
+//   const showPreview = e => {
+//     console.log(e)
+//     if (e.target.files && e.target.files[0] && changeImage) {
+//       let imgFile = e.target.files[0];
+//       const reader = new FileReader();
+//       reader.onload = x => {
+//         setImage({
+//           ...image,
+//           imgFile,
+//           imgSrc: x.target.result
+//         })
+//       }
+//       reader.readAsDataURL(imgFile)
+//     }
+//     else {
+//       setImage({
+//         ...image,
+//         imgFile: null,
+//         imgSrc: userProfile.imgSrc
+//       })
+//     console.log(image)
+//   }
+// }
 
   return (
-    <div>
-      <Header
-        absolute
-        color="transparent"
-        brand="Java Florist"
-        rightLinks={<HeaderLinks />}
-        {...rest}
-      />
-      <div
-        className={classes.pageHeader}
-        style={{
-          backgroundImage: "url(" + backgroundImage + ")",
-          backgroundSize: "cover",
-          backgroundPosition: "top center"
-        }}
-      >
-        <div className={classes.container}>
-          <GridContainer justify="center">
+    // <div>
+    //   <Header
+    //     absolute
+    //     color="transparent"
+    //     brand="Java Florist"
+    //     rightLinks={<HeaderLinks />}
+    //     {...rest}
+    //   />
+    //   <div
+    //     className={classes.pageHeader}
+    //     style={{
+    //       backgroundImage: "url(" + backgroundImage + ")",
+    //       backgroundSize: "cover",
+    //       backgroundPosition: "top center"
+    //     }}
+    //   >
+    //     <div className={classes.container}>
+          
+    //     </div>
+    //     <Footer whiteFont />
+    //   </div>
+    // </div>
+    <GridContainer justify="center">
             <GridItem xs={12} sm={12} md={8}>
               <Card className={classes[cardAnimaton]}>
                 <form className={classes.form} noValidate onSubmit={handleSubmit(onSubmit)}>
@@ -409,7 +416,7 @@ export default function ProfileEdit(props) {
                         
                       </GridItem>
                     </GridContainer>
-                    <GridContainer justify="center">
+                    {/* <GridContainer justify="center">
                       <GridItem xs={12} sm={12} md={4} justify="center">
                         {image !== {} ? 
                         <>
@@ -420,7 +427,7 @@ export default function ProfileEdit(props) {
                         }
                         
                       </GridItem>
-                    </GridContainer>
+                    </GridContainer> */}
                     {/* <GridContainer justify="center">
                       <GridItem xs={12} sm={12} md={4} justify="center">
                         
@@ -441,9 +448,5 @@ export default function ProfileEdit(props) {
               </Card>
             </GridItem>
           </GridContainer>
-        </div>
-        <Footer whiteFont />
-      </div>
-    </div>
   );
 }

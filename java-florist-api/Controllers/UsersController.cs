@@ -72,11 +72,11 @@ namespace java_florist_api.Controllers
             [HttpPut("{id}")]
         public async Task<IActionResult> PutUser(int id, [FromForm] User User)
         {
-            if (User.ImgFile != null)
-            {
-                DeleteImage(User.ImgName);
-                User.ImgName = await SaveImage(User.ImgFile);
-            }
+            // if (User.ImgFile != null)
+            // {
+            //     DeleteImage(User.ImgName);
+            //     User.ImgName = await SaveImage(User.ImgFile);
+            // }
 
             _context.Entry(User).State = EntityState.Modified;
 

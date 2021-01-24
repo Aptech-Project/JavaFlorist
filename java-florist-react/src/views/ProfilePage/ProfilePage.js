@@ -40,12 +40,30 @@ import { List, ListItem, ListItemIcon, ListItemText, Tooltip } from "@material-u
 import { Email, People } from "@material-ui/icons";
 import { date } from "yup";
 import { Link } from "react-router-dom";
-
+import Modal from '@material-ui/core/Modal';
+import Backdrop from '@material-ui/core/Backdrop';
+import Fade from '@material-ui/core/Fade';
+import ProfileEdit from "./ProfileEdit";
 
 const useStyles = makeStyles(styles);
+const useCusStyle = makeStyles((theme) => ({
+  modal: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width:"100%"
+  },
+  paper: {
+    backgroundColor: theme.palette.background.paper,
+    //border: '2px solid #000',
+    boxShadow: theme.shadows[5],
+    //padding: theme.spacing(12, 8, 9),
+  },
+}));
 
 export default function ProfilePage(props) {
   const classes = useStyles();
+  const cusClasses = useCusStyle();
   const { ...rest } = props;
   const imageClasses = classNames(
     classes.imgRaised,
@@ -55,6 +73,16 @@ export default function ProfilePage(props) {
   const navImageClasses = classNames(classes.imgRounded, classes.imgGallery);
 
   const userProfile = useSelector(state => state.customer.userProfile);
+
+  const [open, setOpen] = React.useState(false);
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   const formatDate = () => {
     let date = new Date(userProfile.birthday);
@@ -90,7 +118,7 @@ export default function ProfilePage(props) {
                       <img src={userProfile.imgSrc} alt="..." className={imageClasses}/>
                     </div>
                     <div className={classes.name}>
-                      <h3 className={classes.title}>{userProfile.name}</h3>
+                      <h3 className={classes.title}>{userProfile.username}</h3>
                       {/* <Button justIcon link className={classes.margin5}>
                         <i className={"fab fa-twitter"} />
                       </Button>
@@ -100,6 +128,10 @@ export default function ProfilePage(props) {
                       <Button justIcon link className={classes.margin5}>
                         <i className={"fab fa-facebook"} />
                       </Button> */}
+                        {/* <Link onClick={handleOpen} className={classes.description}> */}
+                        {/* <div type="button" onClick={handleOpen} className={classes.description}> */}
+                        {/* </div> */}
+                        {/* </Link> */}
                     </div>
                   </div>
                 </GridItem>
@@ -107,10 +139,26 @@ export default function ProfilePage(props) {
               <div className={classes.description}>
               <h4 style={{marginLeft:"5%"}} className={classes.title}>My Infomation</h4> &nbsp; 
               <Tooltip title="Edit Profile">
-                <Link to="/editProfile" className={classes.description}>
+                <Link onClick={handleOpen} className={classes.description}>
+                {/* <div type="button" onClick={handleOpen} className={classes.description}> */}
                   <EditIcon fontSize="small"/>
+                {/* </div> */}
                 </Link>
               </Tooltip>
+                <Modal
+                className={cusClasses.modal}
+                open={open}
+                onClose={handleClose}
+                closeAfterTransition
+                // BackdropComponent={Backdrop}
+                // BackdropProps={{
+                //   timeout: 500,
+                // }}
+              >
+                <Fade in={open}>
+                  <ProfileEdit/>
+                </Fade>
+              </Modal>
                 <GridContainer style={{marginLeft: '8%'}}>
                   <GridItem xs={12} sm={12} md={6}>
                     <List>
@@ -147,6 +195,12 @@ export default function ProfilePage(props) {
                           <PhoneIphoneIcon />
                         </ListItemIcon>
                         <ListItemText primary={userProfile.phonenumber} />
+                      </ListItem>
+                      <ListItem>
+                        <ListItemIcon>
+                          <EditIcon fontSize="small"/>
+                        </ListItemIcon>
+                        <ListItemText primary="Change Password" />
                       </ListItem>
                     </List>
                   </GridItem>
