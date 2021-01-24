@@ -37,6 +37,8 @@ namespace java_florist_api.Controllers
                  Name = x.ppc.p.Name,
                  Price = x.ppc.p.Price,
                  Description = x.ppc.p.Description,
+                 Active = x.ppc.p.Active,
+                 CategoryActive = x.c.Active,
                  Categoryname = x.c.Categoryname,
                  ImgName = x.ppc.p.ImgName,
                  ImgSrc = String.Format("{0}://{1}{2}/Images/{3}", Request.Scheme, Request.Host, Request.PathBase, x.ppc.p.ImgName)

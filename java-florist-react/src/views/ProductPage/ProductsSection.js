@@ -32,9 +32,8 @@ export default function ProductSection() {
     dispatch(actions.fetchAll())
     setProducts(allProducts)
     dispatch(categoryActions.fetchAll())
-    console.log("on UseEffect")
   }, [allProducts == products == allCategories == []]); //second parameter use to inform useEffect run when this parameter changes
-  console.log(products)
+
   function onSubmitFilter(data) {
     let filteredList = productFilter(data, allProducts)
     setProducts(filteredList)
@@ -109,12 +108,13 @@ export default function ProductSection() {
               <Button
                 // style={{ width: "10rem" }}
                 onClick={() => { onSubmitFilter({}) }}>All Products</Button>
-              {allCategories && allCategories.map((category) => (
-                <Button
-                  // style={{ width: "10rem" }}
+              {allCategories && allCategories.map(category => (
+                category.active == 1 &&
+                < Button
                   key={category.categoryname}
                   onClick={() => { onSubmitFilter({ categoryname: category.categoryname }) }}
                 >{category.categoryname}</Button>
+
               ))}
             </ButtonGroup>
           </div>
@@ -128,6 +128,6 @@ export default function ProductSection() {
           </div>
         </div>
       </div>
-    </div>
+    </div >
   );
 }

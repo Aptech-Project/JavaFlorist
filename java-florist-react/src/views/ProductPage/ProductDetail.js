@@ -13,29 +13,22 @@ import { AddShoppingCart, Shop, Face, Chat, Build } from '@material-ui/icons';
 import IconButton from '@material-ui/core/IconButton';
 
 // core components
-import Footer from "components/Footer/Footer.js";
 import GridContainer from "components/Grid/GridContainer.js";
 import GridItem from "components/Grid/GridItem.js";
 import Button from "components/CustomButtons/Button.js";
 import Parallax from "components/Parallax/Parallax.js";
 import styles from "assets/jss/material-kit-react/views/landingPage.js";
 import * as actions from 'actions/product.action'
-import ProductSection from './ProductsSection';
 import CustomTabs from 'components/CustomTabs/CustomTabs';
-import GridList from '@material-ui/core/GridList';
-import GridListTile from '@material-ui/core/GridListTile';
-import GridListTileBar from '@material-ui/core/GridListTileBar';
 import ProductFeedback from './ProductFeedback'
-const dashboardRoutes = [];
 
 const useStyles = makeStyles(styles);
-const defaultImgSrc = "https://st4.depositphotos.com/17828278/24401/v/600/depositphotos_244011872-stock-illustration-image-vector-symbol-missing-available.jpg"
 
 const initialFieldValues = {
   name: '',
   price: '',
   description: '',
-  imgSrc: defaultImgSrc,
+  imgSrc: '',
   imgFile: null
 }
 
@@ -59,6 +52,9 @@ export default function ProductDetail(props) {
           <GridContainer>
             <GridItem xs={12} sm={12} md={12} style={{ paddingLeft: "5rem" }}>
               <h1 className={classes.title}>{product.name}</h1>
+              <h3>
+                Price: {product.price} $
+              </h3>
               <h4>
                 {product.description}
               </h4>
@@ -78,7 +74,7 @@ export default function ProductDetail(props) {
                 target="_blank"
                 rel="noopener noreferrer">
                 <i className="fas fa-cart-plus" />
-                Buy now
+                Add to Cart
               </Button>
             </GridItem>
           </GridContainer>

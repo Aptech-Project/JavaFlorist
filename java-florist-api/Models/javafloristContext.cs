@@ -93,6 +93,8 @@ namespace java_florist_api.Models
 
                 entity.Property(e => e.Id).HasColumnName("id");
 
+                entity.Property(e => e.Active).HasColumnName("active");
+
                 entity.Property(e => e.Categoryname)
                     .IsRequired()
                     .HasMaxLength(255)
@@ -288,6 +290,7 @@ namespace java_florist_api.Models
 
                 entity.Property(e => e.Id).HasColumnName("id");
 
+
                 entity.Property(e => e.Description)
                     .IsRequired()
                     .HasMaxLength(500)
@@ -306,6 +309,8 @@ namespace java_florist_api.Models
                     .HasColumnName("name");
 
                 entity.Property(e => e.Price).HasColumnName("price");
+
+                entity.Property(e => e.Active).HasColumnName("active");
             });
 
             modelBuilder.Entity<Productcategory>(entity =>

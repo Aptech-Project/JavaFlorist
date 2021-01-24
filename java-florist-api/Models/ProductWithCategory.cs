@@ -19,6 +19,8 @@ namespace java_florist_api.Models
         public string Name { get; set; }
         public double Price { get; set; }
         public string Description { get; set; }
+        public int Active { get; set; }
+        public int CategoryActive { get; set; }
         public string Categoryname { get; set; }
         public string ImgName { get; set; }
         [NotMapped]

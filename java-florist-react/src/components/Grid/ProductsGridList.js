@@ -52,8 +52,7 @@ export default function ProductsGridList(props) {
 
   let activeIndex = useSelector(state => state.product.activeIndex) || 1;
   const classes = useStyles();
-  const { products, indexCount } = productPagination(props.products, activeIndex)
-
+  let { products, indexCount } = productPagination(props.products.filter(product => product.categoryActive == product.active == 1), activeIndex)
   const dispatch = useDispatch();
   return (
     <div>
