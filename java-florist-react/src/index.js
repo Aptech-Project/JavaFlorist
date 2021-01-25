@@ -17,6 +17,7 @@ import AboutPage from "views/AboutPage/AboutPage";
 import RegisterPage from "views/LoginPage/RegisterPage.js";
 import Dashboard from "views/AdminPage/Dashboard";
 import CartPage from "views/CartPage/CartPage";
+import CheckOut from "views/CheckoutPage/CheckoutPage";
 import Admin from "views/AdminPage/Admin";
 import ProfileEdit from "views/ProfilePage/ProfileEdit";
 import NotFoundPage from "views/NotFoundPage";
@@ -40,6 +41,7 @@ const render = () => {
       <Route path="/products" component={ProductsPage} />
       <Route path="/about" component={AboutPage} />
       <Route path="/cart" component={CartPage} />
+      <Route path="/checkout" component={CheckOut} />
       <Route path='/404' component={NotFoundPage} />
       <Redirect from='*' to='/404' />
     </Switch>
