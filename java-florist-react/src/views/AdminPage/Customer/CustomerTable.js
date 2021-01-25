@@ -6,6 +6,8 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import { ButtonGroup, Button, Grid } from "@material-ui/core";
 import EditIcon from "@material-ui/icons/Info";
+import CheckCircle from "@material-ui/icons/CheckCircle";
+import Cancel from "@material-ui/icons/Cancel";
 import DeleteIcon from "@material-ui/icons/Delete";
 import { connect } from "react-redux";
 import { TextField } from "@material-ui/core";
@@ -16,10 +18,12 @@ import CustomerDetail from "./CustomerDetail"
 import { useSelector, useDispatch } from 'react-redux';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import Search from '@material-ui/icons/Search';
+
 const CustomerTable = ({ classes, ...props }) => {
     const dispatch = useDispatch()
     const [currentId, setCurrentId] = useState(0)
     const [customer, setCustomer] = useState([])
+    const [value, setValues] = useState([])
     let allCustomer = useSelector(state => state.customer.list);
     const [search, setSearch] = useState("")
     const [filterCustomer, setFilterCustomer] = useState([])
@@ -45,6 +49,18 @@ const CustomerTable = ({ classes, ...props }) => {
             )
         );
     }, [search, customer]);
+    const onInActive = (record) => {
+        if (window.confirm("Account will be deactivate !!!")) {
+            props.updateActiveCustomer(record.id)
+            setCustomer(allCustomer)
+        }
+    }
+    const onActive = (record) => {
+        if (window.confirm("Account will be activate !!!")) {
+            props.updateInActiveCustomer(record.id)
+            setCustomer(allCustomer)
+        }
+    }
     const renderTable = () => {
         return (
             <TableBody>
@@ -54,8 +70,15 @@ const CustomerTable = ({ classes, ...props }) => {
                         <TableCell>{record.username}</TableCell>
                         <TableCell>{record.email}</TableCell>
                         <TableCell>{record.address}</TableCell>
-                        <TableCell>{record.birthday}</TableCell>
-                        <TableCell>{record.phonenumber}</TableCell>
+                        <TableCell>{record.role}</TableCell>
+                        <TableCell>{record.active}</TableCell>
+                        <TableCell>
+                            <ButtonGroup variant="text">
+                                <Button><CheckCircle style={{ color: 'green' }} onClick={() => onActive(record)} /></Button>
+                                <Button><Cancel style={{ color: 'red' }} onClick={() => onInActive(record)} /></Button>
+                            </ButtonGroup>
+
+                        </TableCell>
                         <TableCell>
                             <ButtonGroup variant="text">
                                 <Button><EditIcon color="primary" onClick={() => { setCurrentId(record.id); setShow(true) }} /></Button>
@@ -111,8 +134,9 @@ const CustomerTable = ({ classes, ...props }) => {
                             <TableCell>Username</TableCell>
                             <TableCell>Email</TableCell>
                             <TableCell>Address</TableCell>
-                            <TableCell>Birthday</TableCell>
-                            <TableCell>Phone Number</TableCell>
+                            <TableCell>Role</TableCell>
+                            <TableCell>Active</TableCell>
+                            <TableCell>Active/InActive</TableCell>
                             <TableCell></TableCell>
                         </TableRow>
                     </TableHead>
@@ -128,5 +152,7 @@ const mapStateToProps = state => ({
 
 const mapActionToProps = {
     fetchAllCustomer: actions.fetchAll,
+    updateActiveCustomer: actions.updateActive,
+    updateInActiveCustomer: actions.updateInActive
 }
 export default connect(mapStateToProps, mapActionToProps)(CustomerTable);

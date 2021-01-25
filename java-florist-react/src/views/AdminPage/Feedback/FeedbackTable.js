@@ -38,8 +38,6 @@ const FeedbackTable = ({ classes, ...props }) => {
 
     const handleClose = () => setShow(false);
 
-
-
     useEffect(() => {
         setFilterFeedback(
             feedback.filter((fb) =>
@@ -55,6 +53,7 @@ const FeedbackTable = ({ classes, ...props }) => {
                         <TableCell>{record.name}</TableCell>
                         <TableCell>{record.pname}</TableCell>
                         <TableCell>{record.fb}</TableCell>
+                        <TableCell>{record.fbRep}</TableCell>
                         <TableCell>{record.vote}</TableCell>
                         <TableCell>
                             <ButtonGroup variant="text">
@@ -66,7 +65,7 @@ const FeedbackTable = ({ classes, ...props }) => {
                         {/* <Modal show={show} onHide={() => setShow(false)} size="lg" aria-labelledby="contained-modal-title-vcenter" centered> */}
                         <Modal show={show} size="lg" aria-labelledby="contained-modal-title-vcenter" centered>
                             <Modal.Header>
-                                <Modal.Title><h4 style={{ fontWeight: 'bold', color: '#0a7cdb' }}>FEEDBACK INFORMATION</h4></Modal.Title>
+                                <Modal.Title><h4 style={{ fontWeight: 'bold', color: '#0a7cdb' }}>FEEDBACK</h4></Modal.Title>
                             </Modal.Header>
                             <Modal.Body >
                                 <FeedbackDetail {...({ currentId, setCurrentId })} />
@@ -118,6 +117,7 @@ const FeedbackTable = ({ classes, ...props }) => {
                             <TableCell>UserName</TableCell>
                             <TableCell>Product name</TableCell>
                             <TableCell>Feedback</TableCell>
+                            <TableCell>Feedback Replay</TableCell>
                             <TableCell>Vote</TableCell>
                             <TableCell></TableCell>
                         </TableRow>

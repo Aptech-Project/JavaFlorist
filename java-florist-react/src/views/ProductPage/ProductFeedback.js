@@ -5,13 +5,47 @@ import Button from "components/CustomButtons/Button.js";
 import { connect } from "react-redux";
 import * as actions from "../../actions/feedback.action";
 import EditIcon from "@material-ui/icons/Message";
+import { useSelector, useDispatch } from 'react-redux';
 const ProductFeedback = ({ classes, ...props }) => {
     const [currentId, setCurrentId] = useState(0)
     const [rating, setRating] = useState(null);
-    const [hover,setHover]=useState(null);
+    const [hover, setHover] = useState(null);
+    const [comment, setComment] = useState([])
+    const [filterComment, setFilterComment] = useState([])
+    const [productid, setProductId] = useState([])
+    const [userId, setUserId] = useState([])
+    const dispatch = useDispatch()
     useEffect(() => {
         props.fetchAllFeedback()
     }, [])//componentDidMount
+    const user = useSelector(state => state.login.userAuth)
+    const product = useSelector(state => state.product.product)
+    const allComment = props.feedbackReducer
+    useEffect(() => {
+        setComment(allComment)
+        // setCategories(allCategories)
+    }, [allComment == comment == [],]);
+
+    useEffect(() =>
+        setProductId(product)
+    )
+    useEffect(() =>
+        setUserId(user)
+    )
+    useEffect(() => {
+        setFilterComment(
+            comment.filter((com) =>
+                com.uId.toLowerCase().includes('1')
+            )
+        );
+    }, [userId, allComment]);
+    // console.log(filterComment)
+    // console.log(user)
+    // console.log(userId)
+    // console.log(comment)
+    const a = () => {
+        props.fetchFeedbackById(5, 1)
+    }
 
     return (
         <form>
@@ -31,32 +65,31 @@ const ProductFeedback = ({ classes, ...props }) => {
                         const ratingValue = i + 1;
                         return <label>
                             <input
-                            key={ratingValue} 
-                            type="radio" 
-                            name="rating" 
-                            style={{ display: "none" }} 
-                            value={ratingValue} 
-                            onClick={() => setRating(ratingValue)} 
-                            
+                                key={ratingValue}
+                                type="radio"
+                                name="rating"
+                                style={{ display: "none" }}
+                                value={ratingValue}
+                                onClick={() => setRating(ratingValue)}
                             />
-                            <FaStar 
-                            key={i}
-                            style={{ cursor: 'pointer', transition: "color 200ms" }} 
-                            color={ratingValue <= (hover||rating) ? "#ffc107" : "#e4e5e9"} 
-                            size={25} 
-                            onMouseEnter={()=>setHover(ratingValue)}
-                            onMouseLeave={()=>setHover(null)}
+                            <FaStar
+                                key={i}
+                                style={{ cursor: 'pointer', transition: "color 200ms" }}
+                                color={ratingValue <= (hover || rating) ? "#ffc107" : "#e4e5e9"}
+                                size={25}
+                                onMouseEnter={() => setHover(ratingValue)}
+                                onMouseLeave={() => setHover(null)}
                             />
                         </label>
-                        
+
                     })}
                 </div>
                 <Button variant="outlined" color="primary">Send</Button>
                 <Button variant="outlined" color="secondary">Reset</Button>
             </Grid>
-            <h5 style={{ fontWeight: 'bold', color: 'black' }}>Comments <EditIcon color="primary"/></h5>
+            <h5 style={{ fontWeight: 'bold', color: 'black' }}>Comments <EditIcon color="primary" /></h5>
             {
-                props.feedbackReducer.map((record) => {
+                props.feedbackReducer.map((record, key) => {
                     return (
                         <div>
                             <br />
@@ -87,6 +120,7 @@ const mapStateToProps = state => ({
 })
 const mapActionToProps = {
     fetchAllFeedback: actions.fetchAll,
+    fetchFeedbackById: actions.fetchByIdPro,
     createFeedback: actions.create,
     updateFeedback: actions.update
 }

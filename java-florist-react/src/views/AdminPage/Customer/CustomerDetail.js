@@ -1,9 +1,12 @@
 import React, { useEffect } from "react";
 import { Grid, withStyles } from "@material-ui/core";
 import useForm from "../../LandingPage/Sections/useForm";
+import { ButtonGroup, Button } from "@material-ui/core";
 import { connect } from "react-redux";
 import * as actions from "../../../actions/customer.action";
 import userImg from "../../../assets/img/userDefault.png"
+import CheckCircle from "@material-ui/icons/CheckCircle";
+import Cancel from "@material-ui/icons/Cancel";
 const styles = theme => ({
     root: {
         '& .MuiTextField-root': {
@@ -55,6 +58,33 @@ const CustomerDetail = (props) => {
             )
         }
     }
+    // const onInActive = (values) => {
+
+    //     props.updateActiveCustomer(values.id)
+    //     window.alert("Account has been deactivated !!!")
+
+    // }
+    // const onActive = (values) => {
+    //     props.updateInActiveCustomer(values.id)
+    //     window.alert("Account has been active !!!")
+
+    // }
+    // const renderButton = () => {
+    //     if (values.active == 0) {
+    //         return (
+    //             <ButtonGroup variant="text">
+    //                 <Button><CheckCircle style={{ color: 'green' }} onClick={() => onActive(values)} />Active</Button>
+    //             </ButtonGroup>
+    //         )
+    //     }
+    //     if (values.active == 1) {
+    //         return (
+    //             <ButtonGroup variant="text">
+    //                 <Button><Cancel style={{ color: 'red' }} onClick={() => onInActive(values)} />DeAcTive</Button>
+    //             </ButtonGroup>
+    //         )
+    //     }
+    // }
     return (
         <form>
             <Grid container>
@@ -94,7 +124,8 @@ const mapStateToProps = state => ({
 })
 
 const mapActionToProps = {
-    updateDCandidate: actions.update
+    updateActiveCustomer: actions.updateActive,
+    updateInActiveCustomer: actions.updateInActive
 }
 
 export default connect(mapStateToProps, mapActionToProps)(withStyles(styles)(CustomerDetail));

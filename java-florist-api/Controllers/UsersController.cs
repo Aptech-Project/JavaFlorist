@@ -173,5 +173,29 @@ namespace java_florist_api.Controllers
             if (System.IO.File.Exists(imgPath))
                 System.IO.File.Delete(imgPath);
         }
+
+        [HttpPut("EditActive/{id}")]
+        public ActionResult EditActive(int id)
+        {
+            var result = _context.Users.SingleOrDefault(s => s.Id.Equals(id));
+            if (result != null)
+            {
+                result.Active = 0;
+                _context.SaveChanges();
+            }
+            return Ok(result);
+        }
+        [HttpPut("InAtive/{id}")]
+        public ActionResult InAtive(int id)
+        {
+            var result = _context.Users.SingleOrDefault(s => s.Id.Equals(id));
+            if (result != null)
+            {
+                result.Active = 1;
+                _context.SaveChanges();
+            }
+            return Ok(result);
+        }
+
     }
 }

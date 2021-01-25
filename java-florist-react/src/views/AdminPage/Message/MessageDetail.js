@@ -1,9 +1,9 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Grid, withStyles } from "@material-ui/core";
 import useForm from "../../LandingPage/Sections/useForm";
 import { connect } from "react-redux";
 import * as actions from "../../../actions/contact.action";
-import userImg from "../../../assets/img/userDefault.png"
+import TextField from '@material-ui/core/TextField';
 const styles = theme => ({
     root: {
         '& .MuiTextField-root': {
@@ -47,10 +47,7 @@ const MessageDetail = (props) => {
                 <Grid item lg={6} xs={12} sm={12} md={12} align='center' >
 
                 </Grid>
-                <Grid item lg={2} align='left'>
-
-                </Grid>
-                <Grid item lg={4} align='left'>
+                <Grid item lg={6} align='left'>
 
                 </Grid>
             </Grid>

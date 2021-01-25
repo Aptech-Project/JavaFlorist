@@ -10,6 +10,8 @@ export const ACTION_TYPES = {
     DELETEID: 'DELETEID',
     FETCH_ALL: 'FETCH_ALL',
     FETCH_BY_ID: 'FETCH_BY_ID',
+    UPDATE_ACTIVE: 'UPDATE_ACTIVE',
+    UPDATE_INACTIVE: 'UPDATE_INACTIVE',
     LOG_IN: 'LOG_IN'
 }
 
@@ -52,6 +54,28 @@ export const update = (id, data) => dispatch => {
             dispatch({
                 type: ACTION_TYPES.UPDATE,
                 payload: { id, ...data },
+                status: res.status
+            })
+        })
+        .catch(err => console.log(err))
+}
+export const updateActive = (id) => dispatch => {
+    apiService.customers().updateActive(id)
+        .then(res => {
+            dispatch({
+                type: ACTION_TYPES.UPDATE_ACTIVE,
+                payload: id,
+                status: res.status
+            })
+        })
+        .catch(err => console.log(err))
+}
+export const updateInActive = (id) => dispatch => {
+    apiService.customers().updateInActive(id)
+        .then(res => {
+            dispatch({
+                type: ACTION_TYPES.UPDATE_INACTIVE,
+                payload: id,
                 status: res.status
             })
         })
