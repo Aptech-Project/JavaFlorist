@@ -7,7 +7,8 @@ import {
   DECREASE_QUANTITY,
   INCREASE_QUANTITY,
   DELETE_CART,
-  USER_PROFILE
+  USER_PROFILE,
+  INSERT_ORDER
 } from '../actions/checkout.action';
 
 const initialState = {
@@ -45,6 +46,10 @@ export const CheckoutReducer = (state = initialState, action) => {
         ...state
       }
     case DELETE_CART:
+      return {
+        ...state,
+      }
+    case INSERT_ORDER:
       return {
         ...state,
       }

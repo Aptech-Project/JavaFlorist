@@ -21,6 +21,7 @@ import styles from "assets/jss/material-kit-react/views/landingPage.js";
 import * as actions from 'actions/product.action'
 import CustomTabs from 'components/CustomTabs/CustomTabs';
 import ProductFeedback from './ProductFeedback'
+import { AddCart } from '../../actions/cart.action';
 
 const useStyles = makeStyles(styles);
 
@@ -38,6 +39,7 @@ export default function ProductDetail(props) {
   const [rating, setRating] = useState(null)
   const dispatch = useDispatch()
   const { id } = props.match.params;
+  const userAuth = localStorage.getItem("user_authenticated");
 
   useEffect(() => {
     dispatch(actions.fetchById(id))
@@ -59,19 +61,20 @@ export default function ProductDetail(props) {
                 {product.description}
               </h4>
               <br />
-              <Button
+              {/* <Button
                 color="success"
                 size="lg"
                 target="_blank"
                 rel="noopener noreferrer">
                 <i className="fab fa-amazon-pay" />
                 Buy now
-              </Button>
+              </Button> */}
               &emsp;
               <Button
                 color="warning"
                 size="lg"
                 target="_blank"
+                onClick={() => dispatch(AddCart(userAuth, product))}
                 rel="noopener noreferrer">
                 <i className="fas fa-cart-plus" />
                 Add to Cart

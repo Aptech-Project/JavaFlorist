@@ -26,8 +26,8 @@ export function GetNumberCart() {
     }
 }
 
-export const AddCart = (product) => dispatch => {
-    apiService.carts().update(1, product)
+export const AddCart = (id, product) => dispatch => {
+    apiService.carts().update(id, product)
         .then(response => {
             dispatch({
                 type: ADD_CART,

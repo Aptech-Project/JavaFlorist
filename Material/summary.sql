@@ -87,7 +87,7 @@ CREATE TABLE [feedbackdata] (
   [userid] int NOT NULL FOREIGN KEY REFERENCES [user](id),
   [productid] int NOT NULL FOREIGN KEY REFERENCES [product](id),
   [feedback] varchar(8000) NOT NULL,
-  [fbReply] varchar(8000) NOT NULL,
+  [fbReply] varchar(8000)  NULL,
   [vote] int NOT NULL
   PRIMARY KEY ([id])
 );

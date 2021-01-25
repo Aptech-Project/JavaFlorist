@@ -35,9 +35,10 @@ export default {
     feedbacks(url = baseApi + 'Feedbackdatums/') {
         return {
             fetchAll: () => axios.get(url),
-            fetchById: id => axios.get(url + id),
+            fetchByIdPro: (pId, uId) => axios.get(url + "Comment/" + pId + "/" + uId),
             create: newRecord => axios.post(url, newRecord),
             update: (id, updateRecord) => axios.put(url + id, updateRecord),
+            repComment: (id, rep) => axios.put(url + "RepComment/" + id + "/" + rep, rep),
             delete: id => axios.delete(url + id)
         }
     },
@@ -49,6 +50,8 @@ export default {
             update: (id, updateRecord) => axios.put(url + id, updateRecord),
             delete: id => axios.delete(url + id),
             deleteID: id => axios.deleteID(url + "Delete/" + id),
+            updateActive: (id) => axios.put(url + "EditActive/" + id),
+            updateInActive: (id) => axios.put(url + "InAtive/" + id),
             login: email => axios.get(url + "login/" + email)
         }
     },
@@ -61,6 +64,14 @@ export default {
         }
     },
     cartdetail(url = baseApi + 'Cartdetails/') {
+        return {
+            fetchById: id => axios.get(url + id),
+            create: newRecord => axios.post(url, newRecord),
+            update: (id, updateRecord) => axios.put(url + id, updateRecord),
+            delete: id => axios.delete(url + id),
+        }
+    },
+    orders(url = baseApi + 'Orders/') {
         return {
             fetchById: id => axios.get(url + id),
             create: newRecord => axios.post(url, newRecord),

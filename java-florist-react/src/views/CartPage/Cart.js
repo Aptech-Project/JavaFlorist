@@ -39,7 +39,7 @@ export default function Cart() {
 
     const DecQuantity = async (item) => {
         await dispatch(DecreaseQuantity(item))
-        await dispatch(GetCart(1))
+        await dispatch(GetCart(userAuth))
         await setCart(carts)
     }
     const IncQuantity = async (item) => {

@@ -9,6 +9,7 @@ export const ADD_CART = 'ADD_CART';
 export const UPDATE_CART = 'UPDATE_CART';
 export const DELETE_CART = 'DELETE_CART';
 export const USER_PROFILE = 'USER_PROFILE';
+export const INSERT_ORDER = 'INSERT_ORDER';
 
 export const GetCart = (id) => dispatch => {
   apiService.carts().fetchById(id)
@@ -84,12 +85,12 @@ export const loadprofile = (userData) => {
   }
 }
 
-export const update = (id, data) => dispatch => {
-  apiService.customers().update(id, data)
+export const insert = (data) => dispatch => {
+  apiService.orders().create(data)
     .then(res => {
       dispatch({
-        type: ACTION_TYPES.UPDATE,
-        payload: { id, ...data },
+        type: INSERT_ORDER,
+        payload: data,
         status: res.status
       })
     })

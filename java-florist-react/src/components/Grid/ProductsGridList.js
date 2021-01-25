@@ -53,6 +53,8 @@ export default function ProductsGridList(props) {
   const classes = useStyles();
   let { products, indexCount } = productPagination(props.products.filter(product => product.categoryActive == product.active == 1), activeIndex, 9)
   const dispatch = useDispatch();
+  const userAuth = localStorage.getItem("user_authenticated");
+
   return (
     <div>
       <div className={classes.root + "row"}>
@@ -77,7 +79,7 @@ export default function ProductsGridList(props) {
                     <Tooltip
                       title="Add to cart"
                       placement={window.innerWidth > 959 ? "top" : "left"}>
-                      <IconButton className={classes.icon} onClick={() => dispatch(AddCart(product))}>
+                      <IconButton className={classes.icon} onClick={() => dispatch(AddCart(userAuth, product))}>
                         <AddShoppingCart />
                       </IconButton>
                     </Tooltip>

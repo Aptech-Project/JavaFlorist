@@ -26,7 +26,7 @@ import {
 	UpdateCart,
 } from '../../actions/cart.action';
 import { loadprofile } from "actions/customer.action";
-// import { update } from "actions/checkout.action";
+import { insert } from "actions/checkout.action";
 import MenuItem from '@material-ui/core/MenuItem';
 
 const currencies = [
@@ -75,15 +75,15 @@ export default function Checkout() {
 		TotalCart += item.quanity * item.product.price;
 	});
 
-	const DecQuantity = (item) => {
-		dispatch(DecreaseQuantity(item))
-		dispatch(GetCart(userAuth))
-		setCart(carts)
+	const DecQuantity = async (item) => {
+		await dispatch(DecreaseQuantity(item))
+		await dispatch(GetCart(userAuth))
+		await setCart(carts)
 	}
-	const IncQuantity = (item) => {
-		dispatch(IncreaseQuantity(item))
-		dispatch(GetCart(userAuth))
-		setCart(carts)
+	const IncQuantity = async (item) => {
+		await dispatch(IncreaseQuantity(item))
+		await dispatch(GetCart(userAuth))
+		await setCart(carts)
 	}
 	const DeleteCart = (item) => {
 		dispatch(DeleteCarts(item))
@@ -118,13 +118,9 @@ export default function Checkout() {
 			userData.append('paymentmethod', currency)
 			userData.append('message', data.note)
 			userData.append('phonenumber', data.phone)
+			userData.append('totalmoney', TotalCart)
 			userData.append('userid', userAuth)
-			userData.append('userid', userAuth)
-			userData.append('userid', userAuth)
-			console.log(data)
-			console.log(userData.get("paymentmethod"))
-			alert("DOne")
-			// dispatch(create(userData))
+			dispatch(insert(userData))
 		}
 	};
 

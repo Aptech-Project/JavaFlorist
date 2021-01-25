@@ -24,36 +24,73 @@ namespace java_florist_api.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Feedbackfullcs>>> GetFeedback()
         {
-
-
-
             var feedback = from p in _context.Products
                            join f in _context.Feedbackdata on p.Id equals f.Productid
                            join u in _context.Users on f.Userid equals u.Id
                            select new Feedbackfullcs()
+                           
                            {
+                               id=f.Id,
+                               uId=f.Userid,
+                               pId=f.Productid,
                                name = u.Username,
                                pname = p.Name,
                                fb = f.Feedback,
-                               vote = f.Vote
+                               vote = f.Vote,
+                               fbRep=f.FbReply
                            };
+                        
             return await feedback.ToListAsync();
         }
 
         // GET: api/Feedbackdatums/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Feedbackdatum>> GetFeedbackdatum(int id)
+        public async Task<ActionResult<IEnumerable<Feedbackfullcs>>> GetFeedbackdatum(int id)
         {
-            var feedbackdatum = await _context.Feedbackdata.FindAsync(id);
-
-            if (feedbackdatum == null)
+            var feedback = from p in _context.Products
+                           join f in _context.Feedbackdata on p.Id equals f.Productid
+                           join u in _context.Users on f.Userid equals u.Id
+                           where f.Id == id
+                           select new Feedbackfullcs()
+                           {
+                               id = f.Id,
+                               name = u.Username,
+                               pname = p.Name,
+                               fb = f.Feedback,
+                               vote = f.Vote,
+                               fbRep = f.FbReply
+                           };
+            if (feedback == null)
             {
                 return NotFound();
             }
 
-            return feedbackdatum;
+            return await feedback.ToListAsync();
         }
+        [HttpGet("Comment/{productId}/{userID}")]
+        public async Task<ActionResult<IEnumerable<Feedbackdatum>>> GetComment(int productId,int userID)
+        {
+            var feedback = from f in _context.Feedbackdata
+                           where f.Productid == productId where f.Userid == userID
+                           select f;
+            if (feedback == null)
+            {
+                return NotFound();
+            }
 
+            return await feedback.ToListAsync();
+        }
+        [HttpPut("RepComment/{id}/{rep}")]
+        public ActionResult RepComment(int id,string rep)
+        {
+            var result = _context.Feedbackdata.SingleOrDefault(s => s.Id.Equals(id));
+            if (result != null)
+            {
+                result.FbReply = rep;
+                _context.SaveChanges();
+            }
+            return Ok(result);
+        }
         // PUT: api/Feedbackdatums/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]

@@ -75,14 +75,46 @@ namespace java_florist_api.Controllers
         // POST: api/Orders
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Order>> PostOrder(Order order)
+        public async Task<ActionResult<Order>> PostOrder([FromForm] Order order)
         {
+
+            order.Date = DateTime.Now;
             _context.Orders.Add(order);
             await _context.SaveChangesAsync();
+            var cart = await _context.Carts.FirstAsync(c => c.Userid == order.Userid);
+            var id_cart = cart.Id;
+            var Cartdetails = await _context.Cartdetails
+               .Where(cd => cd.Cartid == id_cart)
+               .Select(x => new Cartdetail()
+               {
+                   Id = x.Id,
+                   Quanity = x.Quanity,
+                   Cartid = x.Cartid,
+                   Productid = x.Productid,
+               }).ToListAsync();
+            var oder_id = await _context.Orders.OrderByDescending(p => p.Id).FirstAsync();
+            foreach (var item in Cartdetails)
+            {
+                Orderdetail orderdetail = new Orderdetail();
+                orderdetail.Productid = item.Productid;
+                orderdetail.Orderid = oder_id.Id;
+                orderdetail.Quantity = item.Quanity;
+                _context.Orderdetails.Add(orderdetail);
+                await _context.SaveChangesAsync();
+            }
+            foreach (var item in Cartdetails)
+            {
+                var cartdetail = await _context.Cartdetails.FirstAsync(c=> c.Id==item.Id);
+                if (cartdetail
+                    != null)
+                {
+                    _context.Cartdetails.Remove(cartdetail);
+                    await _context.SaveChangesAsync();
+                }
+            }
 
-            return CreatedAtAction("GetOrder", new { id = order.Id }, order);
+            return NoContent();
         }
-
         // DELETE: api/Orders/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteOrder(int id)
