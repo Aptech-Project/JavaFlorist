@@ -32,16 +32,19 @@ namespace java_florist_api.Controllers
         public async Task<ActionResult<Cart>> GetCart(int id)
         {
             var cart = await _context.Carts.FirstAsync(c => c.Userid == id);
+
             var id_cart = cart.Id;
+
+            // var Cartdetails = from cd in _context.Cartdetails where cd.Cartid == id_cart select  ;
             var Cartdetails = await _context.Cartdetails
+                .Where(cd => cd.Cartid == id_cart)
                 .Select(x => new Cartdetail()
                 {
                     Id = x.Id,
                     Quanity = x.Quanity,
-                    Cartid = id_cart,
+                    Cartid = x.Cartid,
                     Productid = x.Productid,
-                })
-                .ToListAsync();
+                }).ToListAsync();
             foreach (var item in Cartdetails)
             {
                 var product = await _context.Products.FirstAsync(p => p.Id == item.Productid);

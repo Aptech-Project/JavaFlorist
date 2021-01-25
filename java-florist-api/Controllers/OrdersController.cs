@@ -84,14 +84,14 @@ namespace java_florist_api.Controllers
             var cart = await _context.Carts.FirstAsync(c => c.Userid == order.Userid);
             var id_cart = cart.Id;
             var Cartdetails = await _context.Cartdetails
-                .Select(x => new Cartdetail()
-                {
-                    Id = x.Id,
-                    Quanity = x.Quanity,
-                    Cartid = id_cart,
-                    Productid = x.Productid,
-                })
-                .ToListAsync();
+               .Where(cd => cd.Cartid == id_cart)
+               .Select(x => new Cartdetail()
+               {
+                   Id = x.Id,
+                   Quanity = x.Quanity,
+                   Cartid = x.Cartid,
+                   Productid = x.Productid,
+               }).ToListAsync();
             var oder_id = await _context.Orders.OrderByDescending(p => p.Id).FirstAsync();
             foreach (var item in Cartdetails)
             {
@@ -102,6 +102,17 @@ namespace java_florist_api.Controllers
                 _context.Orderdetails.Add(orderdetail);
                 await _context.SaveChangesAsync();
             }
+            foreach (var item in Cartdetails)
+            {
+                var cartdetail = await _context.Cartdetails.FirstAsync(c=> c.Id==item.Id);
+                if (cartdetail
+                    != null)
+                {
+                    _context.Cartdetails.Remove(cartdetail);
+                    await _context.SaveChangesAsync();
+                }
+            }
+
             return NoContent();
         }
         // DELETE: api/Orders/5
