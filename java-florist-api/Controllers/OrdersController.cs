@@ -29,16 +29,18 @@ namespace java_florist_api.Controllers
 
         // GET: api/Orders/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Order>> GetOrder(int id)
+        public async Task<ActionResult<User>> GetOrder(int id)
         {
-            var order = await _context.Orders.FindAsync(id);
+            var user = await _context.Users.FirstAsync(u => u.Id == id);
 
-            if (order == null)
-            {
-                return NotFound();
-            }
-
-            return order;
+            var order = await _context.Orders
+               .Where(od => od.Userid == id)
+               .Select(x => new Order()
+               {
+                   Id = x.Id,
+               }).ToListAsync();
+            user.Orders = order;
+            return user;
         }
 
         // PUT: api/Orders/5

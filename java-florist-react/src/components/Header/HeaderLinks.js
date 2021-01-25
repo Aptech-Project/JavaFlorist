@@ -86,6 +86,20 @@ export default function HeaderLinks(props) {
       </ListItem>
       <ListItem className={classes.listItem}>
         <Tooltip
+          id="order"
+          title="List Oder"
+          placement={window.innerWidth > 959 ? "top" : "left"}
+          classes={{ tooltip: classes.tooltip }}>
+          <Button
+            color="transparent"
+            href="/order"
+            className={classes.navLink}>
+            <i className={classes.socialIcons + " fas fa-shopping-cart"} />
+          </Button>
+        </Tooltip>
+      </ListItem>
+      <ListItem className={classes.listItem}>
+        <Tooltip
           id="login-profile"
           title="Login To Order"
           placement={window.innerWidth > 959 ? "top" : "left"}

@@ -1,12 +1,5 @@
-import React, { Component, useState, useEffect } from 'react'
-import { connect } from "react-redux";
-import { makeStyles } from "@material-ui/core/styles";
-import styles from "assets/jss/material-kit-react/views/landingPageSections/productStyle.js";
+import React, { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux';
-import { FormGroup, FormControlLabel, Switch } from '@material-ui/core';
-import GridContainer from "components/Grid/GridContainer";
-import GridItem from "components/Grid/GridItem";
-import ProductsGridList from "components/Grid/ProductsGridList";
 import Button from "components/CustomButtons/Button.js";
 
 import {
@@ -14,8 +7,6 @@ import {
     GetCart,
     DecreaseQuantity,
     DeleteCarts,
-    GetNumberCart,
-    UpdateCart,
 } from '../../actions/cart.action';
 
 export default function Cart() {
@@ -26,7 +17,6 @@ export default function Cart() {
     let carts = useSelector(state => state.cart.Carts);//get from root reducer
     let [cart, setCart] = useState([])
     const userAuth = localStorage.getItem(SET_USER_AUTHENTICATE);
-
 
     useEffect(() => {
         dispatch(GetCart(userAuth))
@@ -54,9 +44,6 @@ export default function Cart() {
     }
     function TotalPrice(price, tonggia) {
         return Number(price * tonggia).toLocaleString('en-US');
-    }
-    function toCheckout() {
-
     }
     return (
         <div className="row">

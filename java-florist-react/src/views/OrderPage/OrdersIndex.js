@@ -17,11 +17,11 @@ import styles from "assets/jss/material-kit-react/views/landingPage.js";
 
 
 // Sections for this page
-import Cart from './Cart';
+import Order from './Order';
 
 const useStyles = makeStyles(styles);
 
-export default function CartsIndex(props) {
+export default function OrdersIndex(props) {
   const classes = useStyles();
   return (
     <div>
@@ -49,7 +49,7 @@ export default function CartsIndex(props) {
       </Parallax>
       <div className={classNames(classes.main, classes.mainRaised)}>
         <div className={classes.container}>
-          <Cart />
+          <Order />
         </div>
       </div>
     </div>
