@@ -26,31 +26,45 @@ import {
 	UpdateCart,
 } from '../../actions/cart.action';
 import { loadprofile } from "actions/customer.action";
+// import { update } from "actions/checkout.action";
+import MenuItem from '@material-ui/core/MenuItem';
 
+const currencies = [
+	{
+		value: '1',
+		label: 'SHIP CODE',
+	},
+	{
+		value: '2',
+		label: 'Pay cart',
+	},
+];
 export default function Checkout() {
 	const dispatch = useDispatch()
 	const SET_USER_AUTHENTICATE = 'user_authenticated';
-
 	let TotalCart = 0;
 	let carts = useSelector(state => state.cart.Carts);//get from root reducer
 	let [cart, setCart] = useState([])
 	const userProfile = useSelector(state => state.customer.userProfile);
-	console.log("userProfile")
-	console.log(userProfile)
+	const [count, setCount] = useState(0)
 	const userAuth = localStorage.getItem(SET_USER_AUTHENTICATE);
 	const formatDate = () => {
 		let date = new Date(userProfile.birthday);
 		date = date.getDate() + ' - ' + (date.getMonth() + 1) + ' - ' + date.getFullYear();
 		return date
 	}
-	const defaultFormState = {
-		coCd: '',
-		loc: '',
-		docTpId: '',
-		name: '',
+	const [currency, setCurrency] = useState('1');
+
+	const handleChange = (event) => {
+		setCurrency(event.target.value);
 	};
 
 	const [userList, setUserList] = useState([]);
+
+	useEffect(() => {
+		dispatch(GetCart(userAuth))
+		setCart(carts)
+	}, [userProfile]);
 
 	useEffect(() => {
 		dispatch(GetCart(userAuth))
@@ -60,7 +74,6 @@ export default function Checkout() {
 	cart.forEach(function (item) {
 		TotalCart += item.quanity * item.product.price;
 	});
-
 
 	const DecQuantity = (item) => {
 		dispatch(DecreaseQuantity(item))
@@ -100,26 +113,20 @@ export default function Checkout() {
 			let userData = new FormData()
 			userData.append('email', data.email)
 			userData.append('address', data.address)
-			userData.append('name', data.fullname)
+			userData.append('receiver', data.fullname)
+			userData.append('note', data.note)
+			userData.append('paymentmethod', currency)
+			userData.append('message', data.note)
 			userData.append('phonenumber', data.phone)
-			console.log(userData.get("address"))
-			console.log(userData.phonenumber)
-			console.log(userData.email)
+			userData.append('userid', userAuth)
+			userData.append('userid', userAuth)
+			userData.append('userid', userAuth)
+			console.log(data)
+			console.log(userData.get("paymentmethod"))
 			alert("DOne")
-			// registerDispatch(create(userData))
+			// dispatch(create(userData))
 		}
 	};
-	// const updateDoc = (index, value) => {
-	//     setTimeout(() => {
-	//         onUpdateDoc({
-	//             key: info[index].key,
-	//             value,
-	//         });
-	//     }, 100);
-	// };
-	function updateDoc(e) {
-		console.log(e.target.value);
-	}
 
 	return (
 		<div className="row">
@@ -143,7 +150,7 @@ export default function Checkout() {
 											<div className="form-group">
 												<TextField
 													label="Fullname"
-													defaultValue={userProfile != null ? userProfile.name : ""}
+													// value={userProfile != null ? userProfile.name : ""}
 													id="fullname"
 													margin="normal"
 													name="fullname"
@@ -160,16 +167,12 @@ export default function Checkout() {
 													})}
 													required
 													autoFocus
-													onChange={(e) =>
-														updateDoc(e)
-													}
 													autoComplete="fullname"
 													error={errors.fullname}
 													helperText={errors.fullname && errors.fullname.message}
 												/>
 											</div>
 											<div className="form-group">
-
 												<TextField
 													label="Phone Number"
 													// defaultValue={userProfile == null ? "" : userProfile.name}
@@ -177,6 +180,7 @@ export default function Checkout() {
 													margin="normal"
 													name="phone"
 													fullWidth
+													type="number"
 													InputProps={{
 														endAdornment: (
 															<InputAdornment position='end'>
@@ -205,7 +209,7 @@ export default function Checkout() {
 											<div className="form-group">
 												<TextField
 													label="Email..."
-													defaultValue={userProfile == null ? "" : userProfile.email}
+													// defaultValue={userProfile == null ? "" : userProfile.email}
 													margin="normal"
 													id="email"
 													name="email"
@@ -234,7 +238,7 @@ export default function Checkout() {
 											<div className="form-group">
 												<TextField
 													label="Address..."
-													defaultValue={userProfile == null ? "" : userProfile.address}
+													// defaultValue={userProfile == null ? "" : userProfile.address}
 													id="address"
 													margin="normal"
 													name="address"
@@ -256,18 +260,62 @@ export default function Checkout() {
 												/>
 											</div>
 											<div className="form-group">
-												<label for="exampleInputPassword1">Paymentmethod</label>
-												<select name="paymentmethod" className="form-control" id="cars">
-													<option value="1">SHIP COD</option>
-													<option value="3">Oder</option>
-												</select>
+												<TextField
+													label="Payment..."
+													id="paymentmethod"
+													margin="normal"
+													name="paymentmethod"
+													fullWidth
+													InputProps={{
+														endAdornment: (
+															<InputAdornment position='end'>
+																<BusinessIcon />
+															</InputAdornment>
+														),
+													}}
+													inputRef={register({
+														required: 'Payment is required',
+													})}
+													required
+													select
+													autoComplete="payment"
+													error={errors.payment}
+													helperText={errors.payment && errors.payment.message}
+													value={currency}
+													onChange={handleChange}
+												>
+													{currencies.map((option) => (
+														<MenuItem key={option.value} value={option.value}>
+															{option.label}
+														</MenuItem>
+													))}
+												</TextField>
 											</div>
 											<div className="form-group">
-												<label for="exampleInputPassword1">Message</label>
-												<textarea type="text" className="form-control" name="note" id="note"
-												></textarea>
+												<TextField
+													label="Note..."
+													id="note"
+													margin="normal"
+													name="note"
+													fullWidth
+													InputProps={{
+														endAdornment: (
+															<InputAdornment position='end'>
+																<BusinessIcon />
+															</InputAdornment>
+														),
+													}}
+													inputRef={register({
+														required: 'Note is required',
+													})}
+													required
+													multiline
+													autoComplete="note"
+													error={errors.note}
+													helperText={errors.note && errors.note.message}
+												>
+												</TextField>
 											</div>
-
 										</div>
 									</div>
 									<Button simple
@@ -276,8 +324,8 @@ export default function Checkout() {
 										type="submit"
 										//disabled={!formState.isValid}
 										variant="contained">
-										Get Started
-                                    </Button>
+										Buy
+									</Button>
 								</div>
 							</div>
 						</section>

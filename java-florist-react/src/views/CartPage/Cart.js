@@ -37,15 +37,15 @@ export default function Cart() {
         TotalCart += item.quanity * item.product.price;
     });
 
-    const DecQuantity = (item) => {
-        dispatch(DecreaseQuantity(item))
-        dispatch(GetCart(1))
-        setCart(carts)
+    const DecQuantity = async (item) => {
+        await dispatch(DecreaseQuantity(item))
+        await dispatch(GetCart(1))
+        await setCart(carts)
     }
-    const IncQuantity = (item) => {
-        dispatch(IncreaseQuantity(item))
-        dispatch(GetCart(userAuth))
-        setCart(carts)
+    const IncQuantity = async (item) => {
+        await dispatch(IncreaseQuantity(item))
+        await dispatch(GetCart(userAuth))
+        await setCart(carts)
     }
     const DeleteCart = (item) => {
         dispatch(DeleteCarts(item))
