@@ -51,7 +51,7 @@ export default function ProductsGridList(props) {
 
   let activeIndex = useSelector(state => state.product.activeIndex) || 1;
   const classes = useStyles();
-  let { products, indexCount } = productPagination(props.products.filter(product => product.categoryActive == product.active == 1), activeIndex)
+  let { products, indexCount } = productPagination(props.products.filter(product => product.categoryActive == product.active == 1), activeIndex, 9)
   const dispatch = useDispatch();
   return (
     <div>
@@ -87,7 +87,7 @@ export default function ProductsGridList(props) {
             </GridListTile>
           ))}
         </GridList>
-        <br></br>
+        <br /><br />
         {products.length > 0 &&
           <Pagination
             style={{}}

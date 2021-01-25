@@ -11,12 +11,14 @@ import IconButton from "@material-ui/core/IconButton";
 import Close from "@material-ui/icons/Close";
 // core components
 import Button from "components/CustomButtons/Button.js";
-
-import modalStyle from "assets/jss/material-dashboard-pro-react/modalStyle.js";
+import { makeStyles } from '@material-ui/core/styles';
+import modalStyle from "assets/jss/material-kit-react/modalStyle.js";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="down" ref={ref} {...props} />;
 });
+
+const useStyles = makeStyles(modalStyle);
 
 export default function Modal() {
   const [modal, setModal] = React.useState(false);

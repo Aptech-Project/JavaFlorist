@@ -36,19 +36,13 @@ import UpgradeToPro from "views/UpgradeToPro/UpgradeToPro.js";
 import Customer from "./views/AdminPage/Customer/Customer.component"
 import Message from "./views/AdminPage/Message/Message.component"
 import Feedback from "./views/AdminPage/Feedback/Feedback.component"
+import ProductTableList from "views/AdminPage/Product/ProductTableList";
 const dashboardRoutes = [
   {
     path: "/dashboard",
     name: "Dashboard",
     icon: Dashboard,
     component: DashboardPage,
-    layout: "/admin"
-  },
-  {
-    path: "/user",
-    name: "User Profile",
-    icon: Person,
-    component: UserProfile,
     layout: "/admin"
   },
   {
@@ -73,33 +67,13 @@ const dashboardRoutes = [
     layout: "/admin"
   },
   {
-    path: "/table",
-    name: "Table List",
+    path: "/product",
+    name: "Product",
     icon: "content_paste",
-    component: TableList,
+    component: ProductTableList,
     layout: "/admin"
   },
-  {
-    path: "/icons",
-    name: "Icons",
-    icon: BubbleChart,
-    component: Icons,
-    layout: "/admin"
-  },
-  {
-    path: "/maps",
-    name: "Maps",
-    icon: LocationOn,
-    component: Maps,
-    layout: "/admin"
-  },
-  {
-    path: "/notifications",
-    name: "Notifications",
-    icon: Notifications,
-    component: NotificationsPage,
-    layout: "/admin"
-  }
+
 ];
 
 export default dashboardRoutes;

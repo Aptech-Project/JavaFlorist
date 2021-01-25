@@ -24,7 +24,7 @@ export default function SectionPillsHome(props) {
     <div className={classes.section}>
       <div className={classes.container}>
         <div id="navigation-pills">
-          <div className={classes.title} style={{ fontFamily: "DancingScript" }}>
+          <div className={classes.title}>
             <h2>What We Offer</h2>
           </div>
           <GridContainer>
