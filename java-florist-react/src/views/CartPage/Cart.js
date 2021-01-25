@@ -7,6 +7,7 @@ import { FormGroup, FormControlLabel, Switch } from '@material-ui/core';
 import GridContainer from "components/Grid/GridContainer";
 import GridItem from "components/Grid/GridItem";
 import ProductsGridList from "components/Grid/ProductsGridList";
+import Button from "components/CustomButtons/Button.js";
 
 import {
     IncreaseQuantity,
@@ -19,13 +20,16 @@ import {
 
 export default function Cart() {
     const dispatch = useDispatch()
+    const SET_USER_AUTHENTICATE = 'user_authenticated';
 
     let TotalCart = 0;
     let carts = useSelector(state => state.cart.Carts);//get from root reducer
     let [cart, setCart] = useState([])
+    const userAuth = localStorage.getItem(SET_USER_AUTHENTICATE);
+
 
     useEffect(() => {
-        dispatch(GetCart(1))
+        dispatch(GetCart(userAuth))
         setCart(carts)
     }, [carts == cart == []]);
 
@@ -33,23 +37,26 @@ export default function Cart() {
         TotalCart += item.quanity * item.product.price;
     });
 
-    const DecQuantity = (item) => {
-        dispatch(DecreaseQuantity(item))
-        dispatch(GetCart(1))
-        setCart(carts)
+    const DecQuantity = async (item) => {
+        await dispatch(DecreaseQuantity(item))
+        await dispatch(GetCart(1))
+        await setCart(carts)
     }
-    const IncQuantity = (item) => {
-        dispatch(IncreaseQuantity(item))
-        dispatch(GetCart(1))
-        setCart(carts)
+    const IncQuantity = async (item) => {
+        await dispatch(IncreaseQuantity(item))
+        await dispatch(GetCart(userAuth))
+        await setCart(carts)
     }
     const DeleteCart = (item) => {
         dispatch(DeleteCarts(item))
-        dispatch(GetCart(1))
+        dispatch(GetCart(userAuth))
         setCart(carts)
     }
     function TotalPrice(price, tonggia) {
         return Number(price * tonggia).toLocaleString('en-US');
+    }
+    function toCheckout() {
+
     }
     return (
         <div className="row">
@@ -91,7 +98,14 @@ export default function Cart() {
                         </tr>
                         <tr>
                             <td colSpan="5"></td>
-                            <td><button className="btn btn-primary" onClick={() => ""}>Check out</button></td>
+                            <td>
+                                <Button
+                                    color="transparent"
+                                    href="/checkout"
+                                >
+                                    Checkout
+                                </Button>
+                            </td>
                         </tr>
                     </tbody>
 
