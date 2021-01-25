@@ -1,8 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useSelector, useDispatch } from 'react-redux';
 // nodejs library that concatenates classes
 import classNames from "classnames";
-// react components for routing our app without refresh
-import { Link } from "react-router-dom";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 // @material-ui/icons
@@ -15,21 +14,23 @@ import Button from "components/CustomButtons/Button.js";
 import Parallax from "components/Parallax/Parallax.js";
 // sections for this page
 import HeaderLinks from "components/Header/HeaderLinks.js";
-import SectionBasics from "./Components/Sections/SectionBasics.js";
-import SectionNavbars from "./Components/Sections/SectionNavbars.js";
-import SectionTabs from "./Components/Sections/SectionTabs.js";
-import SectionPills from "./Components/Sections/SectionPills.js";
-import SectionNotifications from "./Components/Sections/SectionNotifications.js";
-import SectionTypography from "./Components/Sections/SectionTypography.js";
-import SectionCarousel from "./Components/Sections/SectionCarousel.js";
-import image from "assets/img/faces/avatar.jpg";
+import SectionPillsHome from "./Components/Sections/SectionPillsHome.js";
 import styles from "assets/jss/material-kit-react/views/components.js";
+import SectionHotProduct from "./Components/Sections/SectionHotProducts.js";
+import * as actions from 'actions/product.action'
+import SectionCarouselHome from "./Components/Sections/SectionCarouselHome.js";
 
 const useStyles = makeStyles(styles);
 
 export default function Home(props) {
   const classes = useStyles();
   const { ...rest } = props;
+  const dispatch = useDispatch()
+  let products = useSelector(state => state.product.list);//get from root reducer
+  useEffect(() => {
+    dispatch(actions.fetchAll())
+  }, [!products]); //second parameter use to inform useEffect run when this parameter changes
+  console.log(products)
   return (
     <div>
       <Header
@@ -60,9 +61,28 @@ export default function Home(props) {
       </Parallax>
 
       <div className={classNames(classes.main, classes.mainRaised)}>
-        <SectionTypography />
-        <SectionCarousel />
-        <SectionPills />
+        <SectionPillsHome products={products} />
+        <SectionHotProduct products={products} />
+        <SectionCarouselHome />
+        <div className={classes.textCenter + " " + classes.sharingArea}>
+          <GridContainer justify="center">
+            <h3>Thank you for supporting us!</h3>
+          </GridContainer>
+          <Button color="twitter">
+            <i className={classes.socials + " fab fa-twitter"} /> Tweet
+          </Button>
+          <Button color="facebook">
+            <i className={classes.socials + " fab fa-facebook-square"} /> Share
+          </Button>
+          <Button color="google">
+            <i className={classes.socials + " fab fa-google-plus-g"} />
+            Share
+          </Button>
+          <Button color="github">
+            <i className={classes.socials + " fab fa-github"} /> Star
+          </Button>
+        </div>
+        <br /><br /><br />
       </div>
       <Footer />
     </div>

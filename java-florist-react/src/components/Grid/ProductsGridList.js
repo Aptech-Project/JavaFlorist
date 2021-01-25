@@ -1,17 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
 import GridListTileBar from '@material-ui/core/GridListTileBar';
-import ListSubheader from '@material-ui/core/ListSubheader';
 import IconButton from '@material-ui/core/IconButton';
-import InfoIcon from '@material-ui/icons/Info';
-import { AddShoppingCart, Shop } from '@material-ui/icons';
+import { AddShoppingCart, FavoriteBorder, Shop } from '@material-ui/icons';
 import { Link } from 'react-router-dom';
 import Pagination from 'components/Pagination/Pagination';
 import { productPagination } from 'shared/productFunction.shared';
 import { AddCart } from '../../actions/cart.action';
+import { Button, Tooltip } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -68,12 +67,20 @@ export default function ProductsGridList(props) {
                 subtitle={<span>Price: {product.price} $</span>}
                 actionIcon={
                   <div style={{ minWidth: '100px' }}>
-                    <IconButton className={classes.icon} onClick={() => { console.log("Buy now clicked") }}>
-                      <Shop />
-                    </IconButton>
-                    <IconButton className={classes.icon} onClick={() => dispatch(AddCart(product))}>
-                      <AddShoppingCart />
-                    </IconButton>
+                    <Tooltip
+                      title="Buy now"
+                      placement={window.innerWidth > 959 ? "top" : "left"}>
+                      <IconButton className={classes.icon} onClick={() => { console.log("Buy now clicked") }}>
+                        <Shop />
+                      </IconButton>
+                    </Tooltip>
+                    <Tooltip
+                      title="Add to cart"
+                      placement={window.innerWidth > 959 ? "top" : "left"}>
+                      <IconButton className={classes.icon} onClick={() => dispatch(AddCart(product))}>
+                        <AddShoppingCart />
+                      </IconButton>
+                    </Tooltip>
                   </div>
                 }
               />

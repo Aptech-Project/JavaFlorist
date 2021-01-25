@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 import styles from "assets/jss/material-kit-react/views/landingPageSections/productStyle.js";

@@ -6,11 +6,26 @@ const pillsStyle = {
   },
   container,
   title: {
-    ...title,
-    marginTop: "30px",
+    margin: "auto!important",
     minHeight: "32px",
-    textDecoration: "none"
-  }
+    fontWeight: "!400",
+    fontSize: "50px",
+    textDecoration: "none",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    paddingBottom: "20px",
+  },
+  rootGridPills: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    justifyContent: 'space-around',
+    overflow: 'hidden',
+  },
+  gridList: {
+    width: 500,
+    height: 450,
+  },
 };
 
 export default pillsStyle;
