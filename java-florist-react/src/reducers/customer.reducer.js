@@ -39,10 +39,11 @@ export const customerReducer = (state = initialState, action) => {
                 editInfoStatus: action.status
             }
         case ACTION_TYPES.UPDATE_IMAGE:
+            console.log(action.status);
             return {
                 ...state,
                 list: state.list.map(x => x.id == action.payload.id ? action.payload : x),
-                editImageStatus: action.status
+                editInfoStatus: action.status
             }
         case ACTION_TYPES.UPDATE_ACTIVE:
             return {

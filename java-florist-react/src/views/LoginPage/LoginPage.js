@@ -51,7 +51,7 @@ export default function LoginPage(props) {
   useEffect(()=>{
     axios.get('http://localhost:5000/api/Users')
     .then(function (response) {
-      console.log(response);
+      //console.log(response);
       setUserList(response.data)
     })
     .catch(function (error) {
