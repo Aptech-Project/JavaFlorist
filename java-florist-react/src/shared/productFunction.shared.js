@@ -45,4 +45,27 @@ const productPagination = (products, activeIndex, itemPerPage) => {
   return { products: paginatedProducts, indexCount: indexCount }
 }
 
-export { productFilter, productPagination }
+const checkProductName = (filterData, list) => {
+  let filteredList = list.filter(item => {
+    let matched = false
+    Object.keys(item).some(key => {
+      if (filterData.hasOwnProperty(key) || key == "price") {
+        if (key == "name") {
+          let itemValue = item[key].toString().toLowerCase()
+          let filterDataValue = filterData[key].toString().toLowerCase()
+          if (itemValue == filterDataValue) {
+            matched = true
+          }
+        }
+      }
+    })
+    if (matched) {
+      return item
+    }
+  })
+  return (
+    filteredList.length > 0 ? true : false
+  )
+}
+
+export { productFilter, productPagination, checkProductName }

@@ -25,7 +25,6 @@ export const CheckoutReducer = (state = initialState, action) => {
       return {
         ...state,
         Carts: action.payload.cartdetails,
-        numberCart: action.payload.cartdetails.length,
       }
     case GET_NUMBER_CART:
       return {
@@ -34,8 +33,7 @@ export const CheckoutReducer = (state = initialState, action) => {
     case ADD_CART:
       return {
         ...state,
-        Carts: action.payload.cartdetails,
-        numberCart: action.payload.cartdetails.length,
+        numberCart: state.numberCart + 1,
       }
     case INCREASE_QUANTITY:
       return {
@@ -48,6 +46,7 @@ export const CheckoutReducer = (state = initialState, action) => {
     case DELETE_CART:
       return {
         ...state,
+        numberCart: state.numberCart - 1,
       }
     case INSERT_ORDER:
       return {

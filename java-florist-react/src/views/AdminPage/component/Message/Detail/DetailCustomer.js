@@ -25,23 +25,22 @@ const initialFieldValues = {
 }
 
 const DetailCustomer = (props) => {
-    const  { customer } = props
-    console.log(customer)
+    const { customer } = props
     return (
         <form>
-        <Grid container>
-          <Grid item lg={6} align='left' >          
-              <h5 style={{ fontWeight: 'bold', color: 'black' }}>Name: {customer.name}</h5>
-              <h5 style={{ fontWeight: 'bold', color: 'black' }}>UserName: </h5>
-              <h5 style={{ fontWeight: 'bold', color: 'black' }}>Email: AAAAAAA</h5>
-              <h5 style={{ fontWeight: 'bold', color: 'black' }}>Address: AAAAAAA</h5>
-              <h5 style={{ fontWeight: 'bold', color: 'black' }}>Birthday: AAAAAAA</h5>
-          </Grid>
-          <Grid item lg={6} align='center'>
-            <img src=""/>
-          </Grid>
-        </Grid>
-      </form>
+            <Grid container>
+                <Grid item lg={6} align='left' >
+                    <h5 style={{ fontWeight: 'bold', color: 'black' }}>Name: {customer.name}</h5>
+                    <h5 style={{ fontWeight: 'bold', color: 'black' }}>UserName: </h5>
+                    <h5 style={{ fontWeight: 'bold', color: 'black' }}>Email: AAAAAAA</h5>
+                    <h5 style={{ fontWeight: 'bold', color: 'black' }}>Address: AAAAAAA</h5>
+                    <h5 style={{ fontWeight: 'bold', color: 'black' }}>Birthday: AAAAAAA</h5>
+                </Grid>
+                <Grid item lg={6} align='center'>
+                    <img src="" />
+                </Grid>
+            </Grid>
+        </form>
     );
 }
 

@@ -10,6 +10,7 @@ import CardHeader from "components/Card/CardHeader.js";
 import CardBody from "components/Card/CardBody.js";
 import * as actions from 'actions/product.action'
 import ProductTable from "views/AdminPage/Product/ProductTable";
+import ProductModal from "./ProductModal";
 
 const styles = {
   cardCategoryWhite: {
@@ -50,7 +51,6 @@ export default function ProductTableList() {
   useEffect(() => {
     dispatch(actions.fetchAll())
   }, [!products]); //second parameter use to inform useEffect run when this parameter changes
-  console.log(products)
   return (
     <GridContainer>
       <GridItem xs={12} sm={12} md={12}>
@@ -61,6 +61,11 @@ export default function ProductTableList() {
               All products in our site
             </p>
           </CardHeader>
+          <div style={{ padding: "5px 20px" }}>
+            <ProductModal
+              title={"Add Product"}
+            />
+          </div>
           <CardBody>
             <ProductTable
               tableHeaderColor="primary"

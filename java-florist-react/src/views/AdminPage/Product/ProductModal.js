@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import * as productActions from 'actions/product.action'
 // material-ui components
 import withStyles from "@material-ui/core/styles/withStyles";
 import Slide from "@material-ui/core/Slide";
@@ -12,7 +14,7 @@ import Close from "@material-ui/icons/Close";
 import Button from "components/CustomButtons/Button.js";
 import { makeStyles } from '@material-ui/core/styles';
 import modalStyle from "assets/jss/material-kit-react/modalStyle.js";
-import { IconButton, Tooltip } from '@material-ui/core';
+import { FormControlLabel, IconButton, Radio, RadioGroup, Switch, TextField, Tooltip } from '@material-ui/core';
 import { Edit } from '@material-ui/icons';
 import InputLabel from "@material-ui/core/InputLabel";
 // core components
@@ -24,29 +26,160 @@ import CardHeader from "components/Card/CardHeader.js";
 import CardAvatar from "components/Card/CardAvatar.js";
 import CardBody from "components/Card/CardBody.js";
 import CardFooter from "components/Card/CardFooter.js";
-
+import MenuItem from '@material-ui/core/MenuItem';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
 import avatar from "assets/img/faces/marc.jpg";
+import { purple } from '@material-ui/core/colors';
+import defaultImage from "assets/img/default.jpg";
+import * as categoryActions from 'actions/category.action'
+import { Alert } from '@material-ui/lab';
+import { checkProductName } from 'shared/productFunction.shared';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="down" ref={ref} {...props} />;
 });
 
+const PurpleSwitch = withStyles({
+  switchBase: {
+    color: purple[300],
+    '&$checked': {
+      color: purple[500],
+    },
+    '&$checked + $track': {
+      backgroundColor: purple[500],
+    },
+  },
+  checked: {},
+  track: {},
+})(Switch);
 const useStyles = makeStyles(modalStyle);
-
+const initialFieldValues = {
+  name: '',
+  price: '',
+  description: '',
+  categoryname: '',
+  active: 1,
+  imgSrc: defaultImage,
+  imgFile: null
+}
 export default function ProductModal(props) {
-  const { title, product } = props;
-  const [modal, setModal] = React.useState(false);
+  const dispatch = useDispatch()
+  const { product } = props;
+  const [modal, setModal] = useState(false);
+  const [active, setActive] = useState(true);
+  const [error, setError] = useState({});
+  const [values, setValues] = useState(product ? product : initialFieldValues)
+  let allCategories = useSelector(state => state.category.categoriesList);//get from root reducer
+  let products = useSelector(state => state.product.list);//get from root reducer
+  let status = useSelector(state => state.product.status);//get from root reducer
+  const isAddMode = !product;
   const classes = useStyles();
+
+  useEffect(() => {
+    dispatch(categoryActions.fetchAll())
+  }, [!allCategories]);
+
+  function onSubmit(e) {
+    Object.keys(values).some(key => {
+      let value = values[key]
+      vaidateField(key, value)
+    })
+    if (error) return false
+    e.preventDefault()
+    let formData = new FormData()
+    formData.append('name', values.name)
+    formData.append('price', values.price)
+    formData.append('description', values.description)
+    formData.append('categoryname', values.categoryname)
+    formData.append('active', values.active)
+    formData.append('imgName', values.imgName)
+    formData.append('imgFile', values.imgFile)
+    if (isAddMode) {
+      dispatch(productActions.create(formData))
+    } else {
+      formData.append('id', product.id)
+      dispatch(productActions.update(product.id, formData))
+    }
+  }
+
+  function vaidateField(name, value) {
+    if (name == "name") {
+      let nameExisted = checkProductName({ name: value }, products)
+      if (value.length < 3) {
+        setError({ ...error, [name]: "Name must be at least 3 characters!" })
+      } else if (nameExisted) {
+        setError({ ...error, [name]: "This name is used already!" })
+      } else {
+        setError({ ...error, [name]: null })
+      }
+    }
+    if (name == "price") {
+      value <= 0 ?
+        setError({ ...error, [name]: "Price must be positive value!" }) :
+        setError({ ...error, [name]: null })
+    }
+    if (name == "categoryname") {
+      if (value == "") {
+        setError({ ...error, [name]: "Please select a category!" })
+      }
+    }
+    console.log(error)
+  }
+
+  const handleInputChange = e => {
+    let { name, value } = e.target;
+    vaidateField(name, value)
+    if (name == "active") {
+      setActive(!active)
+      value = !active ? 1 : 0
+    }
+    setValues({
+      ...values,
+      [name]: value
+    })
+  }
+
+  const showPreview = e => {
+    if (e.target.files && e.target.files[0]) {
+      let imgFile = e.target.files[0];
+      const reader = new FileReader();
+      reader.onload = x => {
+        setValues({
+          ...values,
+          imgFile,
+          imgSrc: x.target.result
+        })
+      }
+      reader.readAsDataURL(imgFile)
+    }
+    else {
+      setValues({
+        ...values,
+        imgFile: null,
+        imgSrc: defaultImage
+      })
+    }
+  }
+
+
   return (
     <div>
       <div>
-        <Tooltip
-          title="Edit data"
-          placement={window.innerWidth > 959 ? "top" : "left"}>
-          <IconButton className={classes.icon} onClick={e => setModal(true)}>
-            <Edit />
-          </IconButton>
-        </Tooltip>
+        {isAddMode ?
+          <Button color="primary" round onClick={() => setModal(true)}>
+            Add Product
+          </Button> :
+          <Tooltip
+            title="Edit data"
+            placement={window.innerWidth > 959 ? "top" : "left"}>
+            <IconButton className={classes.icon} onClick={e => setModal(true)}>
+              <Edit />
+            </IconButton>
+          </Tooltip>
+        }
+
       </div>
       <Dialog
         classes={{
@@ -74,7 +207,6 @@ export default function ProductModal(props) {
           >
             <Close className={classes.modalClose} />
           </IconButton>
-          <h4 className={classes.modalTitle}>{title}</h4>
         </DialogTitle>
         <DialogContent
           id="modal-slide-description"
@@ -83,149 +215,125 @@ export default function ProductModal(props) {
 
 
           <GridContainer>
-            <GridItem xs={12} sm={12} md={8}>
+            <GridItem xs={12} sm={12} md={12}>
               <Card>
                 <CardHeader color="primary">
-                  <h4 className={classes.cardTitleWhite}>Edit Profile</h4>
-                  <p className={classes.cardCategoryWhite}>Complete your profile</p>
+                  <h4 className={classes.cardTitleWhite}>{product ? "Edit Product" : "Add Product"}</h4>
+                  <p className={classes.cardCategoryWhite}>Product information</p>
                 </CardHeader>
                 <CardBody>
                   <GridContainer>
-                    <GridItem xs={12} sm={12} md={5}>
-                      <CustomInput
-                        labelText="Company (disabled)"
-                        id="company-disabled"
-                        formControlProps={{
-                          fullWidth: true
-                        }}
-                        inputProps={{
-                          disabled: true
-                        }}
-                      />
-                    </GridItem>
-                    <GridItem xs={12} sm={12} md={3}>
-                      <CustomInput
-                        labelText="Username"
-                        id="username"
-                        formControlProps={{
-                          fullWidth: true
-                        }}
-                      />
-                    </GridItem>
-                    <GridItem xs={12} sm={12} md={4}>
-                      <CustomInput
-                        labelText="Email address"
-                        id="email-address"
-                        formControlProps={{
-                          fullWidth: true
-                        }}
-                      />
-                    </GridItem>
-                  </GridContainer>
-                  <GridContainer>
-                    <GridItem xs={12} sm={12} md={6}>
-                      <CustomInput
-                        labelText="First Name"
-                        id="first-name"
-                        formControlProps={{
-                          fullWidth: true
-                        }}
-                      />
-                    </GridItem>
-                    <GridItem xs={12} sm={12} md={6}>
-                      <CustomInput
-                        labelText="Last Name"
-                        id="last-name"
-                        formControlProps={{
-                          fullWidth: true
-                        }}
-                      />
-                    </GridItem>
-                  </GridContainer>
-                  <GridContainer>
-                    <GridItem xs={12} sm={12} md={4}>
-                      <CustomInput
-                        labelText="City"
-                        id="city"
-                        formControlProps={{
-                          fullWidth: true
-                        }}
-                      />
-                    </GridItem>
-                    <GridItem xs={12} sm={12} md={4}>
-                      <CustomInput
-                        labelText="Country"
-                        id="country"
-                        formControlProps={{
-                          fullWidth: true
-                        }}
-                      />
-                    </GridItem>
-                    <GridItem xs={12} sm={12} md={4}>
-                      <CustomInput
-                        labelText="Postal Code"
-                        id="postal-code"
-                        formControlProps={{
-                          fullWidth: true
-                        }}
-                      />
-                    </GridItem>
-                  </GridContainer>
-                  <GridContainer>
+                    {(isAddMode && status == "201") &&
+                      <Alert severity="success">Create new product success!</Alert>
+                    }
+                    {(isAddMode && status && status != "201") &&
+                      <Alert severity="error">Create new product failed!</Alert>
+                    }
                     <GridItem xs={12} sm={12} md={12}>
-                      <InputLabel style={{ color: "#AAAAAA" }}>About me</InputLabel>
-                      <CustomInput
-                        labelText="Lamborghini Mercy, Your chick she so thirsty, I'm in that two seat Lambo."
-                        id="about-me"
-                        formControlProps={{
-                          fullWidth: true
+                      <FormControl className="col-12">
+                        <TextField
+                          name="name"
+                          label="Name"
+                          type="text"
+                          onChange={handleInputChange}
+                          defaultValue={values.name}
+                        />
+                        <FormHelperText error>{error.name}</FormHelperText>
+                      </FormControl>
+                    </GridItem>
+                    <GridItem xs={12} sm={6} md={6}>
+                      <FormControl className="col-12">
+                        <TextField
+                          name="price"
+                          label="Price"
+                          type="number"
+                          onChange={handleInputChange}
+                          defaultValue={values.price}
+                        />
+                        <FormHelperText error>{error.price}</FormHelperText>
+                      </FormControl>
+                    </GridItem>
+                    <GridItem xs={12} sm={6} md={6}>
+                      <FormControlLabel
+                        style={{ marginTop: '25px' }}
+                        control={
+                          <PurpleSwitch
+                            name="active"
+                            checked={active}
+                            onChange={handleInputChange} />
+                        }
+                        classes={{
+                          label: classes.label
                         }}
-                        inputProps={{
-                          multiline: true,
-                          rows: 5
-                        }}
+                        label={active ? "Active" : "Inactive"}
                       />
+                    </GridItem>
+                  </GridContainer>
+                  <GridContainer>
+                    <GridItem xs={12} sm={6} md={6}>
+                      <FormControl className="col-12">
+                        <InputLabel>Category</InputLabel>
+                        <Select
+                          name="categoryname"
+                          value={values.categoryname}
+                          onChange={handleInputChange}
+                        >
+                          {/* <MenuItem value={null}>{null}</MenuItem> */}
+                          {allCategories && allCategories.map((category, index) => (
+                            <MenuItem key={index} value={category.categoryname}>{category.categoryname}</MenuItem>
+                          ))}
+                        </Select>
+                        <FormHelperText error>{error.categoryname}</FormHelperText>
+                      </FormControl>
+                      <FormControl className="col-12">
+                        <TextField
+                          name="description"
+                          label="Description"
+                          multiline
+                          onChange={handleInputChange}
+                          defaultValue={values.description}
+                          rows={8}
+                        />
+                      </FormControl>
+                    </GridItem>
+                    <GridItem xs={12} sm={6} md={6}>
+                      <Card profile
+                        style={{
+                          display: 'flex',
+                          justifyContent: 'center',
+                          alignItems: 'center',
+                          height: "215px",
+                          paddingTop: "20px"
+                        }}>
+                        <CardAvatar profile>
+                          <a href="#pablo" onClick={e => e.preventDefault()}>
+                            <img src={values.imgSrc} alt="..." />
+                          </a>
+                        </CardAvatar>
+                        <CardBody profile>
+                          <TextField
+                            type="file"
+                            onChange={showPreview}
+                            defaultValue={null}
+                          />
+                        </CardBody>
+                      </Card>
                     </GridItem>
                   </GridContainer>
                 </CardBody>
-                <CardFooter>
-                  <Button color="primary">Update Profile</Button>
+                <CardFooter
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}
+                >
+                  <Button color="primary" onClick={onSubmit}>{isAddMode ? "Add Product" : "Update Product"}</Button>
                 </CardFooter>
               </Card>
             </GridItem>
-            <GridItem xs={12} sm={12} md={4}>
-              <Card profile>
-                <CardAvatar profile>
-                  <a href="#pablo" onClick={e => e.preventDefault()}>
-                    <img src={avatar} alt="..." />
-                  </a>
-                </CardAvatar>
-                <CardBody profile>
-                  <h6 className={classes.cardCategory}>CEO / CO-FOUNDER</h6>
-                  <h4 className={classes.cardTitle}>Alec Thompson</h4>
-                  <p className={classes.description}>
-                    Don{"'"}t be scared of the truth because we need to restart the
-                human foundation in truth And I love you like Kanye loves Kanye
-                I love Rick Owens’ bed design but the back is...
-              </p>
-                  <Button color="primary" round>
-                    Follow
-              </Button>
-                </CardBody>
-              </Card>
-            </GridItem>
           </GridContainer>
-
-
         </DialogContent>
-        <DialogActions
-          className={classes.modalFooter + " " + classes.modalFooterCenter}
-        >
-          <Button onClick={() => setModal(false)}>Never Mind</Button>
-          <Button onClick={() => setModal(false)} color="success">
-            Yes
-          </Button>
-        </DialogActions>
       </Dialog>
     </div>
   );

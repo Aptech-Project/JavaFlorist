@@ -38,7 +38,7 @@ export const create = (data) => dispatch => {
         .then(res => {
             dispatch({
                 type: ACTION_TYPES.CREATE,
-                payload: res.data
+                payload: { data: res.data, status: res.status }
             })
         })
         .catch(err => console.log(err))
@@ -66,8 +66,8 @@ export const Delete = (id) => dispatch => {
         .catch(err => console.log(err))
 }
 
-export const setActiveIndex =(index) =>{
-    return{
+export const setActiveIndex = (index) => {
+    return {
         type: ACTION_TYPES.SET_ACTIVE_INDEX,
         payload: index,
     }
