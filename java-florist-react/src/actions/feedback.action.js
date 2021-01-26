@@ -19,23 +19,22 @@ export const fetchAll = () => dispatch => {
             }
         ).catch(err => console.log(err))
 }
-export const fetchByIdPro = (pId, uId) => dispatch => {
-    apiService.feedbacks().fetchByIdPro(pId, uId)
+export const fetchByIdPro = (pId) => dispatch => {
+    apiService.feedbacks().fetchByIdPro(pId)
         .then(response => {
             dispatch({
-                type: ACTION_TYPES.FETCH_BY_ID,
+                type: ACTION_TYPES.FETCH_BY_ID_PRO,
                 payload: response.data
             })
         })
         .catch(err => console.log(err))
 }
-export const create = (data, onSuccess) => dispatch => {
+export const create = (data) => dispatch => {
     apiService.feedbacks().create(data).then(res => {
         dispatch({
             type: ACTION_TYPES.CREATE,
             payload: res.data
         })
-        onSuccess()
     })
         .catch(err => console.log(err))
 }

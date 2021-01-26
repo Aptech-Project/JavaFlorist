@@ -37,7 +37,8 @@ namespace java_florist_api.Controllers
                                pname = p.Name,
                                fb = f.Feedback,
                                vote = f.Vote,
-                               fbRep=f.FbReply
+                               fbRep=f.FbReply,
+                               img = u.ImgSrc
                            };
                         
             return await feedback.ToListAsync();
@@ -54,11 +55,14 @@ namespace java_florist_api.Controllers
                            select new Feedbackfullcs()
                            {
                                id = f.Id,
+                               uId = f.Userid,
+                               pId = f.Productid,
                                name = u.Username,
                                pname = p.Name,
                                fb = f.Feedback,
                                vote = f.Vote,
-                               fbRep = f.FbReply
+                               fbRep = f.FbReply,
+                               img=u.ImgSrc
                            };
             if (feedback == null)
             {
@@ -67,12 +71,25 @@ namespace java_florist_api.Controllers
 
             return await feedback.ToListAsync();
         }
-        [HttpGet("Comment/{productId}/{userID}")]
-        public async Task<ActionResult<IEnumerable<Feedbackdatum>>> GetComment(int productId,int userID)
+        [HttpGet("Comment/{productId}")]
+        public async Task<ActionResult<IEnumerable<Feedbackfullcs>>> GetComment(int productId)
         {
-            var feedback = from f in _context.Feedbackdata
-                           where f.Productid == productId where f.Userid == userID
-                           select f;
+            var feedback = from p in _context.Products
+                           join f in _context.Feedbackdata on p.Id equals f.Productid
+                           join u in _context.Users on f.Userid equals u.Id
+                           where f.Productid==productId
+                           select new Feedbackfullcs()
+                           {
+                               id = f.Id,
+                               uId = f.Userid,
+                               pId = f.Productid,
+                               name = u.Username,
+                               pname = p.Name,
+                               fb = f.Feedback,
+                               vote = f.Vote,
+                               fbRep = f.FbReply,
+                               img = u.ImgSrc
+                           };
             if (feedback == null)
             {
                 return NotFound();

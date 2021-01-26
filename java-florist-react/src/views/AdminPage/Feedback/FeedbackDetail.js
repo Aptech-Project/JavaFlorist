@@ -103,7 +103,6 @@ const FeedbackDetail = (props) => {
                         <Button variant="outlined" color="primary" style={{ marginLeft: '10px' }} type="submit" >Send</Button>
                         <Button variant="outlined" style={{ marginLeft: '10px' }}>Reset</Button>
                     </div>
-
                 </Grid>
             </Grid>
         </form>

@@ -35,7 +35,7 @@ export default {
     feedbacks(url = baseApi + 'Feedbackdatums/') {
         return {
             fetchAll: () => axios.get(url),
-            fetchByIdPro: (pId, uId) => axios.get(url + "Comment/" + pId + "/" + uId),
+            fetchByIdPro: (pId, uId) => axios.get(url + "Comment/" + pId),
             create: newRecord => axios.post(url, newRecord),
             update: (id, updateRecord) => axios.put(url + id, updateRecord),
             repComment: (id, rep) => axios.put(url + "RepComment/" + id + "/" + rep, rep),
