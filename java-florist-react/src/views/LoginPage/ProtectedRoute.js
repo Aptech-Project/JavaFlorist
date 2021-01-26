@@ -11,10 +11,10 @@ function ProtectedRoute(props) {
     if (userAuth === 'undefined') {
       setIsAdmin(false)
     }
-    if (userAuth !== 2) {
+    if (userAuth !== 1) {
       setIsAdmin(false)
     }
-    if (userAuth == 2) {
+    if (userAuth == 1) {
       setIsAdmin(true)
     }
   },[userAuth])
