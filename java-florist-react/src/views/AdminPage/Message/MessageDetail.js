@@ -44,11 +44,29 @@ const MessageDetail = (props) => {
     return (
         <form>
             <Grid container>
-                <Grid item lg={6} xs={12} sm={12} md={12} align='center' >
-
+                <Grid item lg={2} xs={12} sm={12} md={12} align='left' >
+                    <p style={{ fontWeight: 'bold', color: 'black' }}>Name: </p>
+                    <p style={{ fontWeight: 'bold', color: 'black' }}>Email:</p>
                 </Grid>
-                <Grid item lg={6} align='left'>
-
+                <Grid item lg={10} xs={12} sm={12} md={12} align='left' >
+                    <p style={{ fontWeight: 'bold', color: 'black' }}>{values.name} </p>
+                    <p style={{ fontWeight: 'bold', color: 'black' }}>{values.email}</p>
+                </Grid>
+                <Grid item lg={2} xs={12} sm={12} md={12} align='left' >
+                    <p style={{ fontWeight: 'bold', color: 'black' }}>Message: </p>
+                </Grid>
+                <Grid item lg={10} xs={12} sm={12} md={12} align='left' >
+                    <TextField
+                        id="filled-read-only-input"
+                        value={values.message}
+                        disabled
+                        variant="outlined"
+                        name="feedback"
+                        fullWidth
+                        multiline
+                        rows={3}
+                        style={{ color: 'black' }}
+                    />
                 </Grid>
             </Grid>
         </form>
