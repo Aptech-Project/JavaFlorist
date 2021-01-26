@@ -45,8 +45,6 @@ export default function RegisterPage(props) {
 
   const regisStatus = useSelector(state => state.customer.registerStatus)
 
-
-
   setTimeout(function () {
     setCardAnimation("");
   }, 100);
@@ -67,7 +65,7 @@ export default function RegisterPage(props) {
   useEffect(()=>{
     axios.get('http://localhost:5000/api/Users')
     .then(function (response) {
-      console.log(response);
+      //console.log(response);
       setUserList(response.data)
     })
     .catch(function (error) {

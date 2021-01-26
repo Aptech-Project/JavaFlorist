@@ -5,7 +5,7 @@ const initialState = {
     list: [],
     registerStatus: null,
     userProfile: null,
-    editStatus: null,
+    editInfoStatus: null,
 }
 
 
@@ -36,7 +36,13 @@ export const customerReducer = (state = initialState, action) => {
             return {
                 ...state,
                 list: state.list.map(x => x.id == action.payload.id ? action.payload : x),
-                editStatus: action.status
+                editInfoStatus: action.status
+            }
+        case ACTION_TYPES.UPDATE_IMAGE:
+            return {
+                ...state,
+                list: state.list.map(x => x.id == action.payload.id ? action.payload : x),
+                editImageStatus: action.status
             }
         case ACTION_TYPES.UPDATE_ACTIVE:
             return {
@@ -69,6 +75,12 @@ export const customerReducer = (state = initialState, action) => {
             return {
                 ...state,
                 userProfile: newProfile
+            }
+        
+        case 'STATUS_CODE':
+            return {
+                ...state,
+                editInfoStatus: null
             }
         default:
             return state

@@ -52,7 +52,8 @@ export default {
             deleteID: id => axios.deleteID(url + "Delete/" + id),
             updateActive: (id) => axios.put(url + "EditActive/" + id),
             updateInActive: (id) => axios.put(url + "InAtive/" + id),
-            login: email => axios.get(url + "login/" + email)
+            login: email => axios.get(url + "login/" + email),
+            updateImage: (id, updateRecord) => axios.put(url+ "imageUpdate/" + id, updateRecord),
         }
     },
     carts(url = baseApi + 'Carts/') {

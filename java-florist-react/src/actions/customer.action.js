@@ -12,7 +12,8 @@ export const ACTION_TYPES = {
     FETCH_BY_ID: 'FETCH_BY_ID',
     UPDATE_ACTIVE: 'UPDATE_ACTIVE',
     UPDATE_INACTIVE: 'UPDATE_INACTIVE',
-    LOG_IN: 'LOG_IN'
+    LOG_IN: 'LOG_IN',
+    UPDATE_IMAGE: 'UPDATE_IMAGE'
 }
 
 export const fetchAll = () => dispatch => {
@@ -53,6 +54,17 @@ export const update = (id, data) => dispatch => {
         .then(res => {
             dispatch({
                 type: ACTION_TYPES.UPDATE,
+                payload: { id, ...data },
+                status: res.status
+            })
+        })
+        .catch(err => console.log(err))
+}
+export const updateImage = (id, data) => dispatch => {
+    apiService.customers().updateImage(id, data)
+        .then(res => {
+            dispatch({
+                type: ACTION_TYPES.UPDATE_IMAGE,
                 payload: { id, ...data },
                 status: res.status
             })
@@ -118,5 +130,11 @@ export const loadprofile = (userData) => {
     return {
         type: 'USER_PROFILE',
         payload: userData
+    }
+}
+
+export const backStatusCode = () => {
+    return {
+        type: 'STATUS_CODE',
     }
 }
