@@ -38,6 +38,16 @@ namespace java_florist_api.Controllers
                .Select(x => new Order()
                {
                    Id = x.Id,
+                   Address=x.Address,
+                   Paymentmethod=x.Paymentmethod,
+                   Phonenumber=x.Phonenumber,
+                   Message=x.Message,
+                   Deliverydate=x.Deliverydate,
+                   Email=x.Email,
+                   Totalmoney=x.Totalmoney,
+                   Receiver=x.Receiver,
+                   Status=x.Status,
+                   Note=x.Note
                }).ToListAsync();
             user.Orders = order;
             return user;
@@ -122,12 +132,8 @@ namespace java_florist_api.Controllers
         public async Task<IActionResult> DeleteOrder(int id)
         {
             var order = await _context.Orders.FindAsync(id);
-            if (order == null)
-            {
-                return NotFound();
-            }
-
-            _context.Orders.Remove(order);
+            order.Status = "Canceled";
+            _context.Entry(order).State = EntityState.Modified;
             await _context.SaveChangesAsync();
 
             return NoContent();

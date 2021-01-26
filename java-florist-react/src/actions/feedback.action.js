@@ -11,7 +11,7 @@ export const fetchAll = () => dispatch => {
     apiService.feedbacks().fetchAll()
         .then(
             response => {
-                console.log(response)
+                // console.log(response)
                 dispatch({
                     type: ACTION_TYPES.FETCH_ALL,
                     payload: response.data

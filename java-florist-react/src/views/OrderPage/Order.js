@@ -9,9 +9,6 @@ import CardBody from "components/Card/CardBody.js";
 import CardFooter from "components/Card/CardFooter.js";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import OrderTable from './OrderTable';
-import {
-    GetOrder
-} from '../../actions/order.action';
 const useStyles1 = makeStyles((styles) => ({
     cardCategoryWhite: {
         color: "rgba(255,255,255,.62)",
@@ -33,18 +30,6 @@ const useStyles1 = makeStyles((styles) => ({
 
 export default function Order() {
     const classes = useStyles1();
-    const dispatch = useDispatch()
-    const SET_USER_AUTHENTICATE = 'user_authenticated';
-    const userAuth = localStorage.getItem(SET_USER_AUTHENTICATE);
-    let orders = useSelector(state => state.order);//get from root reducer
-    let [order, setOrder] = useState([])
-    console.log("orders")
-    console.log(orders)
-    useEffect(() => {
-        dispatch(GetOrder(userAuth))
-        setOrder(orders)
-    }, []);
-
     return (
         <div className="row">
             <div className="col-md-12">
@@ -52,12 +37,12 @@ export default function Order() {
                     <GridItem xs={12} sm={12} md={12}>
                         <Card>
                             <CardHeader color="primary">
-                                <h4 className={classes.cardTitleWhite}>LIST OF Order</h4>
+                                <h4 className={classes.cardTitleWhite}>LIST OF ORDER</h4>
                             </CardHeader>
                             <CardBody>
                                 <GridContainer>
                                     <GridItem xs={12} sm={12} md={12}>
-                                        {/* <OrderTable /> */}
+                                        <OrderTable />
                                     </GridItem>
                                 </GridContainer>
                             </CardBody>

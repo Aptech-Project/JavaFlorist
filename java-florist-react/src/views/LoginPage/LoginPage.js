@@ -23,7 +23,7 @@ import CustomInput from "components/CustomInput/CustomInput.js";
 import styles from "assets/jss/material-kit-react/views/loginPage.js";
 
 import image from "assets/img/login-register.jpg";
-import { Link, useHistory  } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { isAuthenticated } from "actions/login.action";
 import { useForm } from 'react-hook-form';
@@ -35,7 +35,7 @@ const useStyles = makeStyles(styles);
 
 export default function LoginPage(props) {
   const [cardAnimaton, setCardAnimation] = React.useState("cardHidden");
-  setTimeout(function() {
+  setTimeout(function () {
     setCardAnimation("");
   }, 100);
   const classes = useStyles();
@@ -48,33 +48,33 @@ export default function LoginPage(props) {
   const { register, handleSubmit, errors } = useForm({
     //mode: 'onChange',
   });
-  useEffect(()=>{
+  useEffect(() => {
     axios.get('http://localhost:5000/api/Users')
-    .then(function (response) {
-      //console.log(response);
-      setUserList(response.data)
-    })
-    .catch(function (error) {
-      console.log(error);
-    })
-  },[])
+      .then(function (response) {
+        //console.log(response);
+        setUserList(response.data)
+      })
+      .catch(function (error) {
+        console.log(error);
+      })
+  }, [])
   const onSubmit = (data, e) => {
     e.preventDefault();
-    console.log(data);
+    // console.log(data);
     let userExited = 0;
-    let userExitedid ="";
-    userList.map((user)=>{
+    let userExitedid = "";
+    userList.map((user) => {
       if (user.email === data.email && user.password === data.pass) {
         userExited = userExited + 1;
         userExitedid = user.id
       }
     })
-    console.log(userExited);
+    // console.log(userExited);
     if (userExited > 0) {
       alert("Login Success!!")
       loginDispatch(isAuthenticated(userExitedid));
       history.push('/')
-    }else{
+    } else {
       alert("Login Faill!! Check your Email and Password")
     }
   };
@@ -100,7 +100,7 @@ export default function LoginPage(props) {
           <GridContainer justify="center">
             <GridItem xs={12} sm={12} md={4}>
               <Card className={classes[cardAnimaton]}>
-                <form className={classes.form} noValidate  onSubmit={handleSubmit(onSubmit)}>
+                <form className={classes.form} noValidate onSubmit={handleSubmit(onSubmit)}>
                   <CardHeader color="primary" className={classes.cardHeader}>
                     <h4>Login</h4>
                     {/* <div className={classes.socialLine}>
@@ -134,7 +134,7 @@ export default function LoginPage(props) {
                     </div> */}
                   </CardHeader>
                   <Link to="/register" className={classes.navLink}>
-                    <p className={classes.divider} style={{cursor: "pointer"}}>Don't have an Account?</p>
+                    <p className={classes.divider} style={{ cursor: "pointer" }}>Don't have an Account?</p>
                   </Link>
                   <CardBody>
                     <TextField
@@ -195,15 +195,15 @@ export default function LoginPage(props) {
                     />
                   </CardBody>
                   <CardFooter className={classes.cardFooter}>
-                      <Button 
-                        simple 
-                        color="primary" 
-                        //size="lg" 
-                        type="submit"
-                        //disabled={!formState.isValid}
-                        variant="contained"
-                      >
-                        Get Started
+                    <Button
+                      simple
+                      color="primary"
+                      //size="lg" 
+                      type="submit"
+                      //disabled={!formState.isValid}
+                      variant="contained"
+                    >
+                      Get Started
                       </Button>
                   </CardFooter>
                 </form>

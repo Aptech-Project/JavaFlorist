@@ -45,6 +45,7 @@ export default function Cart() {
     function TotalPrice(price, tonggia) {
         return Number(price * tonggia).toLocaleString('en-US');
     }
+
     return (
         <div className="row">
             <div className="col-md-12">
@@ -80,15 +81,16 @@ export default function Cart() {
 
                         }
                         <tr>
-                            <td colSpan="4">Total Carts</td>
+                            <td colSpan="4">Total Price</td>
                             <td>{Number(TotalCart).toLocaleString('en-US')} $</td>
                         </tr>
                         <tr>
                             <td colSpan="5"></td>
                             <td>
                                 <Button
-                                    color="transparent"
+                                    color="primary"
                                     href="/checkout"
+                                    disabled={cart == null || cart == [] || cart.length == 0}
                                 >
                                     Checkout
                                 </Button>
