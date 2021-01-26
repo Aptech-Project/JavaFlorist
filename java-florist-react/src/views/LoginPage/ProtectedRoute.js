@@ -17,6 +17,9 @@ function ProtectedRoute(props) {
     if (userAuth == 1) {
       setIsAdmin(true)
     }
+    // return ()=>{
+    //   setIsAdmin();
+    // }
   },[userAuth])
   
   return (

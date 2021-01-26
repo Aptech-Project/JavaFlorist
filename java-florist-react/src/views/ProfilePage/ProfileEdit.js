@@ -111,7 +111,7 @@ export default function ProfileEdit(props) {
       userData.append('email', data.email)
       userData.append('password', userProfile.password)
       userData.append('username', data.username)
-      userData.append('role', "customer")
+      userData.append('role', userProfile.role)
       userData.append('address', data.address)
       userData.append('birthday',newBirthday)
       userData.append('name', data.fullname)

@@ -99,7 +99,7 @@ export default function ChangeImage(props) {
     userData.append('email', userProfile.email)
     userData.append('password', userProfile.password)
     userData.append('username', userProfile.username)
-    userData.append('role', "customer")
+    userData.append('role', userProfile.role)
     userData.append('address', userProfile.address)
     userData.append('birthday',userProfile.birthday)
     userData.append('name', userProfile.name)
