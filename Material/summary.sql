@@ -153,7 +153,7 @@ Happy anniversary, my friend! I cherish our special memories and moments togethe
 Congratulations on this anniversary. It is definitely something to be proud about. You have done so well in getting where you are! Continue with the positive attitude, and we will be sure to celebrate many, many more.', 1)
 INSERT [dbo].[category] ([id], [categoryname], [message], [active]) VALUES (2, N'Lover', N'I don’t want to set the world on fire I just want to start a flame in your heart.
 I wrote your name in the sky but the clouds blew it away. I wrote you name in the sand but the waves washed it away. So I wrote your name in my heart and there it will always stay.
-Sorry for embarrassing you at work. I bet your face is as red as these roses!
+Sorry for embarrassing you at work. I bet your beautiful lips is as red as these roses!
 12 roses I give to you to show you how much I do love you.
 I love you with all of my heart.
 Roses are red, shamrocks are green - you’ve got the sweetest smile I’ve ever seen!', 1)

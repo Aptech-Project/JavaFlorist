@@ -68,6 +68,7 @@ export default function ProductSection() {
                       label="Min price"
                       id="min"
                       name="min"
+                      type="number"
                       inputRef={register}
                     />
                   </div>
@@ -76,6 +77,7 @@ export default function ProductSection() {
                       label="Max price"
                       id="max"
                       name="max"
+                      type="number"
                       inputRef={register}
                     />
                   </div>

@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import PropTypes from "prop-types";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
+import withStyles from "@material-ui/core/styles/withStyles";
 import Table from "@material-ui/core/Table";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
@@ -13,14 +14,28 @@ import styles from "assets/jss/material-dashboard-react/components/tableStyle.js
 import Pagination from "components/Pagination/Pagination";
 import { productPagination } from 'shared/productFunction.shared';
 import ProductModal from "./ProductModal";
+import { purple } from '@material-ui/core/colors';
+import { FormControlLabel, IconButton, Radio, RadioGroup, Switch, Tooltip } from '@material-ui/core';
 
 const useStyles = makeStyles(styles);
-
+const PurpleSwitch = withStyles({
+  switchBase: {
+    color: purple[300],
+    '&$checked': {
+      color: purple[500],
+    },
+    '&$checked + $track': {
+      backgroundColor: purple[500],
+    },
+  },
+  checked: {},
+  track: {},
+})(Switch);
 export default function ProductTable(props) {
   const classes = useStyles();
   const { tableHead, tableHeaderColor } = props;
   let activeIndex = useSelector(state => state.product.activeIndex) || 1;
-  let { products, indexCount } = productPagination(props.products, activeIndex, 6)
+  let { products, indexCount } = productPagination(props.products, activeIndex, 4)
   const dispatch = useDispatch();
   return (
     <div className={classes.tableResponsive}>
@@ -62,13 +77,21 @@ export default function ProductTable(props) {
                   {product.price} $
                 </TableCell>
                 <TableCell className={classes.tableCell}>
-                  {product.active}
+                  <FormControlLabel
+                    style={{ marginTop: '25px' }}
+                    control={
+                      <PurpleSwitch
+                        disabled
+                        checked={product.active == 1}
+                        name="active" />
+                    }
+                  />
                 </TableCell>
                 <TableCell className={classes.tableCell}>
                   {product.categoryname}
                 </TableCell>
                 <TableCell className={classes.tableCell}>
-                  <ProductModal
+                  <ProductModal style={{ width: '600px' }}
                     title={"Product Details"}
                     product={product}
                   />

@@ -23,7 +23,8 @@ export const productReducer = (state = initialState, action) => {
         case ACTION_TYPES.CREATE:
             return {
                 ...state,
-                list: [...state.list, action.payload]
+                list: [...state.list, action.payload.list],
+                status: action.payload.status
             }
 
         case ACTION_TYPES.UPDATE:
@@ -43,7 +44,7 @@ export const productReducer = (state = initialState, action) => {
                 ...state,
                 activeIndex: action.payload
             }
-            
+
         default:
             return state
     }
