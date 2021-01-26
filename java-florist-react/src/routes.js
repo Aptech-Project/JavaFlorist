@@ -34,6 +34,7 @@ import Maps from "views/Maps/Maps.js";
 import NotificationsPage from "views/Notifications/Notifications.js";
 import UpgradeToPro from "views/UpgradeToPro/UpgradeToPro.js";
 import Customer from "./views/AdminPage/Customer/Customer.component"
+import Order from "./views/AdminPage/Order/Order.component"
 import Message from "./views/AdminPage/Message/Message.component"
 import Feedback from "./views/AdminPage/Feedback/Feedback.component"
 import ProductTableList from "views/AdminPage/Product/ProductTableList";
@@ -73,7 +74,13 @@ const dashboardRoutes = [
     component: ProductTableList,
     layout: "/admin"
   },
-
+  {
+    path: "/order",
+    name: "Orders",
+    icon: "shopping_basket",
+    component: Order,
+    layout: "/admin"
+  },
 ];
 
 export default dashboardRoutes;

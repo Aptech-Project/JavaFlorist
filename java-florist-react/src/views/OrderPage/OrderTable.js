@@ -4,8 +4,7 @@ import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import { ButtonGroup, Button, Grid } from "@material-ui/core";
-import EditIcon from "@material-ui/icons/Info";
+import { Button, Grid } from "@material-ui/core";
 import { TextField } from "@material-ui/core";
 import TableScrollbar from 'react-table-scrollbar';
 import {
@@ -19,7 +18,6 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
 
 export default function OrderTable() {
 
@@ -38,18 +36,14 @@ export default function OrderTable() {
 
   const [open, setOpen] = useState(false);
 
-  function handleClickOpen(index) {
-    setOpen(true);
-  };
-
   function handleClose() {
     setOpen(false);
   };
   async function cancelOrder() {
     await dispatch(deleteOrder(currentId))
+    handleClose()
     await dispatch(GetOrder(userAuth))
     await setOrder(orders)
-    handleClose()
   }
 
   useEffect(() => {
