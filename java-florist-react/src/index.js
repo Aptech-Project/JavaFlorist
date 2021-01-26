@@ -22,6 +22,8 @@ import CheckOut from "views/CheckoutPage/CheckoutPage";
 import Admin from "views/AdminPage/Admin";
 import ProfileEdit from "views/ProfilePage/ProfileEdit";
 import NotFoundPage from "views/NotFoundPage";
+import CheckRoute from "views/LoginPage/ProtectedRoute";
+
 
 var hist = createBrowserHistory();
 
@@ -35,7 +37,7 @@ const render = () => {
       <Route exact path="/" component={Home} />
       <Route path="/profile" component={ProfilePage} />
       <Route path="/editProfile" component={ProfileEdit} />
-      <Route path="/admin" component={Admin} />
+      <Route path="/admin" component={CheckRoute} />
       <Route path="/login" component={LoginPage} />
       <Route path="/register" component={RegisterPage} />
       <Route path="/components" component={Components} />

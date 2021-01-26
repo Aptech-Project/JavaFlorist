@@ -21,6 +21,13 @@ const loginReducer = (state = initialState, action) =>{
                     userAuth: action.userExitedid
                 }
             }
+            if (localStorage.getItem(SET_USER_AUTHENTICATE) !== action.userExitedid) {
+                localStorage.setItem(SET_USER_AUTHENTICATE, JSON.stringify(action.userExitedid))
+                return{
+                    ...state,
+                    userAuth: action.userExitedid
+                }
+            }
             // if (userAuth === action.userExitedid) {
             //     localStorage.setItem(SET_USER_AUTHENTICATE, JSON.stringify(action.userExitedid))
             //     return{

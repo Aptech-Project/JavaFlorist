@@ -36,8 +36,7 @@ import { backStatusCode } from "actions/customer.action";
 
 const useStyles = makeStyles(styles);
 
-
-export default function ProfileEdit(props) {
+export default function ChangePass(props) {
   const [cardAnimaton, setCardAnimation] = useState("cardHidden");
   const [image, setImage] = useState({});
   const [userList, setUserList] = useState([]);
@@ -82,40 +81,37 @@ export default function ProfileEdit(props) {
   useEffect(()=>{
     axios.get('http://localhost:5000/api/Users')
     .then(function (response) {
-      console.log(response);
       setUserList(response.data)
     })
     .catch(function (error) {
       console.log(error);
     })
-    console.log(userProfile);
   },[])
 
   const onSubmit = (data, e) => {
     e.preventDefault();
-    let userExited = 0;
+    let checkPass = 0;
+    console.log(data);
     userList.map((user)=>{
-       if (data.email !== userProfile.email) {
-        if (user.email === data.email) {
-            userExited = userExited + 1;
+       if (user.email !== userProfile.email) {
+        if (data.oldPassword !== user.password) {
+            checkPass = checkPass + 1;
           }
        }
     })
-    if (userExited > 0) {
-      alert("Email alredy Exited!!")
+    if (checkPass > 0) {
+      alert("Wrong Old Password!!")
     }else{
-        let newBirthday = new Date(data.birthday).toISOString()
-
       let userData = new FormData()
       userData.append('id', userProfile.id)
-      userData.append('email', data.email)
-      userData.append('password', userProfile.password)
-      userData.append('username', data.username)
+      userData.append('email', userProfile.email)
+      userData.append('password', data.password)
+      userData.append('username', userProfile.username)
       userData.append('role', "customer")
-      userData.append('address', data.address)
-      userData.append('birthday',newBirthday)
-      userData.append('name', data.fullname)
-      userData.append('phonenumber', data.phone)
+      userData.append('address', userProfile.address)
+      userData.append('birthday',userProfile.birthday)
+      userData.append('name', userProfile.fullname)
+      userData.append('phonenumber', userProfile.phone)
       // if (changeImage) {
       //   userData.append('imgName', image.imgName)
       //   userData.append('imgFile', image.imgFile)
@@ -124,6 +120,7 @@ export default function ProfileEdit(props) {
       userData.append('imgFile', userProfile.imgFile)
       userData.append('imgFile', userProfile.imgSrc)
       userData.append('active', 1)
+      console.log(userData);
       editProfileDispatch(update(userProfile.id,userData))
     }
   };
@@ -132,7 +129,7 @@ export default function ProfileEdit(props) {
     console.log(editStatus);
     if (editStatus === 204 || editStatus == 200) {
       //forAuth = forAuth + userList[userList.length - 1].id + 1
-      alert("Your Account Has Been Updated!!");
+      alert("Your Password Has Been Changed!!");
       //loginDispatch(isAuthenticated(forAuth));
       statusCode(backStatusCode())
       history.push("/")
@@ -142,8 +139,8 @@ export default function ProfileEdit(props) {
     }
   },[editStatus])
 
-//   const password = useRef({});
-//   password.current = watch('password', '');
+  const password = useRef({});
+  password.current = watch('password', '');
 
 //   const showPreview = e => {
 //     console.log(e)
@@ -170,95 +167,23 @@ export default function ProfileEdit(props) {
 // }
 
   return (
-    // <div>
-    //   <Header
-    //     absolute
-    //     color="transparent"
-    //     brand="Java Florist"
-    //     rightLinks={<HeaderLinks />}
-    //     {...rest}
-    //   />
-    //   <div
-    //     className={classes.pageHeader}
-    //     style={{
-    //       backgroundImage: "url(" + backgroundImage + ")",
-    //       backgroundSize: "cover",
-    //       backgroundPosition: "top center"
-    //     }}
-    //   >
-    //     <div className={classes.container}>
-          
-    //     </div>
-    //     <Footer whiteFont />
-    //   </div>
-    // </div>
     <GridContainer justify="center">
             <GridItem xs={12} sm={12} md={8}>
               <Card className={classes[cardAnimaton]}>
                 <form className={classes.form} noValidate onSubmit={handleSubmit(onSubmit)}>
                   <CardHeader color="primary" className={classes.cardHeader}>
-                    <h4>Edit Profile</h4>
+                    <h4>Change Password</h4>
                   </CardHeader>
                   <CardBody>
                     <GridContainer justify="center">
-                      <GridItem xs={6} sm={6} md={6}>
-                        <TextField
-                          label="Full Name..."
-                          id="fullname"
+                      <GridItem xs={12} sm={12} md={10}>
+                      <TextField
+                          label="Old Password"
                           margin="normal"
-                          name="fullname"
-                          defaultValue ={userProfile.name}
+                          id="oldPassword"
+                          name="oldPassword"
                           fullWidth
-                          InputProps={{
-                            endAdornment: (
-                              <InputAdornment position='end'>
-                                <People className={classes.inputIconsColor} />
-                              </InputAdornment>
-                            ),
-                          }}
-                          inputRef={register({
-                            required: 'Full Name is required',
-                          })}
-                          required
                           autoFocus
-                          autoComplete="fullname"
-                          error={errors.fullname}
-                          helperText={errors.fullname && errors.fullname.message}
-                        />
-                        <TextField
-                          label="Email..."
-                          margin="normal"
-                          id="email"
-                          name="email"
-                          defaultValue ={userProfile.email}
-                          fullWidth
-                          //type= "text"
-                          InputProps={{
-                            endAdornment: (
-                              <InputAdornment position='end'>
-                                <Email className={classes.inputIconsColor} />
-                              </InputAdornment>
-                            ),
-                          }}
-                          inputRef={register({
-                            required: 'Email is required',
-                            pattern: {
-                              value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                              message: 'Invalid email address',
-                            },
-                          })}
-                          required
-                          autoComplete="email"
-                          error={errors.email}
-                          helperText={errors.email && errors.email.message}
-                        />
-                        {/* <TextField
-                          label="Password"
-                          margin="normal"
-                          id="password"
-                          name="password"
-                          defaultValue = {userProfile.password}
-                          fullWidth
                           //type= "text"
                           InputProps={{
                             type: "password",
@@ -284,7 +209,37 @@ export default function ProfileEdit(props) {
                           helperText={errors.password && errors.password.message}
                         />
                         <TextField
-                          label="Confirm Password"
+                          label="New Password"
+                          margin="normal"
+                          id="password"
+                          name="password"
+                          defaultValue = {userProfile.password}
+                          fullWidth
+                          //type= "text"
+                          InputProps={{
+                            type: "password",
+                            endAdornment: (
+                              <InputAdornment position="end">
+                                <Icon className={classes.inputIconsColor}>
+                                  lock_outline
+                                </Icon>
+                              </InputAdornment>
+                            ),
+                          }}
+                          inputRef={register({
+                            required: 'You must specify a password',
+                            minLength: {
+                              value: 8,
+                              message: 'Min length is 8',
+                            },
+                          })}
+                          required
+                          autoComplete="off"
+                          error={errors.password}
+                          helperText={errors.password && errors.password.message}
+                        />
+                        <TextField
+                          label="Confirm New Password"
                           margin="normal"
                           id="confirmPassword"
                           name="confirmPassword"
@@ -306,117 +261,10 @@ export default function ProfileEdit(props) {
                               value === password.current || 'The passwords do not match',
                           })}
                           required
-                          autoFocus
                           autoComplete="off"
                           error={errors.confirmPassword}
                           helperText={errors.confirmPassword && errors.confirmPassword.message}
-                        /> */}
-                        <TextField
-                          label="Phone Number"
-                          id="phone"
-                          margin="normal"
-                          name="phone"
-                          defaultValue ={userProfile.phonenumber}
-                          fullWidth
-                          InputProps={{
-                            endAdornment: (
-                              <InputAdornment position='end'>
-                                <PhoneIphoneIcon className={classes.inputIconsColor} />
-                              </InputAdornment>
-                            ),
-                          }}
-                          inputRef={register({
-                            required: 'Phone Number is required',
-                            maxLength: {
-                              value: 13,
-                              message: 'The Phone Number do not exceed 13 numbers',
-                            },
-                            minLength: {
-                              value: 10,
-                              message: 'The Phone Number must have at least 10 number',
-                            },
-                          })}
-                          required
-                          autoFocus
-                          autoComplete="phone"
-                          error={errors.phone}
-                          helperText={errors.phone && errors.phone.message}
                         />
-                      </GridItem>
-                      <GridItem xs={6} sm={6} md={6}>
-                        <TextField
-                          label="User Name..."
-                          id="username"
-                          margin="normal"
-                          name="username"
-                          defaultValue ={userProfile.username}
-                          fullWidth
-                          InputProps={{
-                            endAdornment: (
-                              <InputAdornment position='end'>
-                                <People className={classes.inputIconsColor} />
-                              </InputAdornment>
-                            ),
-                          }}
-                          inputRef={register({
-                            required: 'User Name is required',
-                            maxLength: {
-                              value: 20,
-                              message: 'Max length is 20',
-                            },
-                            // pattern: {
-                            //   value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                            //   message: 'Invalid email address',
-                            // },
-                          })}
-                          required
-                          autoFocus
-                          autoComplete="username"
-                          error={errors.username}
-                          helperText={errors.username && errors.username.message}
-                        />
-                        <TextField
-                          label="Address..."
-                          id="address"
-                          margin="normal"
-                          name="address"
-                          defaultValue ={userProfile.address}
-                          fullWidth
-                          InputProps={{
-                            endAdornment: (
-                              <InputAdornment position='end'>
-                                <BusinessIcon className={classes.inputIconsColor} />
-                              </InputAdornment>
-                            ),
-                          }}
-                          inputRef={register({
-                            required: 'Address is required',
-                          })}
-                          required
-                          autoFocus
-                          autoComplete="address"
-                          error={errors.address}
-                          helperText={errors.address && errors.address.message}
-                        />
-                        <TextField
-                          label="Birthday..."
-                          id="birthday"
-                          margin="normal"
-                          name="birthday"
-                          defaultValue ={formatDate()}
-                          fullWidth
-                          //type="date"
-                          InputLabelProps={{ shrink: true }}
-                          inputRef={register({
-                            required: 'Birthday is required',
-                          })}
-                          required
-                          autoFocus
-                          autoComplete="birthday"
-                          error={errors.birthday}
-                          helperText={errors.birthday && errors.birthday.message}
-                        />
-                        
                       </GridItem>
                     </GridContainer>
                     {/* <GridContainer justify="center">

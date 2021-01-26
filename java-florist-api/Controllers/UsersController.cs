@@ -69,7 +69,7 @@ namespace java_florist_api.Controllers
         }
             // PUT: api/Users/5
             // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-            [HttpPut("{id}")]
+        [HttpPut("{id}")]
         public async Task<IActionResult> PutUser(int id, [FromForm] User User)
         {
             // if (User.ImgFile != null)
@@ -78,6 +78,35 @@ namespace java_florist_api.Controllers
             //     User.ImgName = await SaveImage(User.ImgFile);
             // }
 
+            _context.Entry(User).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!UserExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return NoContent();
+        }
+
+        [HttpPut("imageUpdate/{id}")]
+        public async Task<IActionResult> PutImageUser(int id, [FromForm] User User)
+        {
+            if (User.ImgFile != null)
+            {
+                DeleteImage(User.ImgName);
+                User.ImgName = await SaveImage(User.ImgFile);
+            }
             _context.Entry(User).State = EntityState.Modified;
 
             try

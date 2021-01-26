@@ -2,7 +2,8 @@ import React from "react";
 // nodejs library that concatenates classes
 import classNames from "classnames";
 // @material-ui/core components
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles, withStyles } from "@material-ui/core/styles";
+import Avatar from '@material-ui/core/Avatar';
 // @material-ui/icons
 import Camera from "@material-ui/icons/Camera";
 import Palette from "@material-ui/icons/Palette";
@@ -11,6 +12,8 @@ import BusinessIcon from '@material-ui/icons/Business';
 import CakeIcon from '@material-ui/icons/Cake';
 import PhoneIphoneIcon from '@material-ui/icons/PhoneIphone';
 import EditIcon from '@material-ui/icons/Edit';
+import PhotoCameraIcon from '@material-ui/icons/PhotoCamera';
+
 // core components
 import Header from "components/Header/Header.js";
 import Footer from "components/Footer/Footer.js";
@@ -21,7 +24,7 @@ import HeaderLinks from "components/Header/HeaderLinks.js";
 import NavPills from "components/NavPills/NavPills.js";
 import Parallax from "components/Parallax/Parallax.js";
 
-import profile from "assets/img/faces/christian.jpg";
+import userDefault from "assets/img/tim_80x80.png";
 
 import studio1 from "assets/img/examples/studio-1.jpg";
 import studio2 from "assets/img/examples/studio-2.jpg";
@@ -34,6 +37,7 @@ import work3 from "assets/img/examples/cynthia-del-rio.jpg";
 import work4 from "assets/img/examples/mariya-georgieva.jpg";
 import work5 from "assets/img/examples/clem-onojegaw.jpg";
 
+
 import styles from "assets/jss/material-kit-react/views/profilePage.js";
 import { useSelector } from "react-redux";
 import { List, ListItem, ListItemIcon, ListItemText, Tooltip } from "@material-ui/core";
@@ -44,6 +48,9 @@ import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
 import ProfileEdit from "./ProfileEdit";
+import ChangePass from "./ChangePassword";
+import Badge from "components/Badge/Badge";
+import ChangeImage from "./ChangeImage";
 
 const useStyles = makeStyles(styles);
 const useCusStyle = makeStyles((theme) => ({
@@ -60,6 +67,13 @@ const useCusStyle = makeStyles((theme) => ({
     //padding: theme.spacing(12, 8, 9),
   },
 }));
+// const SmallAvatar = withStyles((theme) => ({
+//   root: {
+//     width: 22,
+//     height: 22,
+//     border: `2px solid ${theme.palette.background.paper}`,
+//   },
+// }))(Avatar);
 
 export default function ProfilePage(props) {
   const classes = useStyles();
@@ -75,6 +89,8 @@ export default function ProfilePage(props) {
   const userProfile = useSelector(state => state.customer.userProfile);
 
   const [open, setOpen] = React.useState(false);
+  const [passOpen, setPassOpen] = React.useState(false);
+  const [imgOpen, setImgOpen] = React.useState(false);
 
   const handleOpen = () => {
     setOpen(true);
@@ -115,7 +131,28 @@ export default function ProfilePage(props) {
                 <GridItem xs={12} sm={12} md={6}>
                   <div className={classes.profile}>
                     <div>
-                      <img src={userProfile.imgSrc} alt="..." className={imageClasses}/>
+                      {
+                        userProfile.imgName === 'undefined' ? 
+                        <img src={userDefault} alt="..." className={imageClasses} styles={{zIndex: -1}}/>
+                        :
+                        <img src={userProfile.imgSrc} alt="..." className={imageClasses}/>
+                      }
+                      {/* <img src={userProfile.imgSrc || userDefault} alt="..." className={imageClasses}/> */}
+                      <PhotoCameraIcon onClick={() => setImgOpen(true)} style={{marginLeft: "-25px", marginTop: "-25px", cursor: "pointer"}}/>
+                      <Modal
+                        className={cusClasses.modal}
+                        open={imgOpen}
+                        onClose={() => setImgOpen(false)}
+                        closeAfterTransition
+                        // BackdropComponent={Backdrop}
+                        // BackdropProps={{
+                        //   timeout: 500,
+                        // }}
+                      >
+                        <Fade in={imgOpen}>
+                          <ChangeImage/>
+                        </Fade>
+                      </Modal>
                     </div>
                     <div className={classes.name}>
                       <h3 className={classes.title}>{userProfile.username}</h3>
@@ -200,7 +237,17 @@ export default function ProfilePage(props) {
                         <ListItemIcon>
                           <EditIcon fontSize="small"/>
                         </ListItemIcon>
-                        <ListItemText primary="Change Password" />
+                        <ListItemText onClick={() => setPassOpen(true)} primary="Change Password"  style={{color: "navy", cursor:"pointer"}}/>
+                        <Modal
+                          className={cusClasses.modal}
+                          open={passOpen}
+                          onClose={() => setPassOpen(false)}
+                          closeAfterTransition
+                        >
+                          <Fade in={passOpen}>
+                            <ChangePass/>
+                          </Fade>
+                        </Modal>
                       </ListItem>
                     </List>
                   </GridItem>
