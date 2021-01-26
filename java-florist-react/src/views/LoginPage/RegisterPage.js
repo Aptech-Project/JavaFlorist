@@ -62,28 +62,28 @@ export default function RegisterPage(props) {
     mode: 'onChange',
   });
 
-  useEffect(()=>{
+  useEffect(() => {
     axios.get('http://localhost:5000/api/Users')
-    .then(function (response) {
-      //console.log(response);
-      setUserList(response.data)
-    })
-    .catch(function (error) {
-      console.log(error);
-    })
-  },[])
+      .then(function (response) {
+        //console.log(response);
+        setUserList(response.data)
+      })
+      .catch(function (error) {
+        console.log(error);
+      })
+  }, [])
 
   const onSubmit = (data, e) => {
     e.preventDefault();
     let userExited = 0;
-    userList.map((user)=>{
+    userList.map((user) => {
       if (user.email === data.email) {
         userExited = userExited + 1;
       }
     })
     if (userExited > 0) {
       alert("Email alredy Exited!!")
-    }else{
+    } else {
       let userData = new FormData()
       userData.append('email', data.email)
       userData.append('password', data.password)
@@ -99,18 +99,18 @@ export default function RegisterPage(props) {
       registerDispatch(create(userData))
     }
   };
-  useEffect(()=>{
-    console.log(forAuth);
+  useEffect(() => {
+    // console.log(forAuth);
     if (regisStatus === 204 || regisStatus == 200) {
       forAuth = forAuth + userList[userList.length - 1].id + 1
       alert("Your Account Has Been Created!!");
       loginDispatch(isAuthenticated(forAuth));
       history.push('/')
     }
-    if (regisStatus == 500 || regisStatus == 404 || regisStatus == 400 ) {
+    if (regisStatus == 500 || regisStatus == 404 || regisStatus == 400) {
       alert("Cannot Create Account!!");
     }
-  },[regisStatus])
+  }, [regisStatus])
 
   const password = useRef({});
   password.current = watch('password', '');
@@ -136,7 +136,7 @@ export default function RegisterPage(props) {
         imgSrc: defaultImgSrc
       })
     }
-    console.log(image)
+    // console.log(image)
   }
 
   return (
@@ -383,7 +383,7 @@ export default function RegisterPage(props) {
                       <GridItem xs={12} sm={12} md={4} justify="center">
                         <img src={image.imgSrc} className="card-img-top" alt="" style={{ width: "90px", marginLeft: "28%", marginTop: "15px" }} />
                         {/* <label>Choose image</label><br></br> */}
-                        <input style={{marginTop: "15px"}} type="file" accept="image/*" className="form-control-file" onChange={showPreview} />
+                        <input style={{ marginTop: "15px" }} type="file" accept="image/*" className="form-control-file" onChange={showPreview} />
                       </GridItem>
                     </GridContainer>
                     {/* <GridContainer justify="center">

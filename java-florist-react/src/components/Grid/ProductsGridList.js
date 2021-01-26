@@ -69,13 +69,13 @@ export default function ProductsGridList(props) {
                 subtitle={<span>Price: {product.price} $</span>}
                 actionIcon={
                   <div style={{ minWidth: '100px' }}>
-                    <Tooltip
+                    {/* <Tooltip
                       title="Buy now"
                       placement={window.innerWidth > 959 ? "top" : "left"}>
                       <IconButton className={classes.icon} onClick={() => { console.log("Buy now clicked") }}>
                         <Shop />
                       </IconButton>
-                    </Tooltip>
+                    </Tooltip> */}
                     <Tooltip
                       title="Add to cart"
                       placement={window.innerWidth > 959 ? "top" : "left"}>

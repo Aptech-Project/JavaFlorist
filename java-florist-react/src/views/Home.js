@@ -19,18 +19,21 @@ import styles from "assets/jss/material-kit-react/views/components.js";
 import SectionHotProduct from "./Components/Sections/SectionHotProducts.js";
 import * as actions from 'actions/product.action'
 import SectionCarouselHome from "./Components/Sections/SectionCarouselHome.js";
-
+import {
+  GetCart,
+} from '../actions/cart.action';
 const useStyles = makeStyles(styles);
 
 export default function Home(props) {
   const classes = useStyles();
   const { ...rest } = props;
   const dispatch = useDispatch()
+  const userAuth = useSelector(state => state.login.userAuth)
   let products = useSelector(state => state.product.list);//get from root reducer
   useEffect(() => {
     dispatch(actions.fetchAll())
+    dispatch(GetCart(userAuth))
   }, [!products]); //second parameter use to inform useEffect run when this parameter changes
-  console.log(products)
   return (
     <div>
       <Header

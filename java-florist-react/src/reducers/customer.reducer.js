@@ -19,14 +19,12 @@ export const customerReducer = (state = initialState, action) => {
             }
 
         case ACTION_TYPES.FETCH_BY_ID:
-            console.log(action.payload);
             return {
                 ...state,
                 userProfile: { ...action.payload }
             }
 
         case ACTION_TYPES.CREATE:
-            console.log(action.payload);
             return {
                 ...state,
                 registerStatus: action.payload
@@ -42,7 +40,7 @@ export const customerReducer = (state = initialState, action) => {
             return {
                 ...state,
                 list: state.list.map(x => x.id == action.payload.id ? action.payload : x),
-                editImageStatus: action.status
+                editInfoStatus: action.status
             }
         case ACTION_TYPES.UPDATE_ACTIVE:
             return {
@@ -76,7 +74,7 @@ export const customerReducer = (state = initialState, action) => {
                 ...state,
                 userProfile: newProfile
             }
-        
+
         case 'STATUS_CODE':
             return {
                 ...state,

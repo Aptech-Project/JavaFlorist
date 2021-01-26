@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 // react plugin for creating charts
 import ChartistGraph from "react-chartist";
 // @material-ui/core
@@ -18,6 +18,7 @@ import Code from "@material-ui/icons/Code";
 import Cloud from "@material-ui/icons/Cloud";
 import PaymentIcon from '@material-ui/icons/Payment';
 import LocalFloristIcon from '@material-ui/icons/LocalFlorist';
+
 // core components
 import GridItem from "components/Grid/GridItem.js";
 import GridContainer from "components/Grid/GridContainer.js";
@@ -30,9 +31,7 @@ import CardHeader from "components/Card/CardHeader.js";
 import CardIcon from "components/Card/CardIcon.js";
 import CardBody from "components/Card/CardBody.js";
 import CardFooter from "components/Card/CardFooter.js";
-
 import { bugs, website, server } from "variables/general.js";
-
 import {
   dailySalesChart,
   emailsSubscriptionChart,
@@ -43,11 +42,43 @@ import styles from "assets/jss/material-dashboard-react/views/dashboardStyle.js"
 //payment
 import mastercard from "assets/img/PaymentIcons/mastercard.png";
 
+import axios from "axios";
+import DataTable from "./DataTable";
+import DashboardChart from "./DashboardChart"
 
 const useStyles = makeStyles(styles);
 
 export default function Dashboard() {
   const classes = useStyles();
+  const [orderList, setOrderList] = useState([]);
+
+  let yearRevenue = 50000;
+  let monthRevenue = 20000;
+  useEffect(()=>{
+    axios.get('http://localhost:5000/api/Orders')
+    .then(function (response) {
+      //console.log(response);
+      setOrderList([...response.data]);
+    })
+    .catch(function (error) {
+      console.log(error);
+    })
+  },[])
+
+  useEffect(()=>{
+    if (orderList.length !== 0) {
+        orderList.map((orderItem)=>{
+            const countYear = new Date(orderItem.deliverydate);
+            const thisTime = new Date();
+            if (countYear.getFullYear() === thisTime.getFullYear()) {
+              yearRevenue = yearRevenue + orderItem.totalmoney
+            }
+            if (countYear.getMonth() === thisTime.getMonth()) {
+              monthRevenue = monthRevenue + orderItem.totalmoney
+            }
+    //console.log(dataChart);
+    })}
+  },[orderList]) 
 
   const paymentMethod = (method) => {
     switch (method) {
@@ -57,6 +88,7 @@ export default function Dashboard() {
         break;
     }
   }
+
   return (
     <div>
       <GridContainer>
@@ -67,12 +99,12 @@ export default function Dashboard() {
                 <Store />
               </CardIcon>
               <p className={classes.cardCategory}>Year Revenue</p>
-              <h4 className={classes.cardTitle}>$540,245</h4>
+              <h4 className={classes.cardTitle}>${yearRevenue}</h4>
             </CardHeader>
             <CardFooter>
               <div className={classes.stats}>
                 <DateRange />
-                Last Years
+                This Year
               </div>
             </CardFooter>
           </Card>
@@ -84,12 +116,12 @@ export default function Dashboard() {
                 <Store />
               </CardIcon>
               <p className={classes.cardCategory}>Revenue</p>
-              <h4 className={classes.cardTitle}>$34,245</h4>
+              <h4 className={classes.cardTitle}>${monthRevenue}</h4>
             </CardHeader>
             <CardFooter>
               <div className={classes.stats}>
                 <DateRange />
-                Last 24 Hours
+                This Month
               </div>
             </CardFooter>
           </Card>
@@ -136,13 +168,14 @@ export default function Dashboard() {
               <h4 style={{textAlign:'center'}}>Year Revenue</h4>
             </CardHeader>
             <CardBody>
-              <ChartistGraph
+              {/* <ChartistGraph
                 className="ct-chart"
                 data={dailySalesChart.data}
                 type="Line"
                 options={dailySalesChart.options}
                 listener={dailySalesChart.animation}
-              />
+              /> */}
+              <DashboardChart orderList={orderList}/>
             </CardBody>
             <CardFooter>
               {/* <div className={classes.stats}>
@@ -162,17 +195,7 @@ export default function Dashboard() {
               </p>
             </CardHeader>
             <CardBody>
-              <Table
-                tableHeaderColor="warning"
-                tableHead={["Date", "Name", "Ship To", "Payment Method","Sale Amount"]}
-                tableData={[
-                  ['16 Mar, 2019', 'Elvis Presley', 'Tupelo, MS', 'VISA ⠀•••• 3719', 312.44],
-                  ['16 Mar, 2019', 'Paul McCartney', 'London, UK', 'VISA ⠀•••• 2574', 866.99],
-                  ['16 Mar, 2019', 'Tom Scholz', 'Boston, MA', 'MC ⠀•••• 1253', 100.81],
-                  ['16 Mar, 2019', 'Michael Jackson', 'Gary, IN', 'AMEX ⠀•••• 2000', 654.39],
-                  ['15 Mar, 2019', 'Bruce Springsteen', 'Long Branch, NJ', 'VISA ⠀•••• 5919', 212.79]
-                ]}
-              />
+              <DataTable orderList={orderList}/>
             </CardBody>
           </Card>
         </GridItem>

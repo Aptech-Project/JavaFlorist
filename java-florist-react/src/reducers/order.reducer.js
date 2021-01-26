@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux';
 import {
-  GET_ALL_ORDER
+  GET_ALL_ORDER,
+  DELETE_ORDER,
 } from '../actions/order.action';
 
 const initialState = {
@@ -14,6 +15,10 @@ export const orderReducer = (state = initialState, action) => {
       return {
         ...state,
         Order: action.payload.orders,
+      }
+    case DELETE_ORDER:
+      return {
+        ...state,
       }
     default:
       return state;

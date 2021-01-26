@@ -16,6 +16,9 @@ import axios from "axios";
 import { List, ListItem, ListItemIcon, ListItemText, Tooltip } from "@material-ui/core";
 import { useForm } from 'react-hook-form';
 import Button from "components/CustomButtons/Button.js";
+import { useHistory } from "react-router-dom";
+
+
 
 import {
 	IncreaseQuantity,
@@ -41,6 +44,7 @@ const currencies = [
 ];
 export default function Checkout() {
 	const dispatch = useDispatch()
+	let history = useHistory();
 	const SET_USER_AUTHENTICATE = 'user_authenticated';
 	let TotalCart = 0;
 	let carts = useSelector(state => state.cart.Carts);//get from root reducer
@@ -121,6 +125,7 @@ export default function Checkout() {
 			userData.append('totalmoney', TotalCart)
 			userData.append('userid', userAuth)
 			dispatch(insert(userData))
+			history.push("/order");
 		}
 	};
 
@@ -314,12 +319,12 @@ export default function Checkout() {
 											</div>
 										</div>
 									</div>
-									<Button simple
+									<Button
 										color="primary"
 										size="lg"
 										type="submit"
-										//disabled={!formState.isValid}
-										variant="contained">
+									//disabled={!formState.isValid}
+									>
 										Buy
 									</Button>
 								</div>

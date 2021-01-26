@@ -50,7 +50,7 @@ export default function ChangeImage(props) {
 
   const formatDate = () => {
     let date = new Date(userProfile.birthday);
-    date = date.getFullYear() + '/' + (date.getMonth()+1) + '/' +  date.getDate();
+    date = date.getFullYear() + '/' + (date.getMonth() + 1) + '/' + date.getDate();
     return date
   }
   const initialImageValues = {
@@ -58,11 +58,11 @@ export default function ChangeImage(props) {
     imgFile: null
   }
 
-  useEffect(()=>{
+  useEffect(() => {
     if (userProfile !== undefined || userProfile !== null) {
-    setImage(initialImageValues)
+      setImage(initialImageValues)
     }
-  },[userProfile])
+  }, [userProfile])
 
   setTimeout(function () {
     setCardAnimation("");
@@ -80,17 +80,17 @@ export default function ChangeImage(props) {
     mode: 'onChange',
   });
 
-  useEffect(()=>{
+  useEffect(() => {
     axios.get('http://localhost:5000/api/Users')
-    .then(function (response) {
-      //console.log(response);
-      setUserList(response.data)
-    })
-    .catch(function (error) {
-      console.log(error);
-    })
+      .then(function (response) {
+        //console.log(response);
+        setUserList(response.data)
+      })
+      .catch(function (error) {
+        console.log(error);
+      })
     //console.log(userProfile);
-  },[])
+  }, [])
 
   const onSubmit = (data, e) => {
     e.preventDefault();
@@ -99,21 +99,21 @@ export default function ChangeImage(props) {
     userData.append('email', userProfile.email)
     userData.append('password', userProfile.password)
     userData.append('username', userProfile.username)
-    userData.append('role', "customer")
+    userData.append('role', userProfile.role)
     userData.append('address', userProfile.address)
-    userData.append('birthday',userProfile.birthday)
+    userData.append('birthday', userProfile.birthday)
     userData.append('name', userProfile.name)
     userData.append('phonenumber', userProfile.phonenumber)
     userData.append('imgName', image.imgName)
     userData.append('imgFile', image.imgFile)
     // userData.append('imgFile', image.imgSrc)
     userData.append('active', 1)
-    editProfileDispatch(updateImage(userProfile.id,userData))
+    editProfileDispatch(updateImage(userProfile.id, userData))
   };
-  useEffect(()=>{
+  useEffect(() => {
     //console.log(forAuth);
-    console.log(userProfile);
-    console.log(editStatus);
+    // console.log(userProfile);
+    // console.log(editStatus);
     if (editStatus === 204 || editStatus == 200) {
       //forAuth = forAuth + userList[userList.length - 1].id + 1
       alert("Your Image Has Been Change!!");
@@ -121,13 +121,13 @@ export default function ChangeImage(props) {
       statusCode(backStatusCode())
       history.push("/")
     }
-    if (editStatus == 500 || editStatus == 404 || editStatus == 400 ) {
+    if (editStatus == 500 || editStatus == 404 || editStatus == 400) {
       alert("Cannot Create Account!!");
     }
-  },[editStatus])
+  }, [editStatus])
 
-//   const password = useRef({});
-//   password.current = watch('password', '');
+  //   const password = useRef({});
+  //   password.current = watch('password', '');
 
   const showPreview = e => {
     console.log(e)
@@ -149,44 +149,44 @@ export default function ChangeImage(props) {
         imgFile: null,
         imgSrc: userProfile.imgSrc
       })
-    console.log(image)
+      console.log(image)
+    }
   }
-}
 
   return (
     <GridContainer justify="center">
-            <GridItem xs={12} sm={12} md={12}>
-              <Card className={classes[cardAnimaton]}>
-                <form className={classes.form} noValidate onSubmit={handleSubmit(onSubmit)}>
-                  <CardHeader color="primary" className={classes.cardHeader}>
-                    <h4>Change Avatar</h4>
-                  </CardHeader>
-                  <CardBody>
-                    <GridContainer justify="center">
-                      <GridItem xs={12} sm={12} md={12} justify="center">
-                        {image !== {} ? 
-                        <>
-                        <img src={image.imgSrc} className="card-img-top" alt="" style={{ width: "350px", padding: "5%"}} />
-                        <input style={{marginTop: "1%", marginLeft: "15%"}} name="imgInput" type="file" accept="image/*" className="form-control-file" onChange={showPreview}/>
-                        </>
-                        : null
-                        }
-                      </GridItem>
-                    </GridContainer>
-                  </CardBody>
-                  <CardFooter className={classes.cardFooter}>
-                    <Button simple
-                      color="primary"
-                      size="lg"
-                      type="submit"
-                      //disabled={!formState.isValid}
-                      variant="contained">
-                      Get Started
+      <GridItem xs={12} sm={12} md={12}>
+        <Card className={classes[cardAnimaton]}>
+          <form className={classes.form} noValidate onSubmit={handleSubmit(onSubmit)}>
+            <CardHeader color="primary" className={classes.cardHeader}>
+              <h4>Change Avatar</h4>
+            </CardHeader>
+            <CardBody>
+              <GridContainer justify="center">
+                <GridItem xs={12} sm={12} md={12} justify="center">
+                  {image !== {} ?
+                    <>
+                      <img src={image.imgSrc} className="card-img-top" alt="" style={{ width: "350px", padding: "5%" }} />
+                      <input style={{ marginTop: "1%", marginLeft: "15%" }} name="imgInput" type="file" accept="image/*" className="form-control-file" onChange={showPreview} />
+                    </>
+                    : null
+                  }
+                </GridItem>
+              </GridContainer>
+            </CardBody>
+            <CardFooter className={classes.cardFooter}>
+              <Button simple
+                color="primary"
+                size="lg"
+                type="submit"
+                //disabled={!formState.isValid}
+                variant="contained">
+                Get Started
                     </Button>
-                  </CardFooter>
-                </form>
-              </Card>
-            </GridItem>
-          </GridContainer>
+            </CardFooter>
+          </form>
+        </Card>
+      </GridItem>
+    </GridContainer>
   );
 }

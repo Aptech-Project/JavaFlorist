@@ -1,5 +1,5 @@
 /*eslint-disable*/
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import DeleteIcon from "@material-ui/icons/Delete";
 import IconButton from "@material-ui/core/IconButton";
 // react components for routing our app without refresh
@@ -23,13 +23,22 @@ import styles from "assets/jss/material-kit-react/components/headerLinksStyle.js
 import LinkMet from "@material-ui/core/Link";
 import ProfileCard from "views/ProfilePage/ProfileCard";
 import avatar from "assets/img/faces/christian.jpg";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  GetCart,
+} from '../../actions/cart.action';
 
 const useStyles = makeStyles(styles);
 
 export default function HeaderLinks(props) {
+  const dispatch = useDispatch()
   const classes = useStyles();
   const userAuth = useSelector(state => state.login.userAuth)
+  let numberCart = useSelector(state => state.cart.numberCart);
+  let carts = useSelector(state => state.cart.Carts);
+  useEffect(() => {
+    dispatch(GetCart(userAuth))
+  }, [numberCart]);
 
   return (
     <List className={classes.list}>
@@ -81,21 +90,7 @@ export default function HeaderLinks(props) {
             color="transparent"
             href="/cart"
             className={classes.navLink}>
-            <i className={classes.socialIcons + " fas fa-shopping-cart"} />
-          </Button>
-        </Tooltip>
-      </ListItem>
-      <ListItem className={classes.listItem}>
-        <Tooltip
-          id="order"
-          title="List Oder"
-          placement={window.innerWidth > 959 ? "top" : "left"}
-          classes={{ tooltip: classes.tooltip }}>
-          <Button
-            color="transparent"
-            href="/order"
-            className={classes.navLink}>
-            <i className={classes.socialIcons + " fas fa-shopping-cart"} />
+            <i className={classes.socialIcons + " fas fa-shopping-cart"} /><sub>{carts.length}</sub>
           </Button>
         </Tooltip>
       </ListItem>

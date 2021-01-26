@@ -51,7 +51,6 @@ export default function ProductTableList() {
   useEffect(() => {
     dispatch(actions.fetchAll())
   }, [!products]); //second parameter use to inform useEffect run when this parameter changes
-  console.log(products)
   return (
     <GridContainer>
       <GridItem xs={12} sm={12} md={12}>
