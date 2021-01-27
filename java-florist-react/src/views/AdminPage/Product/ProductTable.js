@@ -93,8 +93,6 @@ export default function ProductTable(props) {
                 <TableCell className={classes.tableCell}>
                   <ProductModal style={{ width: '600px' }}
                     title={"Product Details"}
-                    productId={product.id}
-                    products={products}
                     product={product}
                   />
                 </TableCell>

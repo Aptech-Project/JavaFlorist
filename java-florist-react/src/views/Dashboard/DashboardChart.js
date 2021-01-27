@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Line } from 'react-chartjs-2';
 
-function DashboardChart({orderList}) {
+function DashboardChart({ orderList }) {
     //const [orderList, setOrderList] = useState([]);
 
     const [dataForChart, setDataForChart] = useState([]);
@@ -17,11 +17,12 @@ function DashboardChart({orderList}) {
     //     })
     //   },[])
 
-      useEffect(()=>{
+    useEffect(() => {
+        console.log(orderList);
         let Feb = 0, Apr = 0, Jun = 0, Aug = 0, Oct = 0, Dec = 0;
         let dataChart = [];
         if (orderList.length !== 0) {
-            orderList.map((orderItem)=>{
+            orderList.map((orderItem) => {
                 const countYear = new Date(orderItem.deliverydate);
                 const thisYear = new Date().getFullYear();
                 if (countYear.getFullYear() === thisYear) {
@@ -53,27 +54,27 @@ function DashboardChart({orderList}) {
         dataChart.push(Feb, Apr, Jun, Aug, Oct, Dec)
         //console.log(dataChart);
         setDataForChart([...dataChart])
-    },[orderList]) 
-//For LineChart
-const dataLine = {
-labels: ['Feb', 'Apr', 'Jun', 'Aug', 'Oct', 'Dec'],
-datasets: [
-{
-    label: "Revenue",
-    fill: false,
-    data: dataForChart,
-    borderColor: ["rgba(153, 102, 255, 0.8)"],
-    backgroundColor: ["rgba(153, 102, 255, 0.8)"],
-    pointbackgroundColor: "rgba(153, 102, 255, 0.8)",
-    pointborderColor: "rgba(153, 102, 255, 0.8)",
-},
-],
-};
-const optionsLine = {
-title: {
-display: true,
-},
-};
+    }, [orderList])
+    //For LineChart
+    const dataLine = {
+        labels: ['Feb', 'Apr', 'Jun', 'Aug', 'Oct', 'Dec'],
+        datasets: [
+            {
+                label: "Revenue",
+                fill: false,
+                data: dataForChart,
+                borderColor: ["rgba(153, 102, 255, 0.8)"],
+                backgroundColor: ["rgba(153, 102, 255, 0.8)"],
+                pointbackgroundColor: "rgba(153, 102, 255, 0.8)",
+                pointborderColor: "rgba(153, 102, 255, 0.8)",
+            },
+        ],
+    };
+    const optionsLine = {
+        title: {
+            display: true,
+        },
+    };
     return (
         <div>
             <Line data={dataLine} options={optionsLine} />

@@ -46,6 +46,11 @@ export const cartReducer = (state = initialState, action) => {
                 ...state,
                 numberCart: state.numberCart - 1,
             }
+         case "LOGOUT":
+            return {
+                ...state,
+                Carts: [],
+            }
         default:
             return state;
     }

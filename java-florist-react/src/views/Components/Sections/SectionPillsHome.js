@@ -28,7 +28,7 @@ export default function SectionPillsHome(props) {
             <h2>What We Offer</h2>
           </div>
           <GridContainer>
-            <GridItem xs={12} sm={12} md={8} lg={6}>
+            <GridItem xs={12} sm={12} md={6} lg={6}>
               <NavPills
                 color="primary"
                 tabs={[
@@ -75,7 +75,7 @@ export default function SectionPillsHome(props) {
                 ]}
               />
             </GridItem>
-            <GridItem xs={12} sm={12} md={12} lg={6}>
+            <GridItem xs={12} sm={12} md={6} lg={6}>
               <div className={classes.root}>
                 <GridList cellHeight={160} className={classes.gridList} cols={3}>
                   {products.map((product, index) => (

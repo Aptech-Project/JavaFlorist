@@ -43,7 +43,11 @@ export function UpdateCart(payload) {
         payload
     }
 }
-
+export function Logout() {
+    return {
+        type: 'LOGOUT',
+    }
+}
 export const DeleteCarts = (cartdetail) => dispatch => {
     apiService.cartdetail().delete(cartdetail.id)
         .then(response => {

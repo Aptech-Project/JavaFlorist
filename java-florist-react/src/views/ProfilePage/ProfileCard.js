@@ -70,7 +70,7 @@ export default function ProfileCard(props) {
         loadProfileDispatch(loadprofile(response.data))
       })
       .catch(function (error) {
-        console.log(error);
+        // console.log(error);
       })
   }, [])
   return (

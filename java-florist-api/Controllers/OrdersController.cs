@@ -59,6 +59,7 @@ namespace java_florist_api.Controllers
         public async Task<IActionResult> PutOrder(int id )
         {
             var order_Deliv = await _context.Orders.FindAsync(id);
+            order_Deliv.Deliverydate = DateTime.Now;
             order_Deliv.Status = "Delivered";
             _context.Entry(order_Deliv).State = EntityState.Modified;
             await _context.SaveChangesAsync();

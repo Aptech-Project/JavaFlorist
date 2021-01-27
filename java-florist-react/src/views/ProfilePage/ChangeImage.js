@@ -87,7 +87,7 @@ export default function ChangeImage(props) {
         setUserList(response.data)
       })
       .catch(function (error) {
-        console.log(error);
+        // console.log(error);
       })
     //console.log(userProfile);
   }, [])
@@ -130,7 +130,7 @@ export default function ChangeImage(props) {
   //   password.current = watch('password', '');
 
   const showPreview = e => {
-    console.log(e)
+    // console.log(e)
     if (e.target.files && e.target.files[0]) {
       let imgFile = e.target.files[0];
       const reader = new FileReader();
@@ -149,7 +149,7 @@ export default function ChangeImage(props) {
         imgFile: null,
         imgSrc: userProfile.imgSrc
       })
-      console.log(image)
+      // console.log(image)
     }
   }
 

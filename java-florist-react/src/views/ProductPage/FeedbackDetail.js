@@ -39,7 +39,7 @@ const FeedbackDetail = (props) => {
             setErrors({})
         }
     }, [props.currentId])
-    console.log(props.currentId)
+    // console.log(props.currentId)
     const repComment = () => {
         if (value === '') {
             window.alert("Please enter your comment to reply")
@@ -56,7 +56,7 @@ const FeedbackDetail = (props) => {
     const handleChange = e => {
         setValue(e.target.value)
     };
-    console.log(values.id)
+    // console.log(values.id)
     return (
         <form onSubmit={() => repComment()}>
             <Grid container>

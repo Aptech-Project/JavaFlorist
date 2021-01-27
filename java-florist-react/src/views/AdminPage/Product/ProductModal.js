@@ -71,24 +71,26 @@ export default function ProductModal(props) {
   const history = useHistory()
   const alert = useAlert()
   const dispatch = useDispatch()
-  const { product, productId } = props;
+  const { product } = props;
   const [modal, setModal] = useState(false);
   const [active, setActive] = useState(true);
   const [error, setError] = useState({});
   const [missingInput, setMissingInput] = useState(null);
-  const [values, setValues] = useState(product ? product : initialFieldValues)
+  // console.log(product)
+  const [values, setValues] = useState(initialFieldValues)
   let allCategories = useSelector(state => state.category.categoriesList);//get from root reducer
   let products = useSelector(state => state.product.list);//get from root reducer
   let status = useSelector(state => state.product.status);//get from root reducer
+  let activeIndex = useSelector(state => state.product.activeIndex) || 1;
   const isAddMode = !product;
   const classes = useStyles();
 
-  console.log(productId)
-  console.log(product)
+  // console.log(product)
 
   useEffect(() => {
     dispatch(categoryActions.fetchAll())
-  }, [!allCategories, products]);
+    !isAddMode && setValues(product)
+  }, [!allCategories, products, activeIndex]);
 
   function onSubmit(e) {
     let keepRun = true
@@ -332,7 +334,7 @@ export default function ProductModal(props) {
                         }}>
                         <CardAvatar profile>
                           <a href="#pablo" onClick={e => e.preventDefault()}>
-                            <img src={values.imgSrc} alt="..." />
+                            <img src={values?.imgSrc} alt="..." />
                           </a>
                         </CardAvatar>
                         <CardBody profile>

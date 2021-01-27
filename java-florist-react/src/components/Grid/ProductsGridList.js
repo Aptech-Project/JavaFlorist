@@ -51,7 +51,7 @@ export default function ProductsGridList(props) {
 
   let activeIndex = useSelector(state => state.product.activeIndex) || 1;
   const classes = useStyles();
-  let { products, indexCount } = productPagination(props.products.filter(product => product.categoryActive == product.active == 1), activeIndex, 9)
+  let { products, indexCount } = productPagination(props.products.filter(product => product?.categoryActive == product?.active == 1), activeIndex, 9)
   const dispatch = useDispatch();
   const userAuth = localStorage.getItem("user_authenticated");
 
@@ -68,7 +68,7 @@ export default function ProductsGridList(props) {
                 title={<Link to={{ pathname: `/products/${product.id}`, product: { product } }} style={{ color: 'white', width: '70%' }}>{product.name}</Link>}
                 subtitle={<span>Price: {product.price} $</span>}
                 actionIcon={
-                  <div style={{ minWidth: '100px' }}>
+                  <div style={{ minWidth: '50px' }}>
                     {/* <Tooltip
                       title="Buy now"
                       placement={window.innerWidth > 959 ? "top" : "left"}>

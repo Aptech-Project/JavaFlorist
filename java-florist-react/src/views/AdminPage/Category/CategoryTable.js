@@ -35,7 +35,7 @@ export default function CategoryTable(props) {
   const classes = useStyles();
   const { tableHead, tableHeaderColor, categories } = props;
   let activeIndex = useSelector(state => state.category.activeIndex) || 1;
-  console.log(props.categories)
+  // console.log(props.categories)
   // let { categories, indexCount } = productPagination(props.categories || [], activeIndex, 4)
   return (
     <div className={classes.tableResponsive}>

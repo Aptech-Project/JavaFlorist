@@ -52,33 +52,34 @@ export default function Dashboard() {
   const classes = useStyles();
   const [orderList, setOrderList] = useState([]);
 
-  let yearRevenue = 50000;
-  let monthRevenue = 20000;
-  useEffect(()=>{
+  let yearRevenue = 0;
+  let monthRevenue = 0;
+  useEffect(() => {
     axios.get('http://localhost:5000/api/Orders')
-    .then(function (response) {
-      //console.log(response);
-      setOrderList([...response.data]);
-    })
-    .catch(function (error) {
-      console.log(error);
-    })
-  },[])
+      .then(function (response) {
+        // console.log(response);
+        setOrderList([...response.data]);
+      })
+      .catch(function (error) {
+        // console.log(error);
+      })
+  }, [])
 
-  useEffect(()=>{
+  useEffect(() => {
     if (orderList.length !== 0) {
-        orderList.map((orderItem)=>{
-            const countYear = new Date(orderItem.deliverydate);
-            const thisTime = new Date();
-            if (countYear.getFullYear() === thisTime.getFullYear()) {
-              yearRevenue = yearRevenue + orderItem.totalmoney
-            }
-            if (countYear.getMonth() === thisTime.getMonth()) {
-              monthRevenue = monthRevenue + orderItem.totalmoney
-            }
-    //console.log(dataChart);
-    })}
-  },[orderList]) 
+      orderList.map((orderItem) => {
+        const countYear = new Date(orderItem.deliverydate);
+        const thisTime = new Date();
+        if (countYear.getFullYear() === thisTime.getFullYear()) {
+          yearRevenue = yearRevenue + orderItem.totalmoney
+        }
+        if (countYear.getMonth() === thisTime.getMonth()) {
+          monthRevenue = monthRevenue + orderItem.totalmoney
+        }
+        //console.log(dataChart);
+      })
+    }
+  }, [orderList])
 
   const paymentMethod = (method) => {
     switch (method) {
@@ -130,7 +131,7 @@ export default function Dashboard() {
           <Card>
             <CardHeader color="danger" >
               <CardIcon color="danger">
-                <LocalFloristIcon/>
+                <LocalFloristIcon />
               </CardIcon>
               <p className={classes.cardCategory}>BestSellers</p>
               <h4 className={classes.cardTitle}>Rose</h4>
@@ -150,7 +151,7 @@ export default function Dashboard() {
                 <PaymentIcon />
               </CardIcon>
               <p className={classes.cardCategory}>Pay Method</p>
-              <h4 className={classes.cardTitle} style={{textAlign: "center"}}>{paymentMethod('mastercard')}</h4>
+              <h4 className={classes.cardTitle} style={{ textAlign: "center" }}>{paymentMethod('mastercard')}</h4>
             </CardHeader>
             <CardFooter>
               <div className={classes.stats}>
@@ -165,7 +166,7 @@ export default function Dashboard() {
         <GridItem xs={12} sm={12} md={12}>
           <Card>
             <CardHeader color="success">
-              <h4 style={{textAlign:'center'}}>Year Revenue</h4>
+              <h4 style={{ textAlign: 'center' }}>Year Revenue</h4>
             </CardHeader>
             <CardBody>
               {/* <ChartistGraph
@@ -175,7 +176,7 @@ export default function Dashboard() {
                 options={dailySalesChart.options}
                 listener={dailySalesChart.animation}
               /> */}
-              <DashboardChart orderList={orderList}/>
+              <DashboardChart orderList={orderList} />
             </CardBody>
             <CardFooter>
               {/* <div className={classes.stats}>
@@ -195,7 +196,7 @@ export default function Dashboard() {
               </p>
             </CardHeader>
             <CardBody>
-              <DataTable orderList={orderList}/>
+              <DataTable orderList={orderList} />
             </CardBody>
           </Card>
         </GridItem>
