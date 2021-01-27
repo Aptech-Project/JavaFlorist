@@ -15,5 +15,6 @@ namespace java_florist_api.Models
         public string fb { get; set; }
         public int vote { get; set; }
         public string fbRep { get; set; }
+        public string img { get; set; }
     }
 }

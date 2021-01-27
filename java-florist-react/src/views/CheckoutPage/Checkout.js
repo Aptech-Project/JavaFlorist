@@ -36,12 +36,14 @@ import MenuItem from '@material-ui/core/MenuItem';
 
 const currencies = [
 	{
-		value: '1',
+		value: 'shipcode',
+		key: "1",
 		label: 'SHIP COD',
 	},
 	{
-		value: '2',
-		label: 'Pay cart',
+		value: 'cardpay',
+		key: "2",
+		label: 'Pay card',
 	},
 ];
 export default function Checkout() {
@@ -62,7 +64,7 @@ export default function Checkout() {
 		date = date.getDate() + ' - ' + (date.getMonth() + 1) + ' - ' + date.getFullYear();
 		return date
 	}
-	const [currency, setCurrency] = useState('1');
+	const [currency, setCurrency] = useState('shipcode');
 
 	const handleChange = (event) => {
 		setCurrency(event.target.value);
@@ -109,7 +111,7 @@ export default function Checkout() {
 	function TotalPrice(price, tonggia) {
 		return Number(price * tonggia).toLocaleString('en-US');
 	}
-	const onSubmit = (data, e) => {
+	const onSubmit = async (data, e) => {
 		e.preventDefault();
 		let userExited = 0;
 		userList.map((user) => {
@@ -131,7 +133,7 @@ export default function Checkout() {
 			userData.append('phonenumber', data.phone)
 			userData.append('totalmoney', TotalCart)
 			userData.append('userid', userAuth)
-			dispatch(insert(userData))
+			await dispatch(insert(userData))
 			history.push("/order");
 		}
 	};

@@ -13,7 +13,7 @@ export const feedbackReducer = (state = initialState, action) => {
         case ACTION_TYPES.FETCH_BY_ID_PRO:
             return {
                 ...state,
-                list: [...action.payload]
+                feedback: [...action.payload]
             }
         case ACTION_TYPES.CREATE:
             return {
