@@ -35,7 +35,7 @@ const Messagecomponent = ({ classes }) => {
                 <GridItem xs={12} sm={12} md={12}>
                     <Card>
                         <CardHeader color="primary">
-                            <h4 className={classes.cardTitleWhite}>LIST OF USER</h4>
+                            <h4 className={classes.cardTitleWhite}>LIST OF ORDER</h4>
                         </CardHeader>
                         <CardBody>
                             <GridContainer>
