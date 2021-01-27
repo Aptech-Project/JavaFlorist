@@ -34,6 +34,7 @@ const ProductFeedback = ({ classes, ...props }) => {
         if (window.confirm('Are you sure to delete this record?')) {
             props.deleteFeedback(id, window.alert("Delete Successfull !!!"))
             setComment(allComment)
+            setComment(allComment)
         }
     }
     const [show, setShow] = useState(false);
@@ -63,6 +64,9 @@ const ProductFeedback = ({ classes, ...props }) => {
         if (value === null) {
             window.alert("Please enter your feedback")
         }
+        if (value === "") {
+            window.alert("Please enter your feedback")
+        }
         else if (value === undefined) {
             window.alert("Please enter your feedback")
         }
@@ -72,7 +76,10 @@ const ProductFeedback = ({ classes, ...props }) => {
         else {
             props.createFeedback(postComment)
             setComment(allComment)
+            setComment(allComment)
             window.alert("Your comment has been uploaded")
+            setRating(null)
+            setValue("")
         }
         console.log(postComment)
     }
@@ -121,7 +128,8 @@ const ProductFeedback = ({ classes, ...props }) => {
             )
         }
     }
-    const setRatingUpdate = () => {
+    const setRatingUpdate = (ratingValue) => {
+        setRating(ratingValue)
         setPostComment({
             userid: parseInt(user),
             productid: parseInt(id),
@@ -129,6 +137,7 @@ const ProductFeedback = ({ classes, ...props }) => {
             fbReply: ' ',
             vote: rating
         })
+        setRating(ratingValue)
     }
     const renderComment = () => {
         if (comment == undefined) {
@@ -215,14 +224,14 @@ const ProductFeedback = ({ classes, ...props }) => {
                                     name="rating"
                                     style={{ display: "none" }}
                                     value={ratingValue}
-                                    onClick={() => { setRating(ratingValue); setRatingUpdate() }}
+                                    onClick={() => { setRating(ratingValue); setRatingUpdate(ratingValue) }}
                                 />
                                 <FaStar
                                     key={i}
                                     style={{ cursor: 'pointer', transition: "color 200ms" }}
                                     color={ratingValue <= (hover || rating) ? "#ffc107" : "#e4e5e9"}
                                     size={25}
-                                    onMouseEnter={() => setHover(ratingValue)}
+                                    onMouseEnter={() => { setHover(ratingValue); setRatingUpdate(ratingValue) }}
                                     onMouseLeave={() => setHover(null)}
                                 />
                             </label>
