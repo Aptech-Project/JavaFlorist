@@ -17,6 +17,7 @@
 */
 // @material-ui/icons
 import Dashboard from "@material-ui/icons/Dashboard";
+import Category from "@material-ui/icons/Category";
 import Person from "@material-ui/icons/Person";
 import MessageICon from "@material-ui/icons/Message";
 import Comment from "@material-ui/icons/Comment";
@@ -30,13 +31,13 @@ import DashboardPage from "views/Dashboard/Dashboard.js";
 import UserProfile from "views/UserProfile/UserProfile.js";
 import TableList from "views/TableList/TableList.js";
 import Icons from "views/Icons/Icons.js";
-import Maps from "views/Maps/Maps.js";
 import NotificationsPage from "views/Notifications/Notifications.js";
 import UpgradeToPro from "views/UpgradeToPro/UpgradeToPro.js";
 import Customer from "./views/AdminPage/Customer/Customer.component"
 import Message from "./views/AdminPage/Message/Message.component"
 import Feedback from "./views/AdminPage/Feedback/Feedback.component"
 import ProductTableList from "views/AdminPage/Product/ProductTableList";
+import CategoryTableList from "views/AdminPage/Category/CategoryTableList";
 const dashboardRoutes = [
   {
     path: "/dashboard",
@@ -71,6 +72,13 @@ const dashboardRoutes = [
     name: "Product",
     icon: "content_paste",
     component: ProductTableList,
+    layout: "/admin"
+  },
+  {
+    path: "/category",
+    name: "Category",
+    icon: Category,
+    component: CategoryTableList,
     layout: "/admin"
   },
 

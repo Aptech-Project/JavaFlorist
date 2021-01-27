@@ -7,6 +7,7 @@ namespace java_florist_api.Models
 {
     public partial class Productcategory
     {
+        public int Id { get; set; }
         public int Productid { get; set; }
         public string Categoryname { get; set; }
 

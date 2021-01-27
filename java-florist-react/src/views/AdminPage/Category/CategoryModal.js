@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import * as productActions from 'actions/product.action'
+import * as productActions from 'actions/category.action'
 // material-ui components
 import withStyles from "@material-ui/core/styles/withStyles";
 import Slide from "@material-ui/core/Slide";
@@ -59,36 +59,29 @@ const PurpleSwitch = withStyles({
 })(Switch);
 const useStyles = makeStyles(modalStyle);
 const initialFieldValues = {
-  name: '',
-  price: '',
-  description: '',
   categoryname: '',
+  message: '',
   active: 1,
-  imgSrc: defaultImage,
-  imgFile: null
 }
-export default function ProductModal(props) {
+export default function CategoryModal(props) {
   const history = useHistory()
   const alert = useAlert()
   const dispatch = useDispatch()
-  const { product, productId } = props;
+  const { category, categoryId } = props;
   const [modal, setModal] = useState(false);
   const [active, setActive] = useState(true);
   const [error, setError] = useState({});
   const [missingInput, setMissingInput] = useState(null);
-  const [values, setValues] = useState(product ? product : initialFieldValues)
+  const [values, setValues] = useState(category ? category : initialFieldValues)
   let allCategories = useSelector(state => state.category.categoriesList);//get from root reducer
-  let products = useSelector(state => state.product.list);//get from root reducer
-  let status = useSelector(state => state.product.status);//get from root reducer
-  const isAddMode = !product;
+  let categories = useSelector(state => state.category.list);//get from root reducer
+  let status = useSelector(state => state.category.status);//get from root reducer
+  const isAddMode = !category;
   const classes = useStyles();
-
-  console.log(productId)
-  console.log(product)
 
   useEffect(() => {
     dispatch(categoryActions.fetchAll())
-  }, [!allCategories, products]);
+  }, [!allCategories, categories]);
 
   function onSubmit(e) {
     let keepRun = true
@@ -96,54 +89,38 @@ export default function ProductModal(props) {
     Object.keys(values).some(key => {
       let value = values[key]
       if (value == null && isAddMode) {
-        isAddMode && setMissingInput("Please input all field and add an image!")
         keepRun = false
       }
     })
     if (keepRun) {
       e.preventDefault()
       let formData = new FormData()
-      formData.append('name', values.name)
-      formData.append('price', values.price)
-      formData.append('description', values.description)
       formData.append('categoryname', values.categoryname)
+      formData.append('message', values.message)
       formData.append('active', values.active)
-      formData.append('imgName', values.imgName)
-      formData.append('imgFile', values.imgFile)
       if (isAddMode) {
-        dispatch(productActions.create(formData))
+        dispatch(categoryActions.create(formData))
       } else {
-        formData.append('id', product.id)
-        dispatch(productActions.update(product.id, formData))
+        formData.append('id', category.id)
+        dispatch(categoryActions.update(category.id, formData))
         history.go(0)
       }
     }
   }
 
   async function vaidateField(name, value) {
-    if (name == "name") {
-      let nameExisted = checkProductName({ name: value }, products)
+    if (name == "categoryname") {
       if (value.length < 3) {
         setError({ ...error, [name]: "Name must be at least 3 characters!" })
-      } else if (nameExisted && product.name != value) {
-        setError({ ...error, [name]: "This name is used already!" })
       } else {
         setError({ ...error, [name]: null })
       }
     }
-    if (name == "price") {
-      value <= 0 ?
-        setError({ ...error, [name]: "Price must be positive value!" }) :
+    if (name == "message") {
+      if (value.length < 20) {
+        setError({ ...error, [name]: "Message must be at least 20 characters!" })
+      } else {
         setError({ ...error, [name]: null })
-    }
-    if (name == "categoryname") {
-      value == "" ?
-        setError({ ...error, [name]: "Please select a category!" }) :
-        setError({ ...error, [name]: null })
-    }
-    if (name == "imgFile") {
-      if (value) {
-        setError({ ...error, [name]: "Please select an image!" })
       }
     }
   }
@@ -162,35 +139,12 @@ export default function ProductModal(props) {
     setMissingInput(null)
   }
 
-  const showPreview = e => {
-    if (e.target.files && e.target.files[0]) {
-      let imgFile = e.target.files[0];
-      const reader = new FileReader();
-      reader.onload = x => {
-        setValues({
-          ...values,
-          imgFile,
-          imgSrc: x.target.result
-        })
-      }
-      reader.readAsDataURL(imgFile)
-    }
-    else {
-      setValues({
-        ...values,
-        imgFile: null,
-        imgSrc: defaultImage
-      })
-    }
-  }
-
-
   return (
     <div>
       <div>
         {isAddMode ?
           <Button color="primary" round onClick={() => setModal(true)}>
-            Add Product
+            Add Category
           </Button> :
           <Tooltip
             title="Edit data"
@@ -239,42 +193,30 @@ export default function ProductModal(props) {
             <GridItem xs={12} sm={12} md={12}>
               <Card>
                 <CardHeader color="primary">
-                  <h4 className={classes.cardTitleWhite}>{product ? "Edit Product" : "Add Product"}</h4>
-                  <p className={classes.cardCategoryWhite}>Product information</p>
+                  <h4 className={classes.cardTitleWhite}>{category ? "Edit Category" : "Add Category"}</h4>
+                  <p className={classes.cardCategoryWhite}>Category information</p>
                 </CardHeader>
                 <CardBody>
                   <GridContainer>
                     {(isAddMode && status == "201") &&
-                      <Alert severity="success">Create new product success!</Alert>
+                      <Alert severity="success">Create new category success!</Alert>
                     }
                     {(isAddMode && status && status != "201") &&
-                      <Alert severity="error">Create new product failed!</Alert>
+                      <Alert severity="error">Create new category failed!</Alert>
                     }
                     {missingInput &&
                       <Alert severity="error">{missingInput}</Alert>
                     }
-                    <GridItem xs={12} sm={12} md={12}>
-                      <FormControl className="col-12">
-                        <TextField
-                          name="name"
-                          label="Name"
-                          type="text"
-                          onChange={handleInputChange}
-                          defaultValue={values.name}
-                        />
-                        <FormHelperText error>{error.name}</FormHelperText>
-                      </FormControl>
-                    </GridItem>
                     <GridItem xs={12} sm={6} md={6}>
                       <FormControl className="col-12">
                         <TextField
-                          name="price"
-                          label="Price"
-                          type="number"
+                          name="categoryname"
+                          label="Name"
+                          type="text"
                           onChange={handleInputChange}
-                          defaultValue={values.price}
+                          defaultValue={values.categoryname}
                         />
-                        <FormHelperText error>{error.price}</FormHelperText>
+                        <FormHelperText error>{error.categoryname}</FormHelperText>
                       </FormControl>
                     </GridItem>
                     <GridItem xs={12} sm={6} md={6}>
@@ -294,56 +236,18 @@ export default function ProductModal(props) {
                     </GridItem>
                   </GridContainer>
                   <GridContainer>
-                    <GridItem xs={12} sm={6} md={6}>
-                      <FormControl className="col-12">
-                        <InputLabel>Category</InputLabel>
-                        <Select
-                          disabled={!isAddMode}
-                          name="categoryname"
-                          value={values.categoryname}
-                          onChange={handleInputChange}
-                        >
-                          {/* <MenuItem value={null}>{null}</MenuItem> */}
-                          {allCategories && allCategories.map((category, index) => (
-                            <MenuItem key={index} value={category.categoryname}>{category.categoryname}</MenuItem>
-                          ))}
-                        </Select>
-                        <FormHelperText error>{error.categoryname}</FormHelperText>
-                      </FormControl>
+                    <GridItem xs={12} sm={12} md={12}>
                       <FormControl className="col-12">
                         <TextField
-                          name="description"
-                          label="Description"
+                          name="message"
+                          label="Message"
                           multiline
                           onChange={handleInputChange}
-                          defaultValue={values.description}
+                          defaultValue={values.message}
                           rows={8}
                         />
+                        <FormHelperText error>{error.message}</FormHelperText>
                       </FormControl>
-                    </GridItem>
-                    <GridItem xs={12} sm={6} md={6}>
-                      <Card profile
-                        style={{
-                          display: 'flex',
-                          justifyContent: 'center',
-                          alignItems: 'center',
-                          height: "215px",
-                          paddingTop: "20px"
-                        }}>
-                        <CardAvatar profile>
-                          <a href="#pablo" onClick={e => e.preventDefault()}>
-                            <img src={values.imgSrc} alt="..." />
-                          </a>
-                        </CardAvatar>
-                        <CardBody profile>
-                          <TextField
-                            type="file"
-                            onChange={showPreview}
-                            defaultValue={null}
-                          />
-                        </CardBody>
-                        <FormHelperText error>{error.imgFile}</FormHelperText>
-                      </Card>
                     </GridItem>
                   </GridContainer>
                 </CardBody>
@@ -354,7 +258,7 @@ export default function ProductModal(props) {
                     alignItems: 'center',
                   }}
                 >
-                  <Button color="primary" onClick={onSubmit}>{isAddMode ? "Add Product" : "Update Product"}</Button>
+                  <Button color="primary" onClick={onSubmit}>{isAddMode ? "Add Category" : "Update Category"}</Button>
                 </CardFooter>
               </Card>
             </GridItem>

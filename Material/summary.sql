@@ -73,6 +73,7 @@ CREATE TABLE [category] (
 );
 
 CREATE TABLE [productcategory] (
+  [id] int NOT NULL IDENTITY,
   [productid] int NOT NULL FOREIGN KEY REFERENCES [product](id),
   [categoryname] varchar(255) NOT NULL FOREIGN KEY REFERENCES [category](categoryname)
 );

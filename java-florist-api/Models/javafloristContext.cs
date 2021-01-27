@@ -315,9 +315,9 @@ namespace java_florist_api.Models
 
             modelBuilder.Entity<Productcategory>(entity =>
             {
-                entity.HasNoKey();
-
                 entity.ToTable("productcategory");
+
+                entity.Property(e => e.Id).HasColumnName("id");
 
                 entity.Property(e => e.Categoryname)
                     .IsRequired()

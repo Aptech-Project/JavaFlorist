@@ -13,7 +13,7 @@ import TableCell from "@material-ui/core/TableCell";
 import styles from "assets/jss/material-dashboard-react/components/tableStyle.js";
 import Pagination from "components/Pagination/Pagination";
 import { productPagination } from 'shared/productFunction.shared';
-import ProductModal from "./ProductModal";
+import CategoryModal from "./CategoryModal";
 import { purple } from '@material-ui/core/colors';
 import { FormControlLabel, IconButton, Radio, RadioGroup, Switch, Tooltip } from '@material-ui/core';
 
@@ -31,12 +31,12 @@ const PurpleSwitch = withStyles({
   checked: {},
   track: {},
 })(Switch);
-export default function ProductTable(props) {
+export default function CategoryTable(props) {
   const classes = useStyles();
-  const { tableHead, tableHeaderColor } = props;
-  let activeIndex = useSelector(state => state.product.activeIndex) || 1;
-  let { products, indexCount } = productPagination(props.products, activeIndex, 4)
-  const dispatch = useDispatch();
+  const { tableHead, tableHeaderColor, categories } = props;
+  let activeIndex = useSelector(state => state.category.activeIndex) || 1;
+  console.log(props.categories)
+  // let { categories, indexCount } = productPagination(props.categories || [], activeIndex, 4)
   return (
     <div className={classes.tableResponsive}>
       <Table className={classes.table}>
@@ -57,24 +57,11 @@ export default function ProductTable(props) {
           </TableHead>
         ) : null}
         <TableBody>
-          {products.map((product, key) => {
+          {categories.map((category, key) => {
             return (
               <TableRow key={key} className={classes.tableBodyRow}>
                 <TableCell className={classes.tableCell}>
-                  <img src={product.imgSrc} alt={product.name}
-                    style={{
-                      display: "block",
-                      objectFit: "cover",
-                      width: "100px",
-                      height: "100px",
-                    }}
-                  />
-                </TableCell>
-                <TableCell className={classes.tableCell}>
-                  {product.name}
-                </TableCell>
-                <TableCell className={classes.tableCell}>
-                  {product.price} $
+                  {category.categoryname}
                 </TableCell>
                 <TableCell className={classes.tableCell}>
                   <FormControlLabel
@@ -82,20 +69,20 @@ export default function ProductTable(props) {
                     control={
                       <PurpleSwitch
                         disabled
-                        checked={product.active == 1}
+                        checked={category.active == 1}
                         name="active" />
                     }
                   />
                 </TableCell>
                 <TableCell className={classes.tableCell}>
-                  {product.categoryname}
+                  {category.message} $
                 </TableCell>
                 <TableCell className={classes.tableCell}>
-                  <ProductModal style={{ width: '600px' }}
-                    title={"Product Details"}
-                    productId={product.id}
-                    products={products}
-                    product={product}
+                  <CategoryModal style={{ width: '600px' }}
+                    title={"Category Details"}
+                    categoryId={category.id}
+                    categories={categories}
+                    category={category}
                   />
                 </TableCell>
               </TableRow>
@@ -111,29 +98,16 @@ export default function ProductTable(props) {
           margin: 'auto'
         }}
       >
-        {products.length > 0 &&
-          <Pagination
-            color='info'
-            activeIndex={activeIndex}
-            pages={
-              indexCount.map((index) => {
-                let indexObject = { text: index }
-                if (activeIndex == index) indexObject["active"] = true
-                return indexObject
-              })
-            }
-          />
-        }
       </div>
     </div>
   );
 }
 
-ProductTable.defaultProps = {
+CategoryTable.defaultProps = {
   tableHeaderColor: "gray"
 };
 
-ProductTable.propTypes = {
+CategoryTable.propTypes = {
   tableHeaderColor: PropTypes.oneOf([
     "warning",
     "primary",

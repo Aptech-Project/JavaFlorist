@@ -23,10 +23,20 @@ import Admin from "views/AdminPage/Admin";
 import ProfileEdit from "views/ProfilePage/ProfileEdit";
 import NotFoundPage from "views/NotFoundPage";
 import CheckRoute from "views/LoginPage/ProtectedRoute";
-
+import { transitions, positions, Provider as AlertProvider } from 'react-alert'
+import AlertTemplate from 'react-alert-template-basic'
 
 var hist = createBrowserHistory();
 
+// optional configuration
+const options = {
+  // you can also just use 'bottom center'
+  position: positions.BOTTOM_CENTER,
+  timeout: 5000,
+  offset: '30px',
+  // you can also just use 'scale'
+  transition: transitions.SCALE
+}
 
 const render = () => {
   //const userAuth = useSelector(state => state.login.userAuth)
@@ -54,9 +64,11 @@ const render = () => {
 
 ReactDOM.render(
   <Provider store={store}>
-    <Router history={hist}>
-      {render()}
-    </Router>
+    <AlertProvider template={AlertTemplate} {...options}>
+      <Router history={hist}>
+        {render()}
+      </Router>
+    </AlertProvider>
   </Provider>,
   document.getElementById("root")
 );

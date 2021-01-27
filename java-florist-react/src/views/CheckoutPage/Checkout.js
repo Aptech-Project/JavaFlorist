@@ -17,8 +17,10 @@ import { List, ListItem, ListItemIcon, ListItemText, Tooltip } from "@material-u
 import { useForm } from 'react-hook-form';
 import Button from "components/CustomButtons/Button.js";
 import { useHistory } from "react-router-dom";
-
-
+import * as categoryActions from 'actions/category.action'
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
+import InputLabel from "@material-ui/core/InputLabel";
 
 import {
 	IncreaseQuantity,
@@ -35,7 +37,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 const currencies = [
 	{
 		value: '1',
-		label: 'SHIP CODE',
+		label: 'SHIP COD',
 	},
 	{
 		value: '2',
@@ -49,9 +51,12 @@ export default function Checkout() {
 	let TotalCart = 0;
 	let carts = useSelector(state => state.cart.Carts);//get from root reducer
 	let [cart, setCart] = useState([])
+	let [category, setCategory] = useState(null)
+	let [message, setMessage] = useState(null)
 	const userProfile = useSelector(state => state.customer.userProfile);
 	const [count, setCount] = useState(0)
 	const userAuth = localStorage.getItem(SET_USER_AUTHENTICATE);
+	let allCategories = useSelector(state => state.category.categoriesList);//get from root reducer
 	const formatDate = () => {
 		let date = new Date(userProfile.birthday);
 		date = date.getDate() + ' - ' + (date.getMonth() + 1) + ' - ' + date.getFullYear();
@@ -64,11 +69,12 @@ export default function Checkout() {
 	};
 
 	const [userList, setUserList] = useState([]);
-
+	console.log(allCategories)
 	useEffect(() => {
 		dispatch(GetCart(userAuth))
+		dispatch(categoryActions.fetchAll())
 		setCart(carts)
-	}, [userProfile]);
+	}, [userProfile, !allCategories]);
 
 	useEffect(() => {
 		dispatch(GetCart(userAuth))
@@ -120,7 +126,8 @@ export default function Checkout() {
 			userData.append('receiver', data.fullname)
 			userData.append('note', data.note)
 			userData.append('paymentmethod', currency)
-			userData.append('message', data.note)
+			userData.append('message', message || '')
+			userData.append('note', data.note)
 			userData.append('phonenumber', data.phone)
 			userData.append('totalmoney', TotalCart)
 			userData.append('userid', userAuth)
@@ -129,6 +136,16 @@ export default function Checkout() {
 		}
 	};
 
+	const getAllMessage = (name) => {
+		let message = allCategories.filter(category => {
+			if (category.categoryname == name)
+				return category
+		})
+		let messageArray = message[0].message.split("\r\n")
+		setCategory(messageArray)
+		console.log(messageArray)
+	}
+	console.log(message)
 	return (
 		<div className="row">
 			<section className="content-header" >
@@ -291,6 +308,41 @@ export default function Checkout() {
 														</MenuItem>
 													))}
 												</TextField>
+											</div>
+											<div className="form-group">
+												<FormControl className="col-4">
+													<InputLabel>Ocasion</InputLabel>
+													<Select
+														// value={values.categoryname}
+														// onChange={e => setCategory(allCategories.filter(category => { return category.name == e.target.value }))}
+														onChange={e => { getAllMessage(e.target.value) }}
+													>
+														{allCategories && allCategories.map((category, index) => (
+															<MenuItem
+																key={index}
+																value={category.categoryname}
+															>{category.categoryname}</MenuItem>
+														))}
+													</Select>
+												</FormControl>
+												<FormControl className="col-8"
+													style={{ maxWidth: "300px" }}
+												>
+													<InputLabel>Message</InputLabel>
+													<Select
+														// value={values.categoryname}
+														onChange={e => setMessage(e.target.value)}
+													>
+														{/* {category && category.message.split("/r/n").map((message, index) => (
+															<MenuItem key={index} value={message}>{message}</MenuItem>
+														))} */}
+														{category && category.map((c, index) => (
+															<MenuItem
+																rows={3}
+																key={index} value={c}>{c}</MenuItem>
+														))}
+													</Select>
+												</FormControl>
 											</div>
 											<div className="form-group">
 												<TextField

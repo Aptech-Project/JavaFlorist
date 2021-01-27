@@ -44,7 +44,7 @@ namespace java_florist_api.Controllers
                  ImgSrc = String.Format("{0}://{1}{2}/Images/{3}", Request.Scheme, Request.Host, Request.PathBase, x.ppc.p.ImgName)
                })
                .ToListAsync();
-            return await products;
+      return await products;
     }
     // GET: api/Products/5
     [HttpGet("{id}")]
@@ -95,10 +95,25 @@ namespace java_florist_api.Controllers
     // POST: api/Products
     // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
     [HttpPost]
-    public async Task<ActionResult<Product>> PostProduct([FromForm] Product product)
+    public async Task<ActionResult<Product>> PostProduct([FromForm] ProductWithCategory productWithCategory)
     {
-      product.ImgName = await SaveImage(product.ImgFile);
+      var product = new Product()
+      {
+        Name = productWithCategory.Name,
+        Price = productWithCategory.Price,
+        Description = productWithCategory.Description,
+        Active = productWithCategory.Active,
+        ImgSrc = String.Format("{0}://{1}{2}/Images/{3}", Request.Scheme, Request.Host, Request.PathBase, productWithCategory.ImgName)
+      };
+      product.ImgName = await SaveImage(productWithCategory.ImgFile);
       _context.Products.Add(product);
+      await _context.SaveChangesAsync();
+      var productCategory = new Productcategory()
+      {
+        Productid = product.Id,
+        Categoryname = productWithCategory.Categoryname
+      };
+      _context.Productcategories.Add(productCategory);
       await _context.SaveChangesAsync();
 
       return CreatedAtAction("GetProduct", new { id = product.Id }, product);
