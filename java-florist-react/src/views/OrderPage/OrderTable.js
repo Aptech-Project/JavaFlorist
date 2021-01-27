@@ -87,7 +87,7 @@ export default function OrderTable() {
               <TableCell>Phone</TableCell>
               <TableCell size="15">Address</TableCell>
               <TableCell>Message</TableCell>
-              <TableCell>Note</TableCell>
+              <TableCell>Total</TableCell>
               <TableCell>Payment Method</TableCell>
               <TableCell>Status</TableCell>
               <TableCell></TableCell>
@@ -102,7 +102,7 @@ export default function OrderTable() {
                 <TableCell>{record.phonenumber}</TableCell>
                 <TableCell>{record.address}</TableCell>
                 <TableCell>{record.message}</TableCell>
-                <TableCell>{record.note}</TableCell>
+                <TableCell>{record.totalmoney}$</TableCell>
                 <TableCell>{record.paymentmethod == "shipcode" ? "Ship Code" : "Card Pay"}</TableCell>
                 <TableCell>{record.status}</TableCell>
                 <TableCell>

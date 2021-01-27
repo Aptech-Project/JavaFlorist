@@ -25,7 +25,7 @@ import ProfileCard from "views/ProfilePage/ProfileCard";
 import avatar from "assets/img/faces/christian.jpg";
 import { useSelector, useDispatch } from "react-redux";
 import {
-  GetCart,
+  GetCart,Logout
 } from '../../actions/cart.action';
 
 const useStyles = makeStyles(styles);
@@ -37,8 +37,12 @@ export default function HeaderLinks(props) {
   let numberCart = useSelector(state => state.cart.numberCart);
   let carts = useSelector(state => state.cart.Carts);
   useEffect(() => {
-    dispatch(GetCart(userAuth))
-  }, [numberCart]);
+    if (userAuth!=="undefined") {
+       dispatch(GetCart(userAuth))
+    } else {
+     dispatch(Logout())
+    }
+  }, [numberCart,userAuth]);
 
   return (
     <List className={classes.list}>
