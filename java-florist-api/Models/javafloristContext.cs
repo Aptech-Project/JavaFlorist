@@ -34,7 +34,7 @@ namespace java_florist_api.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Server=CRAYSPC; Database=javaflorist;Trusted_Connection=True;");
+                optionsBuilder.UseSqlServer("Server=DESKTOP-I6M145N; Database=javaflorist;Trusted_Connection=True;");
             }
         }
 
@@ -93,11 +93,19 @@ namespace java_florist_api.Models
 
                 entity.Property(e => e.Id).HasColumnName("id");
 
+                entity.Property(e => e.Active).HasColumnName("active");
+
                 entity.Property(e => e.Categoryname)
                     .IsRequired()
                     .HasMaxLength(255)
                     .IsUnicode(false)
                     .HasColumnName("categoryname");
+
+                entity.Property(e => e.Message)
+                    .IsRequired()
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("message");
             });
 
             modelBuilder.Entity<Contact>(entity =>
@@ -144,10 +152,9 @@ namespace java_florist_api.Models
 
             modelBuilder.Entity<Feedbackdatum>(entity =>
             {
-                entity.HasNoKey();
 
                 entity.ToTable("feedbackdata");
-
+                entity.Property(e => e.Id).HasColumnName("id");
                 entity.Property(e => e.FbReply)
                     .IsRequired()
                     .HasMaxLength(8000)
@@ -222,6 +229,12 @@ namespace java_florist_api.Models
                     .IsUnicode(false)
                     .HasColumnName("phonenumber");
 
+                entity.Property(e => e.Message)
+                    .IsRequired()
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("message");
+
                 entity.Property(e => e.Receiver)
                     .IsRequired()
                     .HasMaxLength(255)
@@ -277,6 +290,7 @@ namespace java_florist_api.Models
 
                 entity.Property(e => e.Id).HasColumnName("id");
 
+
                 entity.Property(e => e.Description)
                     .IsRequired()
                     .HasMaxLength(500)
@@ -295,13 +309,15 @@ namespace java_florist_api.Models
                     .HasColumnName("name");
 
                 entity.Property(e => e.Price).HasColumnName("price");
+
+                entity.Property(e => e.Active).HasColumnName("active");
             });
 
             modelBuilder.Entity<Productcategory>(entity =>
             {
-                entity.HasNoKey();
-
                 entity.ToTable("productcategory");
+
+                entity.Property(e => e.Id).HasColumnName("id");
 
                 entity.Property(e => e.Categoryname)
                     .IsRequired()

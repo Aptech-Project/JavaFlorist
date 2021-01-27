@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 #nullable disable
 
@@ -23,6 +25,10 @@ namespace java_florist_api.Models
         public string Name { get; set; }
         public string Phonenumber { get; set; }
         public string ImgName { get; set; }
+        [NotMapped]
+        public string ImgSrc { get; set; }
+        [NotMapped]
+        public IFormFile ImgFile { get; set; }
 
         public virtual Cart Cart { get; set; }
         public virtual ICollection<Order> Orders { get; set; }

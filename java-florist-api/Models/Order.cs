@@ -20,6 +20,7 @@ namespace java_florist_api.Models
         public string Note { get; set; }
         public string Paymentmethod { get; set; }
         public string Phonenumber { get; set; }
+        public string Message { get; set; }
         public string Receiver { get; set; }
         public string Status { get; set; }
         public double Totalmoney { get; set; }

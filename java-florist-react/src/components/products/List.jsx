@@ -4,14 +4,13 @@ import { useForm } from "react-hook-form";
 import { Link } from 'react-router-dom';
 import { FormGroup, FormControlLabel, Switch} from '@material-ui/core';
 import * as actions from '../../actions/product.action'
-import productFilter from '../../shared/filter.shared';
+import productFilter from '../../shared/productFunction.shared';
 
 
 
 function List({ match }) {
     const dispatch = useDispatch()
-    const { path } = match;
-    //const loading = useSelector(state => state.productAction.loading)
+    // const { path } = match;
     let [products, setProducts] = useState(null)
 
     //useSelector is the replacement for mapStateToProps to use state in redux store (can use in function only)

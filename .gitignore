@@ -3,3 +3,9 @@ java-florist-api/bin
 .vs
 laptop-react-app/.eslintcache
 java-florist-react/.eslintcache
+
+java-florist-api/appsettings.json
+java-florist-react/src/services/api.service.js
+java-florist-api/Models/javafloristContext.cs
+java-florist-api/appsettings.json
+java-florist-react/package-lock.json
