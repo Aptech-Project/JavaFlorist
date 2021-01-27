@@ -18,7 +18,7 @@ export default function DataTable({ orderList }) {
   //   },[])
 
   useEffect(() => {
-    console.log(orderList);
+    // console.log(orderList);
     let rowsCop = [...rows];
     if (orderList.length !== 0) {
       orderList.map((orderItem, index) => {
@@ -33,10 +33,10 @@ export default function DataTable({ orderList }) {
           totalmoney: orderItem.totalmoney
         }
         rowsCop.push(rowObj)
-        console.log(orderList);
+        // console.log(orderList);
       })
       setRows([...rowsCop]);
-      console.log(rows);
+      // console.log(rows);
     }
   }, [orderList])
 

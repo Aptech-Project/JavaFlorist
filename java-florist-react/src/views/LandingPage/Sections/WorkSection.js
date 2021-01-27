@@ -5,7 +5,7 @@ import { makeStyles } from "@material-ui/core/styles";
 // @material-ui/icons
 
 // core components
-import { TextField, Grid, Button, withWidth, TextareaAutosize, withStyles} from "@material-ui/core";
+import { TextField, Grid, Button, withWidth, TextareaAutosize, withStyles } from "@material-ui/core";
 import * as actions from "../../../actions/contact.action";
 import { connect } from "react-redux";
 import useForm from "./useForm";
@@ -41,11 +41,11 @@ const WorkSection = ({ classes, ...props }) => {
       temp.name = fieldValues.name ? "" : "Name is required."
     if ('message' in fieldValues)
       temp.message = fieldValues.message ? "" : "Message is required."
-    if ('email' in fieldValues){
+    if ('email' in fieldValues) {
       temp.email = (/^$|.+@.+..+/).test(fieldValues.email) ? "" : "Email is not valid."
-      temp.email = fieldValues.email?"" : "Email is not valid."
+      temp.email = fieldValues.email ? "" : "Email is not valid."
     }
-      
+
     setErrors({
       ...temp
     })
@@ -71,13 +71,13 @@ const WorkSection = ({ classes, ...props }) => {
     if (validate()) {
       reset()
       window.alert("Your message has been sent to us")
-      console.log(values)
+      // console.log(values)
       props.createContact(values)
     }
   }
 
   return (
-    <form autoComplete="off"  className={classes.root} onSubmit={handleSubmit}>
+    <form autoComplete="off" className={classes.root} onSubmit={handleSubmit}>
       <Grid container >
         <Grid item lg={12}>
           <h2 align="center" style={{ fontWeight: 'bold', color: 'black' }}  >Contact us</h2>

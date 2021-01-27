@@ -71,7 +71,7 @@ export default function Checkout() {
 	};
 
 	const [userList, setUserList] = useState([]);
-	console.log(allCategories)
+	// console.log(allCategories)
 	useEffect(() => {
 		dispatch(GetCart(userAuth))
 		dispatch(categoryActions.fetchAll())
@@ -145,9 +145,9 @@ export default function Checkout() {
 		})
 		let messageArray = message[0].message.split("\r\n")
 		setCategory(messageArray)
-		console.log(messageArray)
+		// console.log(messageArray)
 	}
-	console.log(message)
+	// console.log(message)
 	return (
 		<div className="row">
 			<section className="content-header" >

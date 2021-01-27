@@ -48,7 +48,7 @@ export default function ProfileEdit(props) {
 
   const formatDate = () => {
     let date = new Date(userProfile.birthday);
-    date = date.getFullYear() + '/' + (date.getMonth()+1) + '/' +  date.getDate();
+    date = date.getFullYear() + '/' + (date.getMonth() + 1) + '/' + date.getDate();
     return date
   }
   const initialImageValues = {
@@ -56,11 +56,11 @@ export default function ProfileEdit(props) {
     imgFile: null
   }
 
-  useEffect(()=>{
+  useEffect(() => {
     if (userProfile !== undefined || userProfile !== null) {
-    setImage(initialImageValues)
+      setImage(initialImageValues)
     }
-  },[userProfile])
+  }, [userProfile])
 
   setTimeout(function () {
     setCardAnimation("");
@@ -79,32 +79,32 @@ export default function ProfileEdit(props) {
     mode: 'onChange',
   });
 
-  useEffect(()=>{
+  useEffect(() => {
     axios.get('http://localhost:5000/api/Users')
-    .then(function (response) {
-      console.log(response);
-      setUserList(response.data)
-    })
-    .catch(function (error) {
-      console.log(error);
-    })
-    console.log(userProfile);
-  },[])
+      .then(function (response) {
+        // console.log(response);
+        setUserList(response.data)
+      })
+      .catch(function (error) {
+        // console.log(error);
+      })
+    // console.log(userProfile);
+  }, [])
 
   const onSubmit = (data, e) => {
     e.preventDefault();
     let userExited = 0;
-    userList.map((user)=>{
-       if (data.email !== userProfile.email) {
+    userList.map((user) => {
+      if (data.email !== userProfile.email) {
         if (user.email === data.email) {
-            userExited = userExited + 1;
-          }
-       }
+          userExited = userExited + 1;
+        }
+      }
     })
     if (userExited > 0) {
       alert("Email alredy Exited!!")
-    }else{
-        let newBirthday = new Date(data.birthday).toISOString()
+    } else {
+      let newBirthday = new Date(data.birthday).toISOString()
 
       let userData = new FormData()
       userData.append('id', userProfile.id)
@@ -113,7 +113,7 @@ export default function ProfileEdit(props) {
       userData.append('username', data.username)
       userData.append('role', userProfile.role)
       userData.append('address', data.address)
-      userData.append('birthday',newBirthday)
+      userData.append('birthday', newBirthday)
       userData.append('name', data.fullname)
       userData.append('phonenumber', data.phone)
       // if (changeImage) {
@@ -124,12 +124,12 @@ export default function ProfileEdit(props) {
       userData.append('imgFile', userProfile.imgFile)
       userData.append('imgFile', userProfile.imgSrc)
       userData.append('active', 1)
-      editProfileDispatch(update(userProfile.id,userData))
+      editProfileDispatch(update(userProfile.id, userData))
     }
   };
-  useEffect(()=>{
+  useEffect(() => {
     //console.log(forAuth);
-    console.log(editStatus);
+    // console.log(editStatus);
     if (editStatus === 204 || editStatus == 200) {
       //forAuth = forAuth + userList[userList.length - 1].id + 1
       alert("Your Account Has Been Updated!!");
@@ -137,37 +137,37 @@ export default function ProfileEdit(props) {
       statusCode(backStatusCode())
       history.push("/")
     }
-    if (editStatus == 500 || editStatus == 404 || editStatus == 400 ) {
+    if (editStatus == 500 || editStatus == 404 || editStatus == 400) {
       alert("Cannot Create Account!!");
     }
-  },[editStatus])
+  }, [editStatus])
 
-//   const password = useRef({});
-//   password.current = watch('password', '');
+  //   const password = useRef({});
+  //   password.current = watch('password', '');
 
-//   const showPreview = e => {
-//     console.log(e)
-//     if (e.target.files && e.target.files[0] && changeImage) {
-//       let imgFile = e.target.files[0];
-//       const reader = new FileReader();
-//       reader.onload = x => {
-//         setImage({
-//           ...image,
-//           imgFile,
-//           imgSrc: x.target.result
-//         })
-//       }
-//       reader.readAsDataURL(imgFile)
-//     }
-//     else {
-//       setImage({
-//         ...image,
-//         imgFile: null,
-//         imgSrc: userProfile.imgSrc
-//       })
-//     console.log(image)
-//   }
-// }
+  //   const showPreview = e => {
+  //     console.log(e)
+  //     if (e.target.files && e.target.files[0] && changeImage) {
+  //       let imgFile = e.target.files[0];
+  //       const reader = new FileReader();
+  //       reader.onload = x => {
+  //         setImage({
+  //           ...image,
+  //           imgFile,
+  //           imgSrc: x.target.result
+  //         })
+  //       }
+  //       reader.readAsDataURL(imgFile)
+  //     }
+  //     else {
+  //       setImage({
+  //         ...image,
+  //         imgFile: null,
+  //         imgSrc: userProfile.imgSrc
+  //       })
+  //     console.log(image)
+  //   }
+  // }
 
   return (
     // <div>
@@ -187,72 +187,72 @@ export default function ProfileEdit(props) {
     //     }}
     //   >
     //     <div className={classes.container}>
-          
+
     //     </div>
     //     <Footer whiteFont />
     //   </div>
     // </div>
     <GridContainer justify="center">
-            <GridItem xs={12} sm={12} md={8}>
-              <Card className={classes[cardAnimaton]}>
-                <form className={classes.form} noValidate onSubmit={handleSubmit(onSubmit)}>
-                  <CardHeader color="primary" className={classes.cardHeader}>
-                    <h4>Edit Profile</h4>
-                  </CardHeader>
-                  <CardBody>
-                    <GridContainer justify="center">
-                      <GridItem xs={6} sm={6} md={6}>
-                        <TextField
-                          label="Full Name..."
-                          id="fullname"
-                          margin="normal"
-                          name="fullname"
-                          defaultValue ={userProfile.name}
-                          fullWidth
-                          InputProps={{
-                            endAdornment: (
-                              <InputAdornment position='end'>
-                                <People className={classes.inputIconsColor} />
-                              </InputAdornment>
-                            ),
-                          }}
-                          inputRef={register({
-                            required: 'Full Name is required',
-                          })}
-                          required
-                          autoFocus
-                          autoComplete="fullname"
-                          error={errors.fullname}
-                          helperText={errors.fullname && errors.fullname.message}
-                        />
-                        <TextField
-                          label="Email..."
-                          margin="normal"
-                          id="email"
-                          name="email"
-                          defaultValue ={userProfile.email}
-                          fullWidth
-                          //type= "text"
-                          InputProps={{
-                            endAdornment: (
-                              <InputAdornment position='end'>
-                                <Email className={classes.inputIconsColor} />
-                              </InputAdornment>
-                            ),
-                          }}
-                          inputRef={register({
-                            required: 'Email is required',
-                            pattern: {
-                              value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                              message: 'Invalid email address',
-                            },
-                          })}
-                          required
-                          autoComplete="email"
-                          error={errors.email}
-                          helperText={errors.email && errors.email.message}
-                        />
-                        {/* <TextField
+      <GridItem xs={12} sm={12} md={8}>
+        <Card className={classes[cardAnimaton]}>
+          <form className={classes.form} noValidate onSubmit={handleSubmit(onSubmit)}>
+            <CardHeader color="primary" className={classes.cardHeader}>
+              <h4>Edit Profile</h4>
+            </CardHeader>
+            <CardBody>
+              <GridContainer justify="center">
+                <GridItem xs={6} sm={6} md={6}>
+                  <TextField
+                    label="Full Name..."
+                    id="fullname"
+                    margin="normal"
+                    name="fullname"
+                    defaultValue={userProfile.name}
+                    fullWidth
+                    InputProps={{
+                      endAdornment: (
+                        <InputAdornment position='end'>
+                          <People className={classes.inputIconsColor} />
+                        </InputAdornment>
+                      ),
+                    }}
+                    inputRef={register({
+                      required: 'Full Name is required',
+                    })}
+                    required
+                    autoFocus
+                    autoComplete="fullname"
+                    error={errors.fullname}
+                    helperText={errors.fullname && errors.fullname.message}
+                  />
+                  <TextField
+                    label="Email..."
+                    margin="normal"
+                    id="email"
+                    name="email"
+                    defaultValue={userProfile.email}
+                    fullWidth
+                    //type= "text"
+                    InputProps={{
+                      endAdornment: (
+                        <InputAdornment position='end'>
+                          <Email className={classes.inputIconsColor} />
+                        </InputAdornment>
+                      ),
+                    }}
+                    inputRef={register({
+                      required: 'Email is required',
+                      pattern: {
+                        value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                        message: 'Invalid email address',
+                      },
+                    })}
+                    required
+                    autoComplete="email"
+                    error={errors.email}
+                    helperText={errors.email && errors.email.message}
+                  />
+                  {/* <TextField
                           label="Password"
                           margin="normal"
                           id="password"
@@ -311,115 +311,115 @@ export default function ProfileEdit(props) {
                           error={errors.confirmPassword}
                           helperText={errors.confirmPassword && errors.confirmPassword.message}
                         /> */}
-                        <TextField
-                          label="Phone Number"
-                          id="phone"
-                          margin="normal"
-                          name="phone"
-                          defaultValue ={userProfile.phonenumber}
-                          fullWidth
-                          InputProps={{
-                            endAdornment: (
-                              <InputAdornment position='end'>
-                                <PhoneIphoneIcon className={classes.inputIconsColor} />
-                              </InputAdornment>
-                            ),
-                          }}
-                          inputRef={register({
-                            required: 'Phone Number is required',
-                            maxLength: {
-                              value: 13,
-                              message: 'The Phone Number do not exceed 13 numbers',
-                            },
-                            minLength: {
-                              value: 10,
-                              message: 'The Phone Number must have at least 10 number',
-                            },
-                          })}
-                          required
-                          autoFocus
-                          autoComplete="phone"
-                          error={errors.phone}
-                          helperText={errors.phone && errors.phone.message}
-                        />
-                      </GridItem>
-                      <GridItem xs={6} sm={6} md={6}>
-                        <TextField
-                          label="User Name..."
-                          id="username"
-                          margin="normal"
-                          name="username"
-                          defaultValue ={userProfile.username}
-                          fullWidth
-                          InputProps={{
-                            endAdornment: (
-                              <InputAdornment position='end'>
-                                <People className={classes.inputIconsColor} />
-                              </InputAdornment>
-                            ),
-                          }}
-                          inputRef={register({
-                            required: 'User Name is required',
-                            maxLength: {
-                              value: 20,
-                              message: 'Max length is 20',
-                            },
-                            // pattern: {
-                            //   value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                            //   message: 'Invalid email address',
-                            // },
-                          })}
-                          required
-                          autoFocus
-                          autoComplete="username"
-                          error={errors.username}
-                          helperText={errors.username && errors.username.message}
-                        />
-                        <TextField
-                          label="Address..."
-                          id="address"
-                          margin="normal"
-                          name="address"
-                          defaultValue ={userProfile.address}
-                          fullWidth
-                          InputProps={{
-                            endAdornment: (
-                              <InputAdornment position='end'>
-                                <BusinessIcon className={classes.inputIconsColor} />
-                              </InputAdornment>
-                            ),
-                          }}
-                          inputRef={register({
-                            required: 'Address is required',
-                          })}
-                          required
-                          autoFocus
-                          autoComplete="address"
-                          error={errors.address}
-                          helperText={errors.address && errors.address.message}
-                        />
-                        <TextField
-                          label="Birthday..."
-                          id="birthday"
-                          margin="normal"
-                          name="birthday"
-                          defaultValue ={formatDate()}
-                          fullWidth
-                          //type="date"
-                          InputLabelProps={{ shrink: true }}
-                          inputRef={register({
-                            required: 'Birthday is required',
-                          })}
-                          required
-                          autoFocus
-                          autoComplete="birthday"
-                          error={errors.birthday}
-                          helperText={errors.birthday && errors.birthday.message}
-                        />
-                        
-                      </GridItem>
-                    </GridContainer>
-                    {/* <GridContainer justify="center">
+                  <TextField
+                    label="Phone Number"
+                    id="phone"
+                    margin="normal"
+                    name="phone"
+                    defaultValue={userProfile.phonenumber}
+                    fullWidth
+                    InputProps={{
+                      endAdornment: (
+                        <InputAdornment position='end'>
+                          <PhoneIphoneIcon className={classes.inputIconsColor} />
+                        </InputAdornment>
+                      ),
+                    }}
+                    inputRef={register({
+                      required: 'Phone Number is required',
+                      maxLength: {
+                        value: 13,
+                        message: 'The Phone Number do not exceed 13 numbers',
+                      },
+                      minLength: {
+                        value: 10,
+                        message: 'The Phone Number must have at least 10 number',
+                      },
+                    })}
+                    required
+                    autoFocus
+                    autoComplete="phone"
+                    error={errors.phone}
+                    helperText={errors.phone && errors.phone.message}
+                  />
+                </GridItem>
+                <GridItem xs={6} sm={6} md={6}>
+                  <TextField
+                    label="User Name..."
+                    id="username"
+                    margin="normal"
+                    name="username"
+                    defaultValue={userProfile.username}
+                    fullWidth
+                    InputProps={{
+                      endAdornment: (
+                        <InputAdornment position='end'>
+                          <People className={classes.inputIconsColor} />
+                        </InputAdornment>
+                      ),
+                    }}
+                    inputRef={register({
+                      required: 'User Name is required',
+                      maxLength: {
+                        value: 20,
+                        message: 'Max length is 20',
+                      },
+                      // pattern: {
+                      //   value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                      //   message: 'Invalid email address',
+                      // },
+                    })}
+                    required
+                    autoFocus
+                    autoComplete="username"
+                    error={errors.username}
+                    helperText={errors.username && errors.username.message}
+                  />
+                  <TextField
+                    label="Address..."
+                    id="address"
+                    margin="normal"
+                    name="address"
+                    defaultValue={userProfile.address}
+                    fullWidth
+                    InputProps={{
+                      endAdornment: (
+                        <InputAdornment position='end'>
+                          <BusinessIcon className={classes.inputIconsColor} />
+                        </InputAdornment>
+                      ),
+                    }}
+                    inputRef={register({
+                      required: 'Address is required',
+                    })}
+                    required
+                    autoFocus
+                    autoComplete="address"
+                    error={errors.address}
+                    helperText={errors.address && errors.address.message}
+                  />
+                  <TextField
+                    label="Birthday..."
+                    id="birthday"
+                    margin="normal"
+                    name="birthday"
+                    defaultValue={formatDate()}
+                    fullWidth
+                    //type="date"
+                    InputLabelProps={{ shrink: true }}
+                    inputRef={register({
+                      required: 'Birthday is required',
+                    })}
+                    required
+                    autoFocus
+                    autoComplete="birthday"
+                    error={errors.birthday}
+                    helperText={errors.birthday && errors.birthday.message}
+                  />
+
+                </GridItem>
+              </GridContainer>
+              {/* <GridContainer justify="center">
                       <GridItem xs={12} sm={12} md={4} justify="center">
                         {image !== {} ? 
                         <>
@@ -431,25 +431,25 @@ export default function ProfileEdit(props) {
                         
                       </GridItem>
                     </GridContainer> */}
-                    {/* <GridContainer justify="center">
+              {/* <GridContainer justify="center">
                       <GridItem xs={12} sm={12} md={4} justify="center">
                         
                       </GridItem>
                     </GridContainer> */}
-                  </CardBody>
-                  <CardFooter className={classes.cardFooter}>
-                    <Button simple
-                      color="primary"
-                      size="lg"
-                      type="submit"
-                      //disabled={!formState.isValid}
-                      variant="contained">
-                      Get Started
+            </CardBody>
+            <CardFooter className={classes.cardFooter}>
+              <Button simple
+                color="primary"
+                size="lg"
+                type="submit"
+                //disabled={!formState.isValid}
+                variant="contained">
+                Get Started
                     </Button>
-                  </CardFooter>
-                </form>
-              </Card>
-            </GridItem>
-          </GridContainer>
+            </CardFooter>
+          </form>
+        </Card>
+      </GridItem>
+    </GridContainer>
   );
 }

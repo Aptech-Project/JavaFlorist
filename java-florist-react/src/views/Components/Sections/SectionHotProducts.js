@@ -47,8 +47,13 @@ export default function SectionHotProduct(props) {
                   }}
                 ><Link to={{ pathname: `/products/${product.id}`, product: { product } }} style={{ color: 'black', fontSize: '20px' }}>{product.name}</Link></h4>
                 <img
+                  style={{
+                    display: "block",
+                    objectFit: "cover",
+                  }}
                   src={product.imgSrc}
-                  className={classes.imgRoundedCircle + " " + classes.imgFluid}
+                  // className={classes.imgRoundedCircle + " " + classes.imgFluid}
+                  className={classes.imgRounded + " " + classes.imgFluid}
                 />
               </GridItem>
             ))}

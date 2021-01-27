@@ -57,11 +57,11 @@ export default function Dashboard() {
   useEffect(() => {
     axios.get('http://localhost:5000/api/Orders')
       .then(function (response) {
-        console.log(response);
+        // console.log(response);
         setOrderList([...response.data]);
       })
       .catch(function (error) {
-        console.log(error);
+        // console.log(error);
       })
   }, [])
 

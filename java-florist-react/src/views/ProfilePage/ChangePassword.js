@@ -47,7 +47,7 @@ export default function ChangePass(props) {
 
   const formatDate = () => {
     let date = new Date(userProfile.birthday);
-    date = date.getFullYear() + '/' + (date.getMonth()+1) + '/' +  date.getDate();
+    date = date.getFullYear() + '/' + (date.getMonth() + 1) + '/' + date.getDate();
     return date
   }
   const initialImageValues = {
@@ -55,11 +55,11 @@ export default function ChangePass(props) {
     imgFile: null
   }
 
-  useEffect(()=>{
+  useEffect(() => {
     if (userProfile !== undefined || userProfile !== null) {
-    setImage(initialImageValues)
+      setImage(initialImageValues)
     }
-  },[userProfile])
+  }, [userProfile])
 
   setTimeout(function () {
     setCardAnimation("");
@@ -78,30 +78,30 @@ export default function ChangePass(props) {
     mode: 'onChange',
   });
 
-  useEffect(()=>{
+  useEffect(() => {
     axios.get('http://localhost:5000/api/Users')
-    .then(function (response) {
-      setUserList(response.data)
-    })
-    .catch(function (error) {
-      console.log(error);
-    })
-  },[])
+      .then(function (response) {
+        setUserList(response.data)
+      })
+      .catch(function (error) {
+        // console.log(error);
+      })
+  }, [])
 
   const onSubmit = (data, e) => {
     e.preventDefault();
     let checkPass = 0;
-    console.log(data);
-    userList.map((user)=>{
-       if (user.email !== userProfile.email) {
+    // console.log(data);
+    userList.map((user) => {
+      if (user.email !== userProfile.email) {
         if (data.oldPassword !== user.password) {
-            checkPass = checkPass + 1;
-          }
-       }
+          checkPass = checkPass + 1;
+        }
+      }
     })
     if (checkPass > 0) {
       alert("Wrong Old Password!!")
-    }else{
+    } else {
       let userData = new FormData()
       userData.append('id', userProfile.id)
       userData.append('email', userProfile.email)
@@ -109,7 +109,7 @@ export default function ChangePass(props) {
       userData.append('username', userProfile.username)
       userData.append('role', userProfile.role)
       userData.append('address', userProfile.address)
-      userData.append('birthday',userProfile.birthday)
+      userData.append('birthday', userProfile.birthday)
       userData.append('name', userProfile.name)
       userData.append('phonenumber', userProfile.phonenumber)
       // if (changeImage) {
@@ -120,13 +120,13 @@ export default function ChangePass(props) {
       userData.append('imgFile', userProfile.imgFile)
       userData.append('imgFile', userProfile.imgSrc)
       userData.append('active', 1)
-      console.log(userData);
-      editProfileDispatch(update(userProfile.id,userData))
+      // console.log(userData);
+      editProfileDispatch(update(userProfile.id, userData))
     }
   };
-  useEffect(()=>{
+  useEffect(() => {
     //console.log(forAuth);
-    console.log(editStatus);
+    // console.log(editStatus);
     if (editStatus === 204 || editStatus == 200) {
       //forAuth = forAuth + userList[userList.length - 1].id + 1
       alert("Your Password Has Been Changed!!");
@@ -134,140 +134,140 @@ export default function ChangePass(props) {
       statusCode(backStatusCode())
       history.push("/")
     }
-    if (editStatus == 500 || editStatus == 404 || editStatus == 400 ) {
+    if (editStatus == 500 || editStatus == 404 || editStatus == 400) {
       alert("Cannot Create Account!!");
     }
-  },[editStatus])
+  }, [editStatus])
 
   const password = useRef({});
   password.current = watch('password', '');
 
-//   const showPreview = e => {
-//     console.log(e)
-//     if (e.target.files && e.target.files[0] && changeImage) {
-//       let imgFile = e.target.files[0];
-//       const reader = new FileReader();
-//       reader.onload = x => {
-//         setImage({
-//           ...image,
-//           imgFile,
-//           imgSrc: x.target.result
-//         })
-//       }
-//       reader.readAsDataURL(imgFile)
-//     }
-//     else {
-//       setImage({
-//         ...image,
-//         imgFile: null,
-//         imgSrc: userProfile.imgSrc
-//       })
-//     console.log(image)
-//   }
-// }
+  //   const showPreview = e => {
+  //     console.log(e)
+  //     if (e.target.files && e.target.files[0] && changeImage) {
+  //       let imgFile = e.target.files[0];
+  //       const reader = new FileReader();
+  //       reader.onload = x => {
+  //         setImage({
+  //           ...image,
+  //           imgFile,
+  //           imgSrc: x.target.result
+  //         })
+  //       }
+  //       reader.readAsDataURL(imgFile)
+  //     }
+  //     else {
+  //       setImage({
+  //         ...image,
+  //         imgFile: null,
+  //         imgSrc: userProfile.imgSrc
+  //       })
+  //     console.log(image)
+  //   }
+  // }
 
   return (
     <GridContainer justify="center">
-            <GridItem xs={12} sm={12} md={8}>
-              <Card className={classes[cardAnimaton]}>
-                <form className={classes.form} noValidate onSubmit={handleSubmit(onSubmit)}>
-                  <CardHeader color="primary" className={classes.cardHeader}>
-                    <h4>Change Password</h4>
-                  </CardHeader>
-                  <CardBody>
-                    <GridContainer justify="center">
-                      <GridItem xs={12} sm={12} md={10}>
-                      <TextField
-                          label="Old Password"
-                          margin="normal"
-                          id="oldPassword"
-                          name="oldPassword"
-                          fullWidth
-                          autoFocus
-                          //type= "text"
-                          InputProps={{
-                            type: "password",
-                            endAdornment: (
-                              <InputAdornment position="end">
-                                <Icon className={classes.inputIconsColor}>
-                                  lock_outline
+      <GridItem xs={12} sm={12} md={8}>
+        <Card className={classes[cardAnimaton]}>
+          <form className={classes.form} noValidate onSubmit={handleSubmit(onSubmit)}>
+            <CardHeader color="primary" className={classes.cardHeader}>
+              <h4>Change Password</h4>
+            </CardHeader>
+            <CardBody>
+              <GridContainer justify="center">
+                <GridItem xs={12} sm={12} md={10}>
+                  <TextField
+                    label="Old Password"
+                    margin="normal"
+                    id="oldPassword"
+                    name="oldPassword"
+                    fullWidth
+                    autoFocus
+                    //type= "text"
+                    InputProps={{
+                      type: "password",
+                      endAdornment: (
+                        <InputAdornment position="end">
+                          <Icon className={classes.inputIconsColor}>
+                            lock_outline
                                 </Icon>
-                              </InputAdornment>
-                            ),
-                          }}
-                          inputRef={register({
-                            required: 'You must specify a password',
-                            minLength: {
-                              value: 8,
-                              message: 'Min length is 8',
-                            },
-                          })}
-                          required
-                          autoFocus
-                          autoComplete="off"
-                          error={errors.password}
-                          helperText={errors.password && errors.password.message}
-                        />
-                        <TextField
-                          label="New Password"
-                          margin="normal"
-                          id="password"
-                          name="password"
-                          defaultValue = {userProfile.password}
-                          fullWidth
-                          //type= "text"
-                          InputProps={{
-                            type: "password",
-                            endAdornment: (
-                              <InputAdornment position="end">
-                                <Icon className={classes.inputIconsColor}>
-                                  lock_outline
+                        </InputAdornment>
+                      ),
+                    }}
+                    inputRef={register({
+                      required: 'You must specify a password',
+                      minLength: {
+                        value: 8,
+                        message: 'Min length is 8',
+                      },
+                    })}
+                    required
+                    autoFocus
+                    autoComplete="off"
+                    error={errors.password}
+                    helperText={errors.password && errors.password.message}
+                  />
+                  <TextField
+                    label="New Password"
+                    margin="normal"
+                    id="password"
+                    name="password"
+                    defaultValue={userProfile.password}
+                    fullWidth
+                    //type= "text"
+                    InputProps={{
+                      type: "password",
+                      endAdornment: (
+                        <InputAdornment position="end">
+                          <Icon className={classes.inputIconsColor}>
+                            lock_outline
                                 </Icon>
-                              </InputAdornment>
-                            ),
-                          }}
-                          inputRef={register({
-                            required: 'You must specify a password',
-                            minLength: {
-                              value: 8,
-                              message: 'Min length is 8',
-                            },
-                          })}
-                          required
-                          autoComplete="off"
-                          error={errors.password}
-                          helperText={errors.password && errors.password.message}
-                        />
-                        <TextField
-                          label="Confirm New Password"
-                          margin="normal"
-                          id="confirmPassword"
-                          name="confirmPassword"
-                          fullWidth
-                          //type= "text"
-                          InputProps={{
-                            type: "password",
-                            endAdornment: (
-                              <InputAdornment position="end">
-                                <Icon className={classes.inputIconsColor}>
-                                  lock_outline
+                        </InputAdornment>
+                      ),
+                    }}
+                    inputRef={register({
+                      required: 'You must specify a password',
+                      minLength: {
+                        value: 8,
+                        message: 'Min length is 8',
+                      },
+                    })}
+                    required
+                    autoComplete="off"
+                    error={errors.password}
+                    helperText={errors.password && errors.password.message}
+                  />
+                  <TextField
+                    label="Confirm New Password"
+                    margin="normal"
+                    id="confirmPassword"
+                    name="confirmPassword"
+                    fullWidth
+                    //type= "text"
+                    InputProps={{
+                      type: "password",
+                      endAdornment: (
+                        <InputAdornment position="end">
+                          <Icon className={classes.inputIconsColor}>
+                            lock_outline
                                   </Icon>
-                              </InputAdornment>
-                            ),
-                          }}
-                          inputRef={register({
-                            required: 'You must specify a password',
-                            validate: value =>
-                              value === password.current || 'The passwords do not match',
-                          })}
-                          required
-                          autoComplete="off"
-                          error={errors.confirmPassword}
-                          helperText={errors.confirmPassword && errors.confirmPassword.message}
-                        />
-                      </GridItem>
-                    </GridContainer>
-                    {/* <GridContainer justify="center">
+                        </InputAdornment>
+                      ),
+                    }}
+                    inputRef={register({
+                      required: 'You must specify a password',
+                      validate: value =>
+                        value === password.current || 'The passwords do not match',
+                    })}
+                    required
+                    autoComplete="off"
+                    error={errors.confirmPassword}
+                    helperText={errors.confirmPassword && errors.confirmPassword.message}
+                  />
+                </GridItem>
+              </GridContainer>
+              {/* <GridContainer justify="center">
                       <GridItem xs={12} sm={12} md={4} justify="center">
                         {image !== {} ? 
                         <>
@@ -279,25 +279,25 @@ export default function ChangePass(props) {
                         
                       </GridItem>
                     </GridContainer> */}
-                    {/* <GridContainer justify="center">
+              {/* <GridContainer justify="center">
                       <GridItem xs={12} sm={12} md={4} justify="center">
                         
                       </GridItem>
                     </GridContainer> */}
-                  </CardBody>
-                  <CardFooter className={classes.cardFooter}>
-                    <Button simple
-                      color="primary"
-                      size="lg"
-                      type="submit"
-                      //disabled={!formState.isValid}
-                      variant="contained">
-                      Get Started
+            </CardBody>
+            <CardFooter className={classes.cardFooter}>
+              <Button simple
+                color="primary"
+                size="lg"
+                type="submit"
+                //disabled={!formState.isValid}
+                variant="contained">
+                Get Started
                     </Button>
-                  </CardFooter>
-                </form>
-              </Card>
-            </GridItem>
-          </GridContainer>
+            </CardFooter>
+          </form>
+        </Card>
+      </GridItem>
+    </GridContainer>
   );
 }

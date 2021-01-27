@@ -116,7 +116,7 @@ export default function RegisterPage(props) {
   password.current = watch('password', '');
 
   const showPreview = e => {
-    console.log(e)
+    // console.log(e)
     if (e.target.files && e.target.files[0]) {
       let imgFile = e.target.files[0];
       const reader = new FileReader();

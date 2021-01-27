@@ -55,7 +55,7 @@ export default function LoginPage(props) {
         setUserList(response.data)
       })
       .catch(function (error) {
-        console.log(error);
+        // console.log(error);
       })
   }, [])
   const onSubmit = (data, e) => {
