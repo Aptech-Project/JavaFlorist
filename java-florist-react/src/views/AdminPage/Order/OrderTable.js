@@ -111,12 +111,12 @@ export default function OrderTable() {
                                 <TableCell size="small">{record.paymentmethod == "shipcode" ? "Ship Code" : "Card Pay"}</TableCell>
                                 <TableCell size="small">{record.status}</TableCell>
                                 <TableCell>
-                                    <Button disabled={record.status === "Delivered" || record.status === "Canceled" || record.paymentmethod !== "shipcode"} onClick={() => { setCurrentId(record.id); setOpenConfirm(true) }} variant="contained" color="secondary">
+                                    <Button disabled={record.status === "Delivered" || record.status === "Canceled"} onClick={() => { setCurrentId(record.id); setOpenConfirm(true) }} variant="contained" color="secondary">
                                         Delivery
                                     </Button>
                                 </TableCell>
                                 <TableCell>
-                                    <Button disabled={record.status === "Delivered" || record.status === "Canceled" || record.paymentmethod !== "shipcode"} onClick={() => { setCurrentId(record.id); setOpen(true) }} variant="contained" color="secondary">
+                                    <Button disabled={record.status === "Delivered" || record.status === "Canceled"} onClick={() => { setCurrentId(record.id); setOpen(true) }} variant="contained" color="secondary">
                                         Cancel
                                     </Button>
                                 </TableCell>
